@@ -1,0 +1,617 @@
+.quiz-container {
+    background-color: #fdf8f4;
+    margin-top: 40px;
+    padding: 120px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+.quiz-header h1,h2{
+    background-color: #fdf8f4;
+    font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+  .quiz-header h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .quiz-header p {
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  
+  .quiz-button {
+    background-color: black;
+    color: white;
+    padding: 25px 50px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    font-size: 18px;
+  font-family: "Arapey",serif;
+  font-optical-sizing: auto;
+  font-weight: 5500; 
+  font-style: normal;
+  }
+  
+  .quiz-button:hover {
+    background-color: #333;
+  }
+  
+
+  .quiz-container {
+    background-color: #fdf8f4;
+    margin-top: 40px;
+    padding: 120px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  .quiz-header {
+    background-color: #fdf8f4;
+  }
+  .quiz-header h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  .quiz-header p {
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  .quiz-button {
+    background-color: black;
+    color: white;
+    padding: 25px 50px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  .quiz-button:hover {
+    background-color: #333;
+  }
+  
+  
+  /* General Styles for Quiz Pages */
+.quiz-container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+
+input[type="text"] {
+  width: 100%;
+  max-width: 800px; /* Adjust as needed */
+  padding: 15px; /* Adjust padding as needed */
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  font-size: 1em;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.button-text{
+  margin-left: 90px
+}
+
+button.quiz-button1 {
+  background: none;
+  border: none;
+  color: black; /* Color for the text */
+  font-size: 1em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+button.quiz-button1:disabled {
+  color: #aaa; /* Color for the disabled state */
+  cursor: not-allowed;
+}
+
+.button-text::after {
+  content: ' →'; /* Arrow character */
+}
+
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.quiz-header h1,
+.quiz-header h2 {
+  margin: 0;
+  color: #333;
+}
+
+.quiz-header p {
+  font-size: 1.1em;
+  color: #666;
+}
+
+.quiz-button1 {
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+.next{
+  margin-left: 60px;
+}
+
+
+/* .quiz-button:hover {
+  background-color: #0056b3;
+} */
+
+/* Styling for Question Input */
+.question-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.question-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Styling for Buttons in Multiple Choice Questions */
+.mcq-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 5px;
+  transition: background-color 0.3s;
+}
+
+.mcq-button:hover {
+  background-color: #218838;
+}
+
+/* Thank You Page Styles */
+.thank-you-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.thank-you-container h1 {
+  font-size: 2em;
+  color: #333;
+}
+
+.thank-you-container p {
+  font-size: 1.2em;
+  color: #666;
+}
+
+
+.quiz-container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+
+input[type="text"] {
+  width: 100%;
+  max-width: 800px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  font-size: 1em;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+}
+
+button.quiz-button1 {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 1em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+button.quiz-button1.back-button {
+  justify-content: flex-start;
+}
+
+button.quiz-button1.next-button {
+  justify-content: flex-end;
+}
+
+button.quiz-button1:disabled {
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.quiz-header h1,
+.quiz-header h2 {
+  margin: 0;
+  color: #333;
+}
+
+.quiz-header p {
+  font-size: 1.1em;
+  color: #666;
+}
+
+.quiz-button1 {
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.mcq-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 5px;
+  transition: background-color 0.3s;
+}
+
+.mcq-button:hover {
+  background-color: #218838;
+}
+
+.thank-you-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.thank-you-container h1 {
+  font-size: 2em;
+  color: #333;
+}
+
+.thank-you-container p {
+  font-size: 1.2em;
+  color: #666;
+}
+
+.quiz-header {
+  margin-top: 30px; /* Adjust this value as needed */
+}
+
+/* General Styles for Quiz Pages */
+.quiz-container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #fdf8f4;
+  padding: 20px;
+}
+
+.quiz-header h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.mcq-options {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.mcq-button {
+  background-color: #fff;
+  color: #333;
+  border: 2px solid #333;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 50%; /* Make the button circular */
+  margin: 10px;
+  transition: background-color 0.3s, transform 0.2s;
+  width: 100px; /* Set width for circular shape */
+  height: 100px; /* Set height for circular shape */
+}
+
+.mcq-button:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.05); /* Add a slight zoom on hover */
+}
+
+.mcq-button.selected {
+  background-color: #333;
+  color: #fff;
+  transform: scale(1.1); /* Slightly enlarge the selected option */
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+}
+
+button.quiz-button1 {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 1em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+button.quiz-button1.back-button {
+  justify-content: flex-start;
+}
+
+button.quiz-button1.next-button {
+  justify-content: flex-end;
+}
+
+button.quiz-button1:disabled {
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.mcq-button {
+  border-radius: 50%;
+  background-color: beige;
+  border: none;
+  color: black;
+  text-align: center;
+  line-height: 1.5; /* Adjust for vertical centering */
+  padding: 0; /* Remove padding to fit content within the circle */
+  margin: 5px;
+  cursor: pointer;
+  font-size: 14px; /* Adjust font size as needed */
+  width: 80px; /* Larger default width */
+  height: 80px; /* Larger height to keep it circular */
+  overflow: hidden; /* Hide overflow text */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+
+
+.mcq-options {
+  display: flex;
+  flex-wrap: wrap; /* Ensure options wrap if needed */
+  gap: 10px; /* Space between options */
+}
+
+.quiz-container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #fdf8f4; /* Background color */
+  padding: 20px;
+}
+
+.quiz-inner-container {
+  background-color: #fdf8f4; /* Same as background color */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow to differentiate */
+  padding: 40px;
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.quiz-header {
+  margin-bottom: 20px;
+}
+
+.quiz-header h2 {
+  font-size: 24px;
+  color: #333;
+}
+
+.mcq-options {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.mcq-button {
+  background-color: #fff;
+  color: #333;
+  border: 2px solid #333;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 50%;
+  margin: 10px;
+  transition: background-color 0.3s, transform 0.2s;
+  width: 100px;
+  height: 100px;
+}
+
+.mcq-button:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.05);
+}
+
+.mcq-button.selected {
+  background-color: #333;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+}
+
+button.quiz-button1 {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 1em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+button.quiz-button1.back-button {
+  justify-content: flex-start;
+}
+
+button.quiz-button1.next-button {
+  justify-content: flex-end;
+}
+
+button.quiz-button1:disabled {
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+/* Styling for Buttons in Multiple Choice Questions */
+.mcq-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* Start with circular shape */
+  padding: 10px 20px; /* Adjust padding to fit text */
+  font-size: 14px; /* Adjust font size */
+  background-color: #f3f3f3;
+  border: 2px solid #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 80px; /* Minimum width to ensure button is always visible */
+  min-height: 80px; /* Minimum height to ensure button is always visible */
+  text-align: center; /* Center text horizontally */
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflow text */
+}
+
+.mcq-button.selected {
+  border-color: #000; /* Change to your preferred border color */
+}
+
+.mcq-button:hover {
+  border-color: #000; /* Change to your preferred hover color */
+}
+
+.mcq-button:focus {
+  outline: none;
+}
+
+/* Stretch to oval when text increases */
+.mcq-button {
+  width: auto; /* Allow width to adjust based on content */
+  height: auto; /* Allow height to adjust based on content */
+  padding: 10px 20px; /* Adjust padding to ensure proper alignment */
+  border-radius: 50px; /* Keep rounded corners if it becomes oval */
+}
+
+.error-message {
+  color: red;
+  margin-top: 5px;
+  font-size: 0.875rem;
+}
+
+.skip-button {
+  border: none;
+  background: none;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.prompt-before-br {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.prompt-after-br {
+  font-family: "Arapey",serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.prompt-alternative{
+  font-size: 18px;
+  font-family: "Arapey",serif;
+  font-optical-sizing: auto;
+  font-weight: 5500; /* Adjust weight as needed */
+  font-style: normal;
+  display: block; /* Ensure it appears on a new line */
+  margin-top: 30px;
+}
+
+.alt{
+  font-size: 18px;
+  font-family: "Arapey",serif;
+  font-optical-sizing: auto;
+  font-weight: 5500; /* Adjust weight as needed */
+  font-style: normal;
+  display: block; /* Ensure it appears on a new line */
+  margin-top: 30px;
+}
+
+.alt1 {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+

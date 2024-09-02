@@ -5,7 +5,8 @@
   "scripts": {
     "start:server1": "nodemon ./server.js",
     "start:server2": "nodemon ./server1.js",
-    "start": "concurrently \"npm run start:server1\" \"npm run start:server2\"",
+    "start:server3": "nodemon ./serverLogin.js",
+    "start": "concurrently \"npm run start:server1\" \"npm run start:server2\" \"npm run start:server3\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

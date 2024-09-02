@@ -79,11 +79,11 @@ function LandingPage() {
                     <div className="logo-container">
                         {/* <img src={image} alt="Logo" className="logo" /> */}
                         <ul className="left-nav">
-                        <li><Link to='products'>Shop All</Link></li>
-                        <li>Personalised Products</li>
+                        <li><Link to='/All'>Shop All</Link></li>
+                        <li><Link to='/quiz'>Personalised Products</Link></li>
                         <li>More</li>
                         <li><Link to='/login'>Log in</Link></li>
-                        <li>Cart</li>
+                        <li><Link to='/cart'>Cart</Link></li>
                     </ul>
                     </div>
                     
@@ -106,7 +106,7 @@ function LandingPage() {
                         hydration and barrier support. The formulas are 95% naturally
                         derived and will leave you feeling like everyday is spa-day.
                     </p>
-                    <button className="shop-now"><Link to='/products'>Shop Now</Link></button>
+                    <button className="shop-now"><Link to='/All'>Shop Now</Link></button>
                 </div>
             </main>
             <section className="section1">

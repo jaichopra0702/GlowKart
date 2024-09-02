@@ -101,13 +101,21 @@ body {
   }
   
   .shop-now {
-    background-color: black;
+    background-color: palevioletred;
     color: white;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
     font-size: 16px;
   }
+  .shop-now a {
+    color: inherit; /* Ensures the text inside the link inherits the white color */
+    text-decoration: none; /* Removes underline from the link */
+}
+.view-results a {
+  color: inherit; /* Ensures the text inside the link inherits the white color */
+  text-decoration: none; /* Removes underline from the link */
+}
 
   .section1{
     display: flex;
@@ -343,12 +351,12 @@ body {
   
   .testimonials-container h2 {
     font-size: 36px;
-    color: white;
+    color: black;
   }
   
   .subheading {
     font-size: 20px;
-    color: white;
+    color: black;
     margin-bottom: 30px;
   }
   

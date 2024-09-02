@@ -1,0 +1,27 @@
+[
+  {
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "password": "securepassword123"
+  },
+  {
+    "name": "Jai Chopra",
+    "email": "jai427.be22@chitkara.edu.in",
+    "password": "kafbijvebv"
+  },
+  {
+    "name": "ish12",
+    "email": "jaichopra0702@gmail.com",
+    "password": "gfiugbiuwrbvu"
+  },
+  {
+    "name": "Jai Chopra",
+    "email": "jai427.be22@chitkara.edu.in",
+    "password": "hahahahahaha"
+  },
+  {
+    "name": "Jai Chopra",
+    "email": "jai427.be22@chitkara.edu.in",
+    "password": "dkjegfewyfvewufb"
+  }
+]

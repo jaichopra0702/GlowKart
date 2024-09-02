@@ -1,0 +1,28 @@
+.filter-container {
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: plum;
+  }
+  
+  .filter-select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+  }
+  
+  .cart-button {
+    padding: 10px 20px;
+    background-color: blue;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .cart-button:hover {
+    background-color: #0056b3;
+  }

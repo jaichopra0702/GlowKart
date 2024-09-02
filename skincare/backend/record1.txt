@@ -23,5 +23,10 @@
     "name": "Jai Chopra",
     "email": "jai427.be22@chitkara.edu.in",
     "password": "dkjegfewyfvewufb"
+  },
+  {
+    "name": "Jai Chopra",
+    "email": "jai427.be22@chitkara.edu.in",
+    "password": "2614652"
   }
 ]

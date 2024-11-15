@@ -7,7 +7,7 @@ import ThankYouPage from "./Components/ThankYouPage";
 import Navbar from './Components/Navbar';
 import ProductList from './Components/ProductList';
 import Cart from './Components/Cart';
-import Login from './Components/Login';
+import Login from './Components/login';
 import { CartContext } from "./Components/CartContext";
 import Recommendations from "./Components/Recommendations";
 

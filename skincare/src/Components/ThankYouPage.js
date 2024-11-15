@@ -1,11 +1,18 @@
-import React from 'react';
-// import './Components/Quiz.css';
+import { useNavigate } from "react-router-dom";
 
 const ThankYouPage = () => {
+  const navigate = useNavigate();
+
+  const handleSeeRecommendations = () => {
+    navigate("/recommendations");
+  };
+
   return (
-    <div className="quiz-container">
-      <h1>Thank You!</h1>
-      <p>Your responses have been submitted successfully.</p>
+    <div>
+      <h1>Thank You for Taking the Quiz!</h1>
+      <button onClick={handleSeeRecommendations}>
+        See Recommendations
+      </button>
     </div>
   );
 };

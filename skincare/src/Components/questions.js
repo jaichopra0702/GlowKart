@@ -42,7 +42,7 @@ const questions = [
     id: 8,
     prompt: " <span class='alt1'>What do you feel you need help with <br/> most? </span>",
     type: "mcq", // Multiple choice
-    answers: ["Dull or Dry Skin", "Pigmentation or Uneven skin tone", "Dark spots", "Fine lines or Wrinkles","Acne","Acne Scars","Maintenance"]
+    answers: ["DrySkin", "Pigmentation", "OilySkin", "SensitiveSkin","Acne","CombinationSkin","TexturedSkin"]
   },
   {
     id: 9,

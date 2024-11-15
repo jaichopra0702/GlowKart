@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import questions from './questions';
-import './Quiz.css'; 
-import ProgressBar from './ProgressBar'; 
+import './Quiz.css';
+import ProgressBar from './ProgressBar';
+import Recommendations from './Recommendations';
 
 const QuestionPage = () => {
   const { questionNumber } = useParams();
@@ -15,6 +16,7 @@ const QuestionPage = () => {
   const [phone, setPhone] = useState('');
   const [emailError, setEmailError] = useState('');
   const [phoneError, setPhoneError] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const totalQuestions = questions.length;
 
@@ -24,9 +26,9 @@ const QuestionPage = () => {
       const storedFormData = { ...formData };
 
       if (currentQuestionNumber === 1) {
-        localStorage.removeItem('name'); // Clear name from localStorage to avoid auto-fill
-        setName(''); // Clear name state to avoid pre-filling
-        setUserAnswer(''); // Clear userAnswer for question 1
+        localStorage.removeItem('name');
+        setName('');
+        setUserAnswer('');
       } else if (currentQuestionNumber === 2) {
         const storedName = localStorage.getItem('name');
         if (storedName) {
@@ -49,7 +51,6 @@ const QuestionPage = () => {
     const emailValue = event.target.value;
     setEmail(emailValue);
 
-    // Validate email
     if (!emailValue.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
       setEmailError('Please enter a valid email address.');
     } else {
@@ -61,8 +62,7 @@ const QuestionPage = () => {
     const phoneValue = event.target.value;
     setPhone(phoneValue);
 
-    // Validate phone number
-    if (!phoneValue.match(/^\d{10}$/)) { // Assuming 10-digit phone numbers
+    if (!phoneValue.match(/^\d{10}$/)) {
       setPhoneError('Please enter a valid 10-digit phone number.');
     } else {
       setPhoneError('');
@@ -73,11 +73,36 @@ const QuestionPage = () => {
     const currentQuestionNumber = parseInt(questionNumber);
     const updatedFormData = { ...formData };
 
-    if (currentQuestionNumber === 1) {
-      localStorage.setItem('name', answer);
-      updatedFormData.name = answer;
-    } else if (currentQuestionNumber === 2) {
-      updatedFormData.email = email;
+    if (currentQuestionNumber === 8) {
+      // Map selected answer to category
+      let category = '';
+      switch (answer) {
+        case 'DrySkin':
+          category = 'DrySkin';
+          break;
+        case 'Pigmentation':
+          category = 'Pigmentation';
+          break;
+        case 'OilySkin':
+          category = 'OilySkin';
+          break;
+        case 'SensitiveSkin':
+          category = 'SensitiveSkin';
+          break;
+        case 'Acne':
+          category = 'Acne';
+          break;
+        case 'CombinationSkin':
+          category = 'CombinationSkin';
+          break;
+        case 'TexturedSkin':
+          category = 'TexturedSkin';
+          break;
+        default:
+          category = 'General';
+      }
+      updatedFormData[`question${currentQuestionNumber}`] = answer;
+      setSelectedCategory(category); // Set the selected category here
     } else {
       updatedFormData[`question${currentQuestionNumber}`] = answer;
     }
@@ -85,22 +110,16 @@ const QuestionPage = () => {
     setFormData(updatedFormData);
     setUserAnswer(answer);
 
-    // Automatically submit data to the backend
-    axios.post('http://localhost:5000/submit-quiz', updatedFormData)
-      .then(response => {
-        console.log('Success:', response.data);
-
-        // Navigate to the next question
-        const nextQuestionNumber = currentQuestionNumber + 1;
-        if (questions.some(q => q.id === nextQuestionNumber)) {
-          navigate(`/question/${nextQuestionNumber}`);
-        } else {
-          navigate('/thank-you');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+    const nextQuestionNumber = currentQuestionNumber + 1;
+    if (questions.some(q => q.id === nextQuestionNumber)) {
+      navigate(`/question/${nextQuestionNumber}`);
+    } else {
+      // Ensure category is selected before navigation
+      if (!selectedCategory) {
+        setSelectedCategory('General');
+      }
+      navigate(`/recommendation?category=${selectedCategory}`);
+    }
   };
 
   const handleSubmit = (event) => {
@@ -114,12 +133,12 @@ const QuestionPage = () => {
       updatedFormData.name = userAnswer;
     } else if (currentQuestionNumber === 2) {
       if (emailError) {
-        return; // Prevent submission if email is invalid
+        return;
       }
       updatedFormData.email = email;
     } else if (currentQuestionNumber === 3) {
       if (phoneError) {
-        return; // Prevent submission if phone number is invalid
+        return;
       }
       updatedFormData[`question${currentQuestionNumber}`] = phone;
     } else {
@@ -128,25 +147,22 @@ const QuestionPage = () => {
 
     setFormData(updatedFormData);
 
-    console.log('Form Data Before Submit:', updatedFormData);
-
-    // Clear the input fields
     setUserAnswer('');
     setEmail('');
     setPhone('');
 
-    // Handle navigation
     const nextQuestionNumber = currentQuestionNumber + 1;
     if (questions.some(q => q.id === nextQuestionNumber)) {
       navigate(`/question/${nextQuestionNumber}`);
     } else {
-      axios.post('http://localhost:5000/submit-quiz', updatedFormData)
+      axios.post('http://localhost:5001/api/quiz/submit-quiz', updatedFormData)
         .then(response => {
           console.log('Success:', response.data);
-          navigate('/thank-you');
+          navigate(`/recommendation?category=${selectedCategory}`);
         })
         .catch(error => {
           console.error('Error:', error);
+          alert('Something went wrong, please try again!');
         });
     }
   };
@@ -159,13 +175,12 @@ const QuestionPage = () => {
   };
 
   const handleSkip = () => {
-    // Move to the next question when skipping
     const currentQuestionNumber = parseInt(questionNumber);
     const nextQuestionNumber = currentQuestionNumber + 1;
     if (questions.some(q => q.id === nextQuestionNumber)) {
       navigate(`/question/${nextQuestionNumber}`);
     } else {
-      axios.post('http://localhost:5000/submit-quiz', formData)
+      axios.post('http://localhost:5001/api/quiz/submit-quiz', formData)
         .then(response => {
           console.log('Success:', response.data);
           navigate('/thank-you');
@@ -269,6 +284,9 @@ const QuestionPage = () => {
           </div>
         </form>
       </div>
+      {parseInt(questionNumber) > totalQuestions && selectedCategory && (
+        <Recommendations selectedCategory={selectedCategory} />
+      )}
     </div>
   );
 };

@@ -1,0 +1,59 @@
+/* Container for the entire product list */
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center the products horizontally */
+  gap: 20px; /* Space between product cards */
+  padding: 20px;
+}
+
+/* Styling for individual product cards */
+.product-card {
+  width: 250px; /* Fixed width for the product card */
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow for the card */
+  text-align: center;
+  transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+/* Hover effect for product card */
+.product-card:hover {
+  transform: translateY(-5px); /* Lift the card a bit when hovered */
+}
+
+/* Image styling */
+.product-card img {
+  width: 100%;              /* Makes image width responsive */
+  max-height: 140px;        /* Sets maximum height for the image */
+  object-fit: contain;      /* Keeps aspect ratio intact */
+  margin-bottom: 0;         /* Remove space below the image */
+}
+
+/* Product info container */
+.product-info {
+  padding: 0 10px; /* Space inside the info container */
+}
+
+/* Product name styling */
+.product-info h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 10px; /* Space between name and description */
+  font-weight: bold;
+}
+
+/* Product description styling */
+.product-info p {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 10px; /* Space between description and price */
+}
+
+/* Price styling */
+.product-info .price {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #007bff; /* You can adjust this to match your theme */
+}

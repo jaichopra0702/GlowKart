@@ -9,6 +9,10 @@ import ProductList from './Components/ProductList';
 import Cart from './Components/Cart';
 import Login from './Components/Login';
 import { CartContext } from "./Components/CartContext";
+import Recommendations from "./Components/Recommendations";
+
+
+
 
 const products = [
   // Acne Category
@@ -119,6 +123,8 @@ function App() {
         <Route path="/thank-you" element={<ThankYouPage />} />
         <Route path="/all" element={<ProductList products={products} />} />
         <Route path="/:category" element={<ProductList products={products} />} />
+        <Route path="/recommendation" element={<Recommendations />} />
+
 
         <Route path="/cart" element={<Cart
           cart={cart}

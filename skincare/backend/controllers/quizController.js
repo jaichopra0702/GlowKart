@@ -1,52 +1,58 @@
-const fs = require('fs');
-const path = require('path');
-const Quiz = require('../models/Quiz');
-const QUIZ_FILE_PATH = path.join(__dirname, '../data/quizData.json'); // Path to save quiz data
+//quizController.js
+const User = require('../models/User');
+const Product = require('../models/Product'); // Assuming you have a Product model for product recommendations
 
-// Utility function to validate quiz data
-const validateQuizData = (data) => {
-  return data && typeof data === 'object' && data.hasOwnProperty('name') && data.hasOwnProperty('email');
-};
-
-// Ensure the directory exists
-const ensureDirectoryExistence = (filePath) => {
-  const dirname = path.dirname(filePath);
-  if (!fs.existsSync(dirname)) {
-    fs.mkdirSync(dirname, { recursive: true }); // Create directory recursively if it doesn't exist
-  }
-};
-
-// Controller to handle quiz submission
+// Handle quiz submission
 const submitQuiz = async (req, res) => {
-  const quizData = req.body;
+  const { name, email, answers, category } = req.body;
 
-  if (!validateQuizData(quizData)) {
-    return res.status(400).send({ message: 'Invalid data' });
+  console.log(req.body);  // Debugging: log the request body
+
+  if (!name || !email || !answers || !category) {
+    return res.status(400).json({ error: "Missing required fields" });
   }
 
   try {
-    // Ensure the directory exists before attempting to write the file
-    ensureDirectoryExistence(QUIZ_FILE_PATH);
-
-    // Save quiz data to file (ensure writing is complete before responding)
-    const dataToSave = JSON.stringify(quizData, null, 2);
+    let user = await User.findOne({ email });
     
-    // Writing to file using promises for cleaner async handling
-    await fs.promises.appendFile(QUIZ_FILE_PATH, dataToSave + '\n');
+    if (user) {
+      user.answers = answers;
+      user.category = category;
 
-    // Optionally, save the data to MongoDB
-    const newQuiz = new Quiz(quizData);
-    const savedQuiz = await newQuiz.save();
+      // Fetch product recommendations based on category
+      const products = await Product.find({ category }).limit(5);
+      
+      // Log the products fetched
+      console.log('Fetched products:', products);
 
-    // Respond with success message and saved data
-    res.send({ 
-      message: 'Quiz data saved successfully!',
-      quiz: savedQuiz // Optionally include the saved quiz data in the response
-    });
-  } catch (err) {
-    console.error('Error in quiz submission:', err);
-    res.status(500).send({ message: 'Error saving data', error: err.message });
+      user.recommendations = products.map((product) => product.name);
+
+      await user.save();
+      return res.status(200).json({ message: 'Quiz updated successfully', user });
+    } else {
+      user = new User({
+        name,
+        email,
+        answers,
+        category,
+      });
+
+      // Fetch product recommendations based on category
+      const products = await Product.find({ category }).limit(5);
+      
+      // Log the products fetched
+      console.log('Fetched products:', products);
+
+      user.recommendations = products.map((product) => product.name);
+
+      await user.save();
+      return res.status(201).json({ message: 'Quiz submitted successfully', user });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Error submitting quiz', details: error.message });
   }
 };
+
 
 module.exports = { submitQuiz };

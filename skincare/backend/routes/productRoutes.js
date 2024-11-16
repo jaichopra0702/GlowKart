@@ -1,10 +1,11 @@
+// productRoutes.js
+
 const express = require('express');
 const router = express.Router();
+const productController = require('../controllers/productController'); // Assuming you have this controller
 
-// Import the controller for handling product routes (assuming it's in productController.js)
-const productController = require('../controllers/productController');
-
-// Route for fetching product recommendations based on category
+// Route to get recommendations based on category
 router.get('/recommendations', productController.getRecommendations);
+
 
 module.exports = router;

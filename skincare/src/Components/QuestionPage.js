@@ -99,8 +99,9 @@ const QuestionPage = () => {
           category = 'TexturedSkin';
           break;
         default:
-          category = 'General';
+          category = ''; // Removed default "General" category
       }
+
       updatedFormData[`question${currentQuestionNumber}`] = answer;
       setSelectedCategory(category); // Set the selected category here
     } else {
@@ -124,48 +125,110 @@ const QuestionPage = () => {
 
   const handleSubmit = (event) => {
     if (event) event.preventDefault();
-
+  
     const currentQuestionNumber = parseInt(questionNumber);
     const updatedFormData = { ...formData };
-
+  
+    // Collecting answers
     if (currentQuestionNumber === 1) {
       localStorage.setItem('name', userAnswer);
       updatedFormData.name = userAnswer;
     } else if (currentQuestionNumber === 2) {
-      if (emailError) {
-        return;
-      }
+      if (emailError) return;
       updatedFormData.email = email;
-    } else if (currentQuestionNumber === 3) {
-      if (phoneError) {
-        return;
-      }
-      updatedFormData[`question${currentQuestionNumber}`] = phone;
+    } else if (currentQuestionNumber === 8) {
+      updatedFormData[`question${currentQuestionNumber}`] = userAnswer;
+      console.log("Answer for Question 8:", userAnswer); // Log question 8 answer
     } else {
       updatedFormData[`question${currentQuestionNumber}`] = userAnswer;
     }
-
+  
     setFormData(updatedFormData);
-
-    setUserAnswer('');
-    setEmail('');
-    setPhone('');
-
+  
+    // Generate Recommendations based on Question 8 answer
+    let recommendations = [];
+    let selectedCategory = '';
+    console.log("Updated Form Data before Recommendation Logic:", updatedFormData);
+  
+    // Logic to populate category and recommendations based on answer from Question 8
+    switch (updatedFormData[`question8`]) { // Check answer for Question 8
+      case 'DrySkin':
+        recommendations.push('Product for Dry Skin');
+        selectedCategory = 'Dry Skin';
+        break;
+      case 'Pigmentation':
+        recommendations.push('Product for Pigmentation');
+        selectedCategory = 'Pigmentation';
+        break;
+      case 'OilySkin':
+        recommendations.push('Product for Oily Skin');
+        selectedCategory = 'Oily Skin';
+        break;
+      case 'SensitiveSkin':
+        recommendations.push('Product for Sensitive Skin');
+        selectedCategory = 'Sensitive Skin';
+        break;
+      case 'Acne':
+        recommendations.push('Acne Treatment Products');
+        selectedCategory = 'Acne';
+        break;
+      default:
+        selectedCategory = 'General';
+        break;
+    }
+  
+    console.log("Recommendations generated:", recommendations);
+  
+    // Create quizData to submit
+    const quizData = {
+      name: updatedFormData.name, // Ensure name is included
+      email: updatedFormData.email, // Ensure email is included
+      phone: updatedFormData.phone, // Include phone if provided
+      answers: Object.keys(updatedFormData)
+        .filter(key => key.startsWith('question'))
+        .map(key => updatedFormData[key]),
+      category: selectedCategory,  // Dynamic category from Question 8 answer
+      recommendations,  // Dynamic recommendations based on the answer
+    };
+  
+    console.log("Quiz Data before Submission:", quizData);
+    submitQuiz(quizData);
+  
     const nextQuestionNumber = currentQuestionNumber + 1;
     if (questions.some(q => q.id === nextQuestionNumber)) {
       navigate(`/question/${nextQuestionNumber}`);
     } else {
-      axios.post('http://localhost:5001/api/quiz/submit-quiz', updatedFormData)
-        .then(response => {
-          console.log('Success:', response.data);
-          navigate(`/recommendation?category=${selectedCategory}`);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          alert('Something went wrong, please try again!');
-        });
+      navigate(`/recommendation?category=${selectedCategory}`);
     }
   };
+  
+  // Refactored submitQuiz function
+  const submitQuiz = async (quizData) => {
+    try {
+      // Ensure the email is provided in the quiz data
+      if (!quizData.email) {
+        console.error('Email is required');
+        return; // Stop submission if email is missing
+      }
+  
+      const response = await fetch('http://localhost:5001/api/quiz/submit-quiz', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(quizData),
+      });
+  
+      const result = await response.json();
+      console.log(result);  // Log response message from backend
+    } catch (error) {
+      console.error('Error submitting quiz:', error);
+    }
+  };
+  
+  
+
+  
 
   const handleBack = () => {
     const previousQuestionNumber = parseInt(questionNumber) - 1;

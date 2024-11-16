@@ -1,13 +1,13 @@
 exports.getRecommendations = (req, res) => {
-    const category = req.query.category;
-  
-    if (!category) {
-      return res.status(400).json({ message: "Category not provided" });
-    }
-  
-    // Example list of products with categories
-    const recommendedProducts = [
-     // Acne Category
+  const category = req.query.category;
+
+  if (!category) {
+    return res.status(400).json({ message: "Category not provided" });
+  }
+
+  // Example list of products with categories
+  const recommendedProducts = [
+    // Acne Category
   { id: 1, name: 'Acne Treatment Gel', category: 'Acne', price: 1500, imageUrl: 'https://cdn.tirabeauty.com/v2/billowing-snowflake-434234/tira-p/wrkr/products/pictures/item/free/resize-w:1080/1090912/C-iRhDQGuO-4103040895554_1.jpg' },
   { id: 2, name: 'Acne Moisturizer', category: 'Acne', price: 1200, imageUrl: 'https://cdn.tirabeauty.com/v2/billowing-snowflake-434234/tira-p/wrkr/products/pictures/item/free/resize-w:1080/1127303/k9WJ3RrB4B-1127303_2.jpg' },
   { id: 3, name: 'Blemish Control Serum', category: 'Acne', price: 1700, imageUrl: 'https://cdn.tirabeauty.com/v2/billowing-snowflake-434234/tira-p/wrkr/products/pictures/item/free/resize-w:1080/1088060/m2K-vZNrDa-8901030902017_2.jpg' },
@@ -62,19 +62,18 @@ exports.getRecommendations = (req, res) => {
 { id: 40, name: 'Exfoliating Night Cream', category: 'TexturedSkin', price: 2200, imageUrl: 'https://th.bing.com/th?id=OPAC.z%2f4YLYOtXVnjUQ474C474&w=169&h=150&c=17&dpr=1.5&pid=21.1' },
 { id: 41, name: 'Pore Smoothing Primer', category: 'TexturedSkin', price: 1600, imageUrl: 'https://th.bing.com/th?id=OPAC.Du0UzEpcrt0BtA474C474&w=200&h=220&c=17&dpr=1.5&pid=21.1' },
 { id: 42, name: 'Smoothing Face Mask', category: 'TexturedSkin', price: 1800, imageUrl: 'https://th.bing.com/th?id=OPAC.iUg8tDjCIFTnuQ474C474&w=200&h=220&c=17&dpr=1.5&pid=21.1' },
-    ];
-  
-    // Filter products based on category
-    const filteredProducts = recommendedProducts.filter(product =>
-      product.category.toLowerCase() === category.toLowerCase()
-    );
-  
-    // If no products are found for the category
-    if (filteredProducts.length === 0) {
-      return res.status(404).json({ message: `No products found for category: ${category}` });
-    }
-  
-    // Return the filtered list of recommended products
-    res.json(filteredProducts);
-  };
-  
+  ];
+
+  // Filter products based on category
+  const filteredProducts = recommendedProducts.filter(product =>
+    product.category.toLowerCase() === category.toLowerCase()
+  );
+
+  // If no products are found for the category
+  if (filteredProducts.length === 0) {
+    return res.status(404).json({ message: `No products found for category: ${category}` });
+  }
+
+  // Return the filtered list of recommended products
+  res.json(filteredProducts);
+};

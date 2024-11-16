@@ -123,17 +123,27 @@ function App() {
         <Route path="/thank-you" element={<ThankYouPage />} />
         <Route path="/all" element={<ProductList products={products} />} />
         <Route path="/:category" element={<ProductList products={products} />} />
-        <Route path="/recommendation" element={<Recommendations />} />
-
-
-        <Route path="/cart" element={<Cart
-          cart={cart}
-          removeFromCart={removeFromCart}
-          updateCartItemQuantity={updateCartItemQuantity}
-        />} />
+        
+        {/* Pass addToCart prop to Recommendations */}
+        <Route
+          path="/recommendation"
+          element={<Recommendations addToCart={addToCart} />}
+        />
+  
+        <Route
+          path="/cart"
+          element={
+            <Cart
+              cart={cart}
+              removeFromCart={removeFromCart}
+              updateCartItemQuantity={updateCartItemQuantity}
+            />
+          }
+        />
       </Routes>
     </div>
   );
+  
 }
 
 export default App;

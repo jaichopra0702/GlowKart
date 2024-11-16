@@ -1,18 +1,23 @@
+// Cart.js
+
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Cart.css'; // Ensure this CSS file is correctly linked
-import { CartContext } from './CartContext'; // Adjust the path if needed
+import '../Components/Cart.css';
+import { CartContext } from './CartContext';
 
 const Cart = () => {
-  const navigate = useNavigate(); // Initialize navigate
-  const { cart, removeFromCart, updateCartItemQuantity } = useContext(CartContext); // Use CartContext
+  const navigate = useNavigate();
+  const { cart, removeFromCart, updateCartItemQuantity } = useContext(CartContext);
 
-  // Calculate total amount and total number of products
   const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0);
   const totalProducts = cart.reduce((total, item) => total + item.quantity, 0);
 
   const handleBackToShop = () => {
-    navigate(-1); // Go back to the previous page
+    navigate(-1);
+  };
+
+  const handleCheckout = () => {
+    navigate('/checkout', { state: { cart, totalAmount, totalProducts } }); // Pass cart items along with totalAmount and totalProducts
   };
 
   return (
@@ -31,7 +36,7 @@ const Cart = () => {
                 <div className="cart-item-details">
                   <h2>{item.name}</h2>
                   <p>Price: ₹{item.price}</p>
-                  <p>Quantity: 
+                  <p>Quantity:
                     <button onClick={() => updateCartItemQuantity(item, item.quantity - 1)} className="quantity-button">-</button>
                     {item.quantity}
                     <button onClick={() => updateCartItemQuantity(item, item.quantity + 1)} className="quantity-button">+</button>
@@ -46,6 +51,7 @@ const Cart = () => {
         <p className="empty-cart">Your cart is empty.</p>
       )}
       <button onClick={handleBackToShop} className="back-to-shop">Back to Shop</button>
+      <button onClick={handleCheckout} className="checkout-button">Checkout</button>
     </div>
   );
 };

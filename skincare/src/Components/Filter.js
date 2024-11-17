@@ -46,6 +46,7 @@ const Filter = ({ setCategory }) => {
         <button className="cart-button">
           Cart
         </button>
+        
       </Link>
       
     </div>

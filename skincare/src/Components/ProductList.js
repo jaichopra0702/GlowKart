@@ -9,7 +9,7 @@ const ProductList = ({ products }) => {
   const { category } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useContext(CartContext);
-
+ 
   // useMemo to filter products based on the selected category
   const filteredProducts = useMemo(() => {
     console.log("Category:", category);
@@ -22,6 +22,7 @@ const ProductList = ({ products }) => {
     }
     return products; // Show all products if category is 'All'
   }, [category, products]);
+  // console.log("ETESTTTTT")
 
   return (
     <div className="product-list">

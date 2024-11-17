@@ -1,11 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Cart.css'; // Ensure this CSS file is correctly linked
-import { CartContext } from './CartContext'; // Adjust the path if needed
+import { CartContext } from './CartContext'; // Import CartContext
+import { getCartData, updateCartQuantity, removeItemFromCart } from '../utils/api'; // Import API utility functions
 
 const Cart = () => {
   const navigate = useNavigate(); // Initialize navigate
   const { cart, removeFromCart, updateCartItemQuantity } = useContext(CartContext); // Use CartContext
+  // const [loading, setLoading] = useState(true);
 
   // Calculate total amount and total number of products
   const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -21,8 +23,12 @@ const Cart = () => {
       {cart.length > 0 ? (
         <>
           <div className="cart-summary">
-            <p>Total Products: <strong>{totalProducts}</strong></p>
-            <p>Total Amount: <strong>₹{totalAmount.toFixed(2)}</strong></p>
+            <div className="TP">
+              <p>Total Products: <strong>{totalProducts}</strong></p>
+            </div>
+            <div className="TA">
+              <p>Total Amount: <strong>₹{totalAmount.toFixed(2)}</strong></p>
+            </div>
           </div>
           <div className="cart-items">
             {cart.map((item, index) => (

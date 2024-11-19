@@ -35,10 +35,15 @@ function Login() {
     setIsSignUpMode(!isSignUpMode);
   };
 
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const endpoint = isSignUpMode ? '/signup' : '/login'; // Adjust endpoint based on form mode
-    fetch(`http://localhost:7000${endpoint}`, {
+
+    const endpoint = isSignUpMode ? '/registeruser' : '/loginuser';
+
+    fetch(`http://localhost:5000/user${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -48,12 +53,18 @@ function Login() {
       .then((response) => response.json())
       .then((data) => {
         console.log('Success:', data);
-        if (data.message === 'Login successful' || data.message === 'User data saved successfully') {
+
+        // If the response contains a token, save it and redirect
+        if (data.token) {
+          localStorage.setItem('token', data.token); // Save token to localStorage
           navigate('/'); // Redirect to homepage
+        } else {
+          alert(data.message); // Show error message if any
         }
       })
       .catch((error) => console.error('Error:', error));
   };
+
 
   return (
     <div className="login-css">
@@ -75,9 +86,9 @@ function Login() {
                     Sign up
                   </button>
                 </div>
-                
+
                 <div className="actual-form">
-                <div className="input-wrap">
+                  <div className="input-wrap">
                     <input
                       type="name"
                       className="input-field"

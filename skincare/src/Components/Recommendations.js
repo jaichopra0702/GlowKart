@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useLocation, useNavigate } from 'react-router-dom';
 import './Recommendations.css';
 import { CartContext } from './CartContext';
 
@@ -9,20 +9,23 @@ const Recommendations = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const location = useLocation();
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
   const { addToCart } = useContext(CartContext);
 
-  // Extract category from URL query parameter
+  // Extract category from URL query parameter and handle invalid cases
   const urlParams = new URLSearchParams(location.search);
-  const selectedCategory = urlParams.get('category') || 'Acne'; // Default to 'Acne' if no category is selected
+  const selectedCategory = urlParams.get('category') || 'Acne'; // Default to 'Acne'
 
   useEffect(() => {
-    // Fetch recommended products based on the selected category
     setLoading(true); // Start loading when category changes
     axios
       .get(`http://localhost:5001/api/products/recommendations?category=${selectedCategory}`)
       .then((response) => {
-        setProducts(response.data);
+        if (response.data && response.data.length > 0) {
+          setProducts(response.data);
+        } else {
+          setError('No products available for this category');
+        }
         setLoading(false);
       })
       .catch((err) => {
@@ -30,6 +33,16 @@ const Recommendations = () => {
         setLoading(false);
       });
   }, [selectedCategory]);
+
+  // Handle adding individual product to cart
+  const handleAddToCart = (product) => {
+    addToCart(product);  // Add only the clicked product to the cart
+  };
+
+  // Navigate to the cart page
+  const handleGoToCart = () => {
+    navigate('/cart');
+  };
 
   if (loading) {
     return <p>Loading products...</p>;
@@ -39,22 +52,12 @@ const Recommendations = () => {
     return <p>{error}</p>;
   }
 
-  // Handle adding individual product to cart
-  const handleAddToCart = (product) => {
-    addToCart(product);  // Add only the clicked product to the cart
-  };
-
-  // Navigate to the cart page when "Cart" button is clicked
-  const handleGoToCart = () => {
-    navigate('/cart');  // Navigate to the Cart page
-  };
-
   return (
     <div>
       <div className="recommendations-header">
         <h2>Recommended Products for {selectedCategory}</h2>
         <button className="add-all-to-cart" onClick={handleGoToCart}>
-          Cart
+          Go to Cart
         </button>
       </div>
 
@@ -66,7 +69,7 @@ const Recommendations = () => {
               <img
                 src={product.imageUrl}
                 alt={product.name}
-                onError={(e) => (e.target.src = 'path_to_default_image.jpg')} // Fallback image
+                onError={(e) => (e.target.src = '/path_to_default_image.jpg')} // Fallback image
               />
               <div className="product-info">
                 <h3>{product.name}</h3>

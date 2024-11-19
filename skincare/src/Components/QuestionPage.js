@@ -21,9 +21,14 @@ const QuestionPage = () => {
   const totalQuestions = questions.length;
 
   useEffect(() => {
+    console.log("useEffect triggered for questionNumber:", questionNumber);
+
     const currentQuestionNumber = parseInt(questionNumber);
+    console.log("Parsed questionNumber:", currentQuestionNumber);
+
     if (currentQuestionNumber) {
       const storedFormData = { ...formData };
+      console.log("Stored FormData at useEffect start:", storedFormData);
 
       if (currentQuestionNumber === 1) {
         localStorage.removeItem('name');
@@ -45,11 +50,13 @@ const QuestionPage = () => {
 
   const handleInputChange = (event) => {
     setUserAnswer(event.target.value);
+    console.log("User Answer Updated:", event.target.value);
   };
 
   const handleEmailChange = (event) => {
     const emailValue = event.target.value;
     setEmail(emailValue);
+    console.log("Email Updated:", emailValue);
 
     if (!emailValue.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
       setEmailError('Please enter a valid email address.');
@@ -61,6 +68,7 @@ const QuestionPage = () => {
   const handlePhoneChange = (event) => {
     const phoneValue = event.target.value;
     setPhone(phoneValue);
+    console.log("Phone Updated:", phoneValue);
 
     if (!phoneValue.match(/^\d{10}$/)) {
       setPhoneError('Please enter a valid 10-digit phone number.');
@@ -70,148 +78,132 @@ const QuestionPage = () => {
   };
 
   const handleMCQSelection = (answer) => {
+    console.log("MCQ Answer Selected:", answer);
     const currentQuestionNumber = parseInt(questionNumber);
+    console.log("Current Question Number in handleMCQSelection:", currentQuestionNumber);
+
     const updatedFormData = { ...formData };
+    updatedFormData[`question${currentQuestionNumber}`] = answer;
 
     if (currentQuestionNumber === 8) {
-      // Map selected answer to category
-      let category = '';
-      switch (answer) {
-        case 'DrySkin':
-          category = 'DrySkin';
-          break;
-        case 'Pigmentation':
-          category = 'Pigmentation';
-          break;
-        case 'OilySkin':
-          category = 'OilySkin';
-          break;
-        case 'SensitiveSkin':
-          category = 'SensitiveSkin';
-          break;
-        case 'Acne':
-          category = 'Acne';
-          break;
-        case 'CombinationSkin':
-          category = 'CombinationSkin';
-          break;
-        case 'TexturedSkin':
-          category = 'TexturedSkin';
-          break;
-        default:
-          category = ''; // Removed default "General" category
-      }
+        let category = '';
+        
+        const categoryMap = {
+            'DrySkin': 'DrySkin',
+            'Pigmentation': 'Pigmentation',
+            'OilySkin': 'OilySkin',
+            'SensitiveSkin': 'SensitiveSkin',
+            'Acne': 'Acne'
+        };
 
-      updatedFormData[`question${currentQuestionNumber}`] = answer;
-      setSelectedCategory(category); // Set the selected category here
-    } else {
-      updatedFormData[`question${currentQuestionNumber}`] = answer;
+        category = categoryMap[answer] || 'General';
+        
+        setSelectedCategory(category);
+        console.log("Selected Category Set:", category);
     }
 
     setFormData(updatedFormData);
-    setUserAnswer(answer);
-
-    const nextQuestionNumber = currentQuestionNumber + 1;
-    if (questions.some(q => q.id === nextQuestionNumber)) {
-      navigate(`/question/${nextQuestionNumber}`);
-    } else {
-      // Ensure category is selected before navigation
-      if (!selectedCategory) {
-        setSelectedCategory('General');
-      }
-      navigate(`/recommendation?category=${selectedCategory}`);
-    }
-  };
+    
+    
+    
+};
 
   const handleSubmit = (event) => {
     if (event) event.preventDefault();
+    console.log("handleSubmit triggered");
   
     const currentQuestionNumber = parseInt(questionNumber);
+    console.log("Current Question Number in handleSubmit:", currentQuestionNumber);
+  
     const updatedFormData = { ...formData };
   
-    // Collecting answers
+    // Handle different question numbers
     if (currentQuestionNumber === 1) {
       localStorage.setItem('name', userAnswer);
       updatedFormData.name = userAnswer;
     } else if (currentQuestionNumber === 2) {
       if (emailError) return;
       updatedFormData.email = email;
-    } else if (currentQuestionNumber === 8) {
+    } else if (currentQuestionNumber === 3) {
+      updatedFormData.phone = userAnswer;
+    } 
+  
+    // Special handling for skin type question
+    if (currentQuestionNumber === 8) {
       updatedFormData[`question${currentQuestionNumber}`] = userAnswer;
-      console.log("Answer for Question 8:", userAnswer); // Log question 8 answer
-    } else {
-      updatedFormData[`question${currentQuestionNumber}`] = userAnswer;
-    }
+      console.log("Answer for Question 8:", userAnswer);
   
-    setFormData(updatedFormData);
+      // Generate recommendations based on skin type
+      const recommendationMap = {
+        'DrySkin': [
+          'Ultra Moisturizing Cream for Dry Skin', 
+          'Hydrating Serum for Dry Skin'
+        ],
+        'Pigmentation': [
+          'Brightening Vitamin C Serum', 
+          'Dark Spot Corrector Cream'
+        ],
+        'OilySkin': [
+          'Oil-Control Mattifying Gel', 
+          'Deep Cleansing Foaming Face Wash'
+        ],
+        'SensitiveSkin': [
+          'Soothing Aloe Vera Gel', 
+          'Gentle Hydrating Facial Mist'
+        ],
+        'Acne': [
+          'Acne Treatment Gel', 
+          'Benzoyl Peroxide Face Wash'
+        ],
+        'default': [
+          'General Skin Care Cream', 
+          'Hydrating Face Mask'
+        ]
+      };
   
-    // Generate Recommendations based on Question 8 answer
-    let recommendations = [];
-    let selectedCategory = '';
-    console.log("Updated Form Data before Recommendation Logic:", updatedFormData);
+      const recommendations = recommendationMap[userAnswer] || recommendationMap['default'];
+      console.log("Recommendations generated:", recommendations);
   
-    // Logic to populate category and recommendations based on answer from Question 8
-    switch (updatedFormData[`question8`]) { // Check answer for Question 8
-      case 'DrySkin':
-        recommendations.push('Product for Dry Skin');
-        selectedCategory = 'Dry Skin';
-        break;
-      case 'Pigmentation':
-        recommendations.push('Product for Pigmentation');
-        selectedCategory = 'Pigmentation';
-        break;
-      case 'OilySkin':
-        recommendations.push('Product for Oily Skin');
-        selectedCategory = 'Oily Skin';
-        break;
-      case 'SensitiveSkin':
-        recommendations.push('Product for Sensitive Skin');
-        selectedCategory = 'Sensitive Skin';
-        break;
-      case 'Acne':
-        recommendations.push('Acne Treatment Products');
-        selectedCategory = 'Acne';
-        break;
-      default:
-        selectedCategory = 'General';
-        break;
-    }
-  
-    console.log("Recommendations generated:", recommendations);
-  
-    // Create quizData to submit
-    const quizData = {
-      name: updatedFormData.name, // Ensure name is included
-      email: updatedFormData.email, // Ensure email is included
-      phone: updatedFormData.phone, // Include phone if provided
-      answers: Object.keys(updatedFormData)
+      // Collect all answers for submission
+      const allAnswers = Object.keys(updatedFormData)
         .filter(key => key.startsWith('question'))
-        .map(key => updatedFormData[key]),
-      category: selectedCategory,  // Dynamic category from Question 8 answer
-      recommendations,  // Dynamic recommendations based on the answer
-    };
+        .map(key => updatedFormData[key])
+        .filter(answer => answer !== undefined);
   
-    console.log("Quiz Data before Submission:", quizData);
-    submitQuiz(quizData);
+      const quizData = {
+        name: updatedFormData.name || '',
+        email: updatedFormData.email || '',
+        phone: updatedFormData.phone || '',
+        answers: allAnswers,
+        category: selectedCategory || 'General',
+        recommendations,
+      };
   
+      console.log("Quiz Data before Submission:", quizData);
+      submitQuiz(quizData);
+    } else {
+      // Store current question's answer
+      updatedFormData[`question${currentQuestionNumber}`] = userAnswer;
+    }
+  
+    // Update form data state
+    setFormData(updatedFormData);
+    console.log("FormData after submit:", updatedFormData);
+  
+    // Navigate to next question or recommendation page
     const nextQuestionNumber = currentQuestionNumber + 1;
     if (questions.some(q => q.id === nextQuestionNumber)) {
       navigate(`/question/${nextQuestionNumber}`);
     } else {
-      navigate(`/recommendation?category=${selectedCategory}`);
+      navigate(`/recommendation?category=${selectedCategory || 'General'}`);
     }
   };
   
-  // Refactored submitQuiz function
   const submitQuiz = async (quizData) => {
     try {
-      // Ensure the email is provided in the quiz data
-      if (!quizData.email) {
-        console.error('Email is required');
-        return; // Stop submission if email is missing
-      }
+      console.log("Submitting Complete Quiz Data:", JSON.stringify(quizData, null, 2));
   
-      const response = await fetch('http://localhost:5001/api/quiz/submit-quiz', {
+      const response = await fetch('http://localhost:5001/api/quiz/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -219,16 +211,30 @@ const QuestionPage = () => {
         body: JSON.stringify(quizData),
       });
   
+      // Check response status first
+      if (!response.ok) {
+        const errorBody = await response.text();
+        console.error('Server Error Response:', errorBody);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      // Parse server response
       const result = await response.json();
-      console.log(result);  // Log response message from backend
+      console.log("Successful Server Response:", result);
+  
+      // Optional: Fetch and log all quizzes (for verification)
+      
+  
+      return result;
     } catch (error) {
-      console.error('Error submitting quiz:', error);
+      console.error('FULL Quiz Submission Error:', {
+        message: error.message,
+        stack: error.stack
+      });
+      throw error; // Re-throw to allow caller to handle
     }
   };
-  
-  
 
-  
 
   const handleBack = () => {
     const previousQuestionNumber = parseInt(questionNumber) - 1;
@@ -243,7 +249,7 @@ const QuestionPage = () => {
     if (questions.some(q => q.id === nextQuestionNumber)) {
       navigate(`/question/${nextQuestionNumber}`);
     } else {
-      axios.post('http://localhost:5001/api/quiz/submit-quiz', formData)
+      axios.post('http://localhost:5001/api/quiz/submit', formData)
         .then(response => {
           console.log('Success:', response.data);
           navigate('/thank-you');
@@ -337,13 +343,17 @@ const QuestionPage = () => {
               </button>
             )}
             {currentQuestion.id === 3 && (
-              <button type="button" className="quiz-button1 skip-button" onClick={handleSkip}>
+
+                              <button type="button" className="quiz-button1 skip-button" onClick={handleSkip}>
                 SKIP →
               </button>
+
             )}
             <button className="quiz-button1 next-button" type="submit" disabled={!userAnswer && !email && !phone}>
               NEXT →
             </button>
+
+
           </div>
         </form>
       </div>

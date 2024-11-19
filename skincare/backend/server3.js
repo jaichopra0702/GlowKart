@@ -1,8 +1,9 @@
-require('dotenv').config();  // Load environment variables from .env file
+require('dotenv').config(); // This should be at the very top
+ // Load environment variables from .env file
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const productRoutes = require('./routes/productRoutes');
@@ -19,8 +20,9 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Middleware
 app.use(cors({ origin: 'http://localhost:3000', methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', credentials: true }));
-app.use(express.json());  // Parse JSON requests
-app.use(bodyParser.json()); 
+app.use(bodyParser.json()); // This line is crucial to parse incoming JSON request bodies
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // Signup Route
 app.post('/signup', async (req, res) => {
   const { name, email, password } = req.body;
@@ -40,6 +42,12 @@ app.post('/signup', async (req, res) => {
     res.status(500).json({ message: 'Error saving user to database' });
   }
 });
+
+// Root route (optional)
+app.get('/', (req, res) => {
+  res.send('Hello from the server!');
+});
+
 
 // Login Route
 app.post('/login', async (req, res) => {

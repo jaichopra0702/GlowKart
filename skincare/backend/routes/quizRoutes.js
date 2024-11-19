@@ -1,9 +1,9 @@
+//quizRoutes.js
 const express = require('express');
 const router = express.Router();
-const quizController = require('../controllers/quizController');
+const { submitQuiz } = require('../controllers/quizController');
 
 // POST route for submitting a quiz
-router.post('/submit', quizController.submitQuiz);
+router.post('/submit', submitQuiz);
 
-// Export the router
 module.exports = router;

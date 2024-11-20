@@ -8,7 +8,6 @@ import Navbar from './Components/Navbar';
 import ProductList from './Components/ProductList';
 import Cart from './Components/Cart';
 import Login from './Components/Login';
-import Register from './Components/Register';
 import { CartContext } from "./Components/CartContext";
 
 const products = [

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Recommendations.css';
+
 import { CartContext } from './CartContext';
 
 const Recommendations = () => {
@@ -63,7 +64,7 @@ const Recommendations = () => {
 
       {/* Display Products */}
       {products.length > 0 ? (
-        <div className="product-list">
+        <div className="product-list1">
           {products.map((product) => (
             <div key={product.id} className="product-card">
               <img

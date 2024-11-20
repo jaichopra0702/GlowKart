@@ -24,7 +24,7 @@
 
 
 /* Styling for the product list */
-.product-list {
+.product-list1 {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;

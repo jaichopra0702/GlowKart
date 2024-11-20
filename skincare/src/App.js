@@ -130,16 +130,11 @@ function App() {
           element={<Recommendations addToCart={addToCart} />}
         />
   
-        <Route
-          path="/cart"
-          element={
-            <Cart
-              cart={cart}
-              removeFromCart={removeFromCart}
-              updateCartItemQuantity={updateCartItemQuantity}
-            />
-          }
-        />
+  <Route path="/cart" element={<Cart
+          cart={cart}
+          removeFromCart={removeFromCart}
+          updateCartItemQuantity={updateCartItemQuantity}
+        />} />
       </Routes>
     </div>
   );

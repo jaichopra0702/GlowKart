@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const productRoutes = require('./routes/productRoutes');
 const quizRoutes = require('./routes/quizRoutes');
-const User = require('./models/User');
+
 const app = express();
 const PORT = process.env.PORT || 5001;  // Use the port from the .env file or fallback to 5001
 const JWT_SECRET = process.env.JWT_SECRET;  // Use the JWT_SECRET from the .env file

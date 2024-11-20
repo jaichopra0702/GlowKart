@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import './filter.css';
+import '../Components/filter.css';
 
 const Filter = ({ setCategory }) => {
   const { category } = useParams();
@@ -46,6 +46,7 @@ const Filter = ({ setCategory }) => {
         <button className="cart-button">
           Cart
         </button>
+        
       </Link>
       
     </div>

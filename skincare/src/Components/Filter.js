@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import './filter.css';
+import { getCartItemCount } from '../utils/cartUtils'; // or the correct path
+
 
 const Filter = ({ setCategory }) => {
   const { category } = useParams();
@@ -45,6 +47,11 @@ const Filter = ({ setCategory }) => {
       <Link to="/cart">
         <button className="cart-button">
           Cart
+          {/* {getCartItemCount() > 0 && (
+            <span className="cart-item-count">
+              {getCartItemCount()}
+            </span>
+          )} */}
         </button>
       </Link>
       

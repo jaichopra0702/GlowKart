@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const productRoutes = require('./routes/productRoutes'); // Ensure this path is correct for your project
+const cartRoutes = require('./routes/cartRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -103,6 +104,17 @@ app.post('/login', (req, res) => {
 
 // Product routes
 app.use('/api/products', productRoutes);
+
+//cart routes
+app.use('/api/cart',cartRoutes);
+
+// MongoDB connection
+mongoose.connect('mongodb://localhost:27017/my-shop', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('MongoDB connected successfully'))
+.catch((err) => console.error('MongoDB connection error:', err));
 
 // Server start
 app.listen(PORT, () => {

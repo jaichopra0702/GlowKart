@@ -1,87 +1,194 @@
+/* General Styling */
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .product-list {
-    padding: 20px;
-  }
-  
+  padding: 20px;
+  background-color: azure;
+  width: 100vw; /* Full viewport width */
+  margin: 0;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.product-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  /* padding: 20px; */
+  padding-right: 20px; /* Increased padding on the right */
+  margin-right: 30px; /* Add margin on the right for spacing */
+  margin-left: 0px;
+}
+
+.product-card:hover {
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+.product-card .product-image-container {
+  margin: 0 auto;
+}
+
+.product-card .infos {
+  margin-top: 10px;
+}
+
+.product-card .infos .product-rating {
+  height: 20px;
+  width: 200px;
+}
+
+/* Responsive Media Queries */
+
+/* For larger iPhone Pro models and Samsung S20, S20+ (up to 1024px) */
+@media (max-width: 1024px) {
   .products {
-    display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
+    /* max-width: 1024px; */
+    margin-left: -12px;
   }
-  
+
   .product-card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 15px;
-    text-align: center;
-    transition: transform 0.2s ease-in-out;
+    padding-right: 12px; /* Increased padding on the right */
+    margin-right: 40px; /* Adjusted margin on the right */
+    margin-left: 5px;
   }
-  
-  /* Media Queries for Responsiveness */
-  @media (max-width: 1024px) {
-    .products {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  
-    .product-card {
-      padding: 15px;
-    }
-  
-    .product-card h3 {
-      font-size: 16px;
-    }
-  
-    .product-card p {
-      font-size: 14px;
-    }
-  
-    .add-to-cart-button {
-      padding: 8px;
-    }
+
+  .product-card h3 {
+    font-size: 18px;
   }
-  
-  @media (max-width: 768px) {
-    .products {
-      grid-template-columns: 1fr;
-    }
-  
-    .product-card {
-      padding: 12px;
-    }
-  
-    .product-card h3 {
-      font-size: 14px;
-    }
-  
-    .product-card p {
-      font-size: 12px;
-    }
-  
-    .add-to-cart-button {
-      padding: 6px;
-    }
+
+  .product-card p {
+    font-size: 14px;
   }
-  
-  @media (max-width: 480px) {
-    .products {
-      grid-template-columns: 1fr;
-      gap: 15px;
-    }
-  
-    .product-card {
-      margin-bottom: 15px;
-    }
-  
-    .product-card h3 {
-      font-size: 14px;
-    }
-  
-    .product-card p {
-      font-size: 12px;
-    }
-  
-    .add-to-cart-button {
-      padding: 8px;
-    }
+
+  .add-to-cart-button {
+    padding: 10px;
+    /* margin-left: 900px; */
   }
-  
+}
+
+/* For Samsung S10, S10+ (up to 768px) and iPhone Mini series */
+@media (max-width: 768px) {
+  .products {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    max-width: 100%;
+  }
+
+  .product-card {
+    padding: 15px;
+    padding-right: 30px; /* Increased padding on the right */
+    margin-right: 20px; /* Adjusted margin on the right */
+  }
+
+  .product-card h3 {
+    font-size: 16px;
+  }
+
+  .product-card p {
+    font-size: 14px;
+  }
+
+  .add-to-cart-button {
+    padding: 8px;
+  }
+}
+
+/* For smaller Samsung and iPhone screens like Samsung S10, iPhone Mini (up to 480px) */
+@media (max-width: 480px) {
+  .products {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    max-width: 100%;
+  }
+
+  .product-card {
+    padding: 12px;
+    padding-right: 16px; /* Increased padding on the right */
+    margin-right: -8px; /* Adjusted margin on the right */
+    margin-left: -2px;
+  }
+
+  .product-card h3 {
+    font-size: 14px;
+  }
+
+  .product-card p {
+    font-size: 12px;
+  }
+
+  .add-to-cart-button {
+    padding: 6px;
+  }
+}
+
+
+@media (max-width: 418px) {
+  .products {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    max-width: 100%;
+  }
+
+  .product-card {
+    padding: 12px;
+    padding-right: 6px; /* Increased padding on the right */
+    margin-right: -8px; /* Adjusted margin on the right */
+    margin-left: -2px;
+  }
+
+  .product-card h3 {
+    font-size: 14px;
+  }
+
+  .product-card p {
+    font-size: 12px;
+  }
+
+  .add-to-cart-button {
+    padding: 6px;
+  }
+}
+
+
+@media (max-width: 391px) {
+  .products {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    max-width: 100%;
+  }
+
+  .product-card {
+    padding: 12px;
+    padding-right: 1px; /* Increased padding on the right */
+    margin-right: -8px; /* Adjusted margin on the right */
+    margin-left: -7px;
+  }
+
+  .product-card h3 {
+    font-size: 14px;
+  }
+
+  .product-card p {
+    font-size: 12px;
+  }
+
+  .add-to-cart-button {
+    padding: 6px;
+  }
+}

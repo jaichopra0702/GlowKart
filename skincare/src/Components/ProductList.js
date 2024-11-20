@@ -9,7 +9,7 @@ const ProductList = ({ products }) => {
   const { category } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useContext(CartContext);
-
+ 
   // useMemo to filter products based on the selected category
   const filteredProducts = useMemo(() => {
     console.log("Category:", category);

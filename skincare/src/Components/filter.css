@@ -1,28 +1,146 @@
 .filter-container {
-    margin: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: plum;
+  margin: 20px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* background-color: plum; */
+}
+
+.filter-select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.cart-button {
+  position: relative;
+  padding: 10px 20px;
+  background-color: #3289e1;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: -200px;
+}
+
+.cart-item-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+.cart-button:hover {
+  background-color: #0c2fbc;
+}
+
+/* Responsive Design */
+
+/* For iPads and Tablets (up to 1024px) */
+@media (max-width: 1024px) {
+  .filter-container {
+    padding: 10px 30px;
+    flex-direction: column;
+    align-items: flex-start; /* Align left to utilize more screen width */
+    margin: 20px 15px;
+    /* margin-right: 100px; */
   }
-  
+
   .filter-select {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 16px;
+    font-size: 14px;
+    margin-bottom: 15px; /* Add spacing for better clarity */
+    width: 100%; /* Allow select to take full width */
   }
-  
+
   .cart-button {
-    padding: 10px 20px;
-    background-color: blue;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    padding: 12px 25px;
+    width: 100%;
+    /* margin-left: 0px; */
+    text-align: center;
+    
   }
 
   .cart-button:hover {
-    background-color: #0056b3;
+    background-color: #0c2fbc;
   }
+}
+
+/* For Laptops and larger devices (from 1024px to 1280px) */
+@media (max-width: 1280px) {
+  .filter-container {
+    padding: 20px 40px 0px 0px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px;
+    /* margin: 30px 10px 0px 0px; */
+  }
+
+  /* .filter-select {
+    font-size: 16px;
+    width: 45%;
+  } */
+
+  .cart-button {
+    padding: 10px 50px 10px 25px;
+    width: 50%;
+    margin-left: 0px;
+    text-align: center;
+    margin-right: -10px;
+  }
+}
+
+/* For smartphones like Samsung S10, S10+, S20, S20+, iPhone Pro, Mini (up to 768px) */
+@media (max-width: 768px) {
+  .filter-container {
+    padding: 10px 15px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .filter-select {
+    padding: 8px;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .cart-button {
+    padding: 12px 20px;
+    width: 100%;
+    margin-left: 0;
+    text-align: center;
+    /* .cart-button {
+      font-size: 14px;
+    } */
+  }
+}
+
+/* For smaller smartphones like Samsung S10, iPhone Mini (up to 480px) */
+@media (max-width: 480px) {
+  .filter-container {
+    padding: 8px 15px;
+    flex-direction: column;
+    margin: 10px 5px;
+  }
+
+  .filter-select {
+    padding: 8px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    padding-bottom: 11px;
+    padding-top: 10px;
+    text-align: center;
+  }
+
+  .cart-button {
+    padding: 10px 20px 10px 10px;
+    width: 100%;
+    margin-left: 0;
+    text-align: center;
+  }
+}

@@ -1,17 +1,11 @@
-// backend/routes/productRoutes.js
-const express = require('express');
-const Product = require('../models/Product');
-const router = express.Router();
+// productRoutes.js
 
-// Route to get all products
-router.get('/', async (req, res) => {
-  try {
-    const products = await Product.find({});
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ message: 'Server error' });
-  }
-});
+const express = require('express');
+const router = express.Router();
+const productController = require('../controllers/productController'); // Assuming you have this controller
+
+// Route to get recommendations based on category
+router.get('/recommendations', productController.getRecommendations);
+
 
 module.exports = router;
-

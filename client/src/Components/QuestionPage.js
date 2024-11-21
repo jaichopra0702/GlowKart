@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import questions from './questions';
-import './Quiz.css'; 
-import ProgressBar from './ProgressBar'; 
+import './Quiz.css';
+import ProgressBar from './ProgressBar';
+import Recommendations from './Recommendations';
 
 const QuestionPage = () => {
   const { questionNumber } = useParams();
@@ -15,18 +16,24 @@ const QuestionPage = () => {
   const [phone, setPhone] = useState('');
   const [emailError, setEmailError] = useState('');
   const [phoneError, setPhoneError] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const totalQuestions = questions.length;
 
   useEffect(() => {
+    console.log("useEffect triggered for questionNumber:", questionNumber);
+
     const currentQuestionNumber = parseInt(questionNumber);
+    console.log("Parsed questionNumber:", currentQuestionNumber);
+
     if (currentQuestionNumber) {
       const storedFormData = { ...formData };
+      console.log("Stored FormData at useEffect start:", storedFormData);
 
       if (currentQuestionNumber === 1) {
-        localStorage.removeItem('name'); // Clear name from localStorage to avoid auto-fill
-        setName(''); // Clear name state to avoid pre-filling
-        setUserAnswer(''); // Clear userAnswer for question 1
+        localStorage.removeItem('name');
+        setName('');
+        setUserAnswer('');
       } else if (currentQuestionNumber === 2) {
         const storedName = localStorage.getItem('name');
         if (storedName) {
@@ -43,13 +50,14 @@ const QuestionPage = () => {
 
   const handleInputChange = (event) => {
     setUserAnswer(event.target.value);
+    console.log("User Answer Updated:", event.target.value);
   };
 
   const handleEmailChange = (event) => {
     const emailValue = event.target.value;
     setEmail(emailValue);
+    console.log("Email Updated:", emailValue);
 
-    // Validate email
     if (!emailValue.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
       setEmailError('Please enter a valid email address.');
     } else {
@@ -60,9 +68,9 @@ const QuestionPage = () => {
   const handlePhoneChange = (event) => {
     const phoneValue = event.target.value;
     setPhone(phoneValue);
+    console.log("Phone Updated:", phoneValue);
 
-    // Validate phone number
-    if (!phoneValue.match(/^\d{10}$/)) { // Assuming 10-digit phone numbers
+    if (!phoneValue.match(/^\d{10}$/)) {
       setPhoneError('Please enter a valid 10-digit phone number.');
     } else {
       setPhoneError('');
@@ -70,86 +78,163 @@ const QuestionPage = () => {
   };
 
   const handleMCQSelection = (answer) => {
+    console.log("MCQ Answer Selected:", answer);
     const currentQuestionNumber = parseInt(questionNumber);
-    const updatedFormData = { ...formData };
+    console.log("Current Question Number in handleMCQSelection:", currentQuestionNumber);
 
-    if (currentQuestionNumber === 1) {
-      localStorage.setItem('name', answer);
-      updatedFormData.name = answer;
-    } else if (currentQuestionNumber === 2) {
-      updatedFormData.email = email;
-    } else {
-      updatedFormData[`question${currentQuestionNumber}`] = answer;
+    const updatedFormData = { ...formData };
+    updatedFormData[`question${currentQuestionNumber}`] = answer;
+
+    if (currentQuestionNumber === 8) {
+        let category = '';
+        
+        const categoryMap = {
+            'DrySkin': 'DrySkin',
+            'Pigmentation': 'Pigmentation',
+            'OilySkin': 'OilySkin',
+            'SensitiveSkin': 'SensitiveSkin',
+            'Acne': 'Acne'
+        };
+
+        category = categoryMap[answer] || 'General';
+        
+        setSelectedCategory(category);
+        console.log("Selected Category Set:", category);
     }
 
     setFormData(updatedFormData);
-    setUserAnswer(answer);
-
-    // Automatically submit data to the backend
-    axios.post('http://localhost:5000/submit-quiz', updatedFormData)
-      .then(response => {
-        console.log('Success:', response.data);
-
-        // Navigate to the next question
-        const nextQuestionNumber = currentQuestionNumber + 1;
-        if (questions.some(q => q.id === nextQuestionNumber)) {
-          navigate(`/question/${nextQuestionNumber}`);
-        } else {
-          navigate('/thank-you');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  };
+    
+    
+    
+};
 
   const handleSubmit = (event) => {
     if (event) event.preventDefault();
-
+    console.log("handleSubmit triggered");
+  
     const currentQuestionNumber = parseInt(questionNumber);
+    console.log("Current Question Number in handleSubmit:", currentQuestionNumber);
+  
     const updatedFormData = { ...formData };
-
+  
+    // Handle different question numbers
     if (currentQuestionNumber === 1) {
       localStorage.setItem('name', userAnswer);
       updatedFormData.name = userAnswer;
     } else if (currentQuestionNumber === 2) {
-      if (emailError) {
-        return; // Prevent submission if email is invalid
-      }
+      if (emailError) return;
       updatedFormData.email = email;
     } else if (currentQuestionNumber === 3) {
-      if (phoneError) {
-        return; // Prevent submission if phone number is invalid
-      }
-      updatedFormData[`question${currentQuestionNumber}`] = phone;
+      updatedFormData.phone = userAnswer;
+    } 
+  
+    // Special handling for skin type question
+    if (currentQuestionNumber === 8) {
+      updatedFormData[`question${currentQuestionNumber}`] = userAnswer;
+      console.log("Answer for Question 8:", userAnswer);
+  
+      // Generate recommendations based on skin type
+      const recommendationMap = {
+        'DrySkin': [
+          'Ultra Moisturizing Cream for Dry Skin', 
+          'Hydrating Serum for Dry Skin'
+        ],
+        'Pigmentation': [
+          'Brightening Vitamin C Serum', 
+          'Dark Spot Corrector Cream'
+        ],
+        'OilySkin': [
+          'Oil-Control Mattifying Gel', 
+          'Deep Cleansing Foaming Face Wash'
+        ],
+        'SensitiveSkin': [
+          'Soothing Aloe Vera Gel', 
+          'Gentle Hydrating Facial Mist'
+        ],
+        'Acne': [
+          'Acne Treatment Gel', 
+          'Benzoyl Peroxide Face Wash'
+        ],
+        'default': [
+          'General Skin Care Cream', 
+          'Hydrating Face Mask'
+        ]
+      };
+  
+      const recommendations = recommendationMap[userAnswer] || recommendationMap['default'];
+      console.log("Recommendations generated:", recommendations);
+  
+      // Collect all answers for submission
+      const allAnswers = Object.keys(updatedFormData)
+        .filter(key => key.startsWith('question'))
+        .map(key => updatedFormData[key])
+        .filter(answer => answer !== undefined);
+  
+      const quizData = {
+        name: updatedFormData.name || '',
+        email: updatedFormData.email || '',
+        phone: updatedFormData.phone || '',
+        answers: allAnswers,
+        category: selectedCategory || 'General',
+        recommendations,
+      };
+  
+      console.log("Quiz Data before Submission:", quizData);
+      submitQuiz(quizData);
     } else {
+      // Store current question's answer
       updatedFormData[`question${currentQuestionNumber}`] = userAnswer;
     }
-
+  
+    // Update form data state
     setFormData(updatedFormData);
-
-    console.log('Form Data Before Submit:', updatedFormData);
-
-    // Clear the input fields
-    setUserAnswer('');
-    setEmail('');
-    setPhone('');
-
-    // Handle navigation
+    console.log("FormData after submit:", updatedFormData);
+  
+    // Navigate to next question or recommendation page
     const nextQuestionNumber = currentQuestionNumber + 1;
     if (questions.some(q => q.id === nextQuestionNumber)) {
       navigate(`/question/${nextQuestionNumber}`);
     } else {
-      axios.post('http://localhost:5000/submit-quiz', updatedFormData)
-        .then(response => {
-          console.log('Success:', response.data);
-          navigate('/thank-you');
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
+      navigate(`/recommendation?category=${selectedCategory || 'General'}`);
     }
   };
+  
+  const submitQuiz = async (quizData) => {
+    try {
+      console.log("Submitting Complete Quiz Data:", JSON.stringify(quizData, null, 2));
+  
+      const response = await fetch('http://localhost:5000/api/quiz/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(quizData),
+      });
+  
+      // Check response status first
+      if (!response.ok) {
+        const errorBody = await response.text();
+        console.error('Server Error Response:', errorBody);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      // Parse server response
+      const result = await response.json();
+      console.log("Successful Server Response:", result);
+  
+      // Optional: Fetch and log all quizzes (for verification)
+      
+  
+      return result;
+    } catch (error) {
+      console.error('FULL Quiz Submission Error:', {
+        message: error.message,
+        stack: error.stack
+      });
+      throw error; // Re-throw to allow caller to handle
+    }
+  };
+
 
   const handleBack = () => {
     const previousQuestionNumber = parseInt(questionNumber) - 1;
@@ -159,13 +244,12 @@ const QuestionPage = () => {
   };
 
   const handleSkip = () => {
-    // Move to the next question when skipping
     const currentQuestionNumber = parseInt(questionNumber);
     const nextQuestionNumber = currentQuestionNumber + 1;
     if (questions.some(q => q.id === nextQuestionNumber)) {
       navigate(`/question/${nextQuestionNumber}`);
     } else {
-      axios.post('http://localhost:5000/submit-quiz', formData)
+      axios.post('http://localhost:5000/api/quiz/submit', formData)
         .then(response => {
           console.log('Success:', response.data);
           navigate('/thank-you');
@@ -259,16 +343,23 @@ const QuestionPage = () => {
               </button>
             )}
             {currentQuestion.id === 3 && (
-              <button type="button" className="quiz-button1 skip-button" onClick={handleSkip}>
+
+                              <button type="button" className="quiz-button1 skip-button" onClick={handleSkip}>
                 SKIP →
               </button>
+
             )}
             <button className="quiz-button1 next-button" type="submit" disabled={!userAnswer && !email && !phone}>
               NEXT →
             </button>
+
+
           </div>
         </form>
       </div>
+      {parseInt(questionNumber) > totalQuestions && selectedCategory && (
+        <Recommendations selectedCategory={selectedCategory} />
+      )}
     </div>
   );
 };

@@ -43,7 +43,7 @@ function Login() {
 
     const endpoint = isSignUpMode ? '/registeruser' : '/loginuser';
 
-    fetch(`http://localhost:5000/user${endpoint}`, {
+    fetch(`http://localhost:3001/user${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

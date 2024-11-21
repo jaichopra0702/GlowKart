@@ -203,7 +203,7 @@ const QuestionPage = () => {
     try {
       console.log("Submitting Complete Quiz Data:", JSON.stringify(quizData, null, 2));
   
-      const response = await fetch('http://localhost:5000/api/quiz/submit', {
+      const response = await fetch('http://localhost:3001/api/quiz/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -249,7 +249,7 @@ const QuestionPage = () => {
     if (questions.some(q => q.id === nextQuestionNumber)) {
       navigate(`/question/${nextQuestionNumber}`);
     } else {
-      axios.post('http://localhost:5000/api/quiz/submit', formData)
+      axios.post('http://localhost:3001/api/quiz/submit', formData)
         .then(response => {
           console.log('Success:', response.data);
           navigate('/thank-you');

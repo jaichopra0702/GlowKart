@@ -20,7 +20,7 @@ const Recommendations = () => {
   useEffect(() => {
     setLoading(true); // Start loading when category changes
     axios
-      .get(`http://localhost:5000/api/products/recommendations?category=${selectedCategory}`)
+      .get(`http://localhost:3001/api/products/recommendations?category=${selectedCategory}`)
       .then((response) => {
         if (response.data && response.data.length > 0) {
           setProducts(response.data);

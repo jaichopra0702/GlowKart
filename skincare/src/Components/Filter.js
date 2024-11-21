@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import './filter.css';
-import { getCartItemCount } from '../utils/cartUtils'; // or the correct path
-
+import { CartContext } from './CartContext'; // Import CartContext
 
 const Filter = ({ setCategory }) => {
   const { category } = useParams();
   const navigate = useNavigate();
+  const { cart } = useContext(CartContext); // Get the cart from CartContext
   const [showAll, setShowAll] = useState(category === 'All' || !category);
+
+  // Calculate total number of items in the cart
+  const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   const getDropdownValue = () => {
     if (category && category !== 'All') {
@@ -44,14 +47,15 @@ const Filter = ({ setCategory }) => {
         <option value="Pigmentation">Pigmentation</option>
         <option value="CombinationSkin">Combination Skin</option>
       </select>
+      
       <Link to="/cart">
         <button className="cart-button">
           Cart
-          {/* {getCartItemCount() > 0 && (
+          {cartItemCount > 0 && (
             <span className="cart-item-count">
-              {getCartItemCount()}
+              {cartItemCount}
             </span>
-          )} */}
+          )}
         </button>
       </Link>
       

@@ -37,6 +37,43 @@ body {
     text-decoration: none;
     color: white; /* Ensure the Link component has the correct color */
 }
+
+.left-nav.open {
+  display: block;
+}
+
+.hamburger-icon {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Small screen styles */
+@media (max-width: 768px) {
+  .hamburger-icon {
+      display: block;
+  }
+
+  .left-nav {
+      display: none;
+      flex-direction: column;
+      background-color: palevioletred; /* Background for the menu */
+      position: absolute;
+      top: 60px; /* Adjust based on your header height */
+      left: 0;
+      right: 0;
+      padding: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+  }
+
+  .left-nav li {
+      margin: 0.5rem 0;
+  }
+}
+
   
   .logo-container {
     /* flex-grow: 1; */
@@ -84,11 +121,70 @@ body {
     padding: 70px;
     padding-left: 280px;
   }
+
+  .left-section {
+    flex: 1;
+    padding-top: 5px;
+    /* padding: 20px; */
+  }
+  
+  .right-section {
+    flex: 1;
+    padding: 70px;
+    padding-left: 280px;
+  }
+  
+  /* Media query for smaller screens */
+  @media screen and (max-width: 1024px) {
+    .right-section {
+      padding: 50px;
+      padding-left: 150px;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .left-section, .right-section {
+      padding: 20px;
+      padding-left: 10px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .left-section, .right-section {
+      flex: 1 1 100%; /* Full width on smaller screens */
+      padding: 10px;
+    }
+  }
+  
   
   .product-image {
     width: 150%;
     height: 105%;
   }
+
+  /* Media query for medium screens */
+  @media screen and (max-width: 1024px) {
+    .product-image {
+      max-width: 120%;
+    }
+  }
+  
+  /* Media query for small screens */
+  @media screen and (max-width: 768px) {
+    .product-image {
+      max-width: 100%;
+    }
+  }
+  
+  /* Media query for extra-small screens */
+  @media screen and (max-width: 480px) {
+    .product-image {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  
   
   .title {
     font-size: 40px;

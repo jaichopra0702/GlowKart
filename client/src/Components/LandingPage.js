@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "./LandingPage.css";
 import image from './glowcart-removebg-preview.png'
 import { Link } from 'react-router-dom'
-import { useRef } from 'react';
+import { useRef , useState} from 'react';
 import QuizStart from "./QuizStart";
 // import './src/App.css'
 
@@ -65,6 +65,12 @@ function LandingPage() {
         ],
     };
 
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
+
 
     return (
         <div className="LandingPage">
@@ -77,14 +83,16 @@ function LandingPage() {
                 <nav>
 
                     <div className="logo-container">
-                        {/* <img src={image} alt="Logo" className="logo" /> */}
-                        <ul className="left-nav">
-                        <li><Link to='/All'>Shop All</Link></li>
-                        <li><Link to='/quiz'>Personalised Products</Link></li>
-                        <li>More</li>
-                        <li><Link to='/login'>Log in</Link></li>
-                        <li><Link to='/cart'>Cart</Link></li>
-                    </ul>
+                    <button className="hamburger-icon" onClick={toggleMenu}>
+                            &#9776; {/* Hamburger icon */}
+                        </button>
+                        <ul className={`left-nav ${menuOpen ? "open" : ""}`}>
+                            <li><Link to="/All">Shop All</Link></li>
+                            <li><Link to="/quiz">Personalised Products</Link></li>
+                            <li>More</li>
+                            <li><Link to="/login">Log in</Link></li>
+                            <li><Link to="/cart">Cart</Link></li>
+                        </ul>
                     </div>
                     
                 </nav>

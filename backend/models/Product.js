@@ -69,13 +69,5 @@ const products = [
 { id: 42, name: 'Smoothing Face Mask', category: 'TexturedSkin', price: 1800, imageUrl: 'https://th.bing.com/th?id=OPAC.iUg8tDjCIFTnuQ474C474&w=200&h=220&c=17&dpr=1.5&pid=21.1' },
 ];
 
-Product.insertMany(products)
-  .then((docs) => {
-    console.log("Products added successfully:", docs);
-    mongoose.connection.close(); // Close connection after insertion
-  })
-  .catch((err) => {
-    console.error("Error adding products:", err);
-  });
 
 module.exports = Product;

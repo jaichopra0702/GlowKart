@@ -5,7 +5,7 @@ const generateToken = (userData) => {
 }
 
 const validateToken = (req, res, next) => {
-    // first we are checking that jwt token is availabe or not
+    // first we are checking that jwt token is availabe or nota
     const authorization = req.headers.authorization;
 
     //output: 1. Bearer tfghfjehioh(string)

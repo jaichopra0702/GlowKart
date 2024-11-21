@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import LandingPage from "./Components/LandingPage";
 import QuizStart from './Components/QuizStart';
 import QuestionPage from './Components/QuestionPage';
@@ -10,6 +13,7 @@ import Cart from './Components/Cart';
 import Login from './Components/Login';
 import { CartContext } from "./Components/CartContext";
 import Recommendations from "./Components/Recommendations";
+import Checkout from "./Components/Checkout";
 
 
 
@@ -72,6 +76,8 @@ const products = [
 { id: 42, name: 'Smoothing Face Mask', category: 'TexturedSkin', price: 1800, imageUrl: 'https://th.bing.com/th?id=OPAC.iUg8tDjCIFTnuQ474C474&w=200&h=220&c=17&dpr=1.5&pid=21.1' },
 ];
 
+const stripePromise = loadStripe('pk_test_51PyvtA03czuQee3J7rVd9ySCVxJZImm9T9QkjXfpjFg4nsVJBO9QVTgbY1tbWVtVJx6ygJvG8q7q0xUD8Z63STm400HIxzx1xw');
+
 function App() {
   const [cart, setCart] = useState([]);
 
@@ -129,7 +135,16 @@ function App() {
           path="/recommendation"
           element={<Recommendations addToCart={addToCart} />}
         />
-  
+
+        <Route
+            path="/checkout"
+            element={
+              <Elements stripe={stripePromise}>
+                <Checkout />
+              </Elements>
+            }
+          />
+
   <Route path="/cart" element={<Cart
           cart={cart}
           removeFromCart={removeFromCart}

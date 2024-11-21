@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server3.js"
-  },
+  "start": "nodemon server3.js"
+},
+
   "keywords": [],
   "author": "",
   "license": "ISC",

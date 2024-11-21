@@ -10,8 +10,7 @@ import Cart from './Components/Cart';
 import Login from './Components/Login';
 import { CartContext } from "./Components/CartContext";
 import Recommendations from "./Components/Recommendations";
-
-
+import { AuthProvider } from './AuthContext'
 
 
 const products = [
@@ -44,7 +43,7 @@ const products = [
   { id: 20, name: 'Brightening Serum', category: 'Pigmentation', price: 1800, imageUrl: 'https://www.bing.com/th?id=OPAC.3W4JQ%2fMHq2Nv4g474C474&o=5&pid=21.1&w=160&h=185&rs=1&qlt=100&dpr=1.5&c=8&pcl=f5f5f5' },
   { id: 21, name: 'Spot Corrector', category: 'Pigmentation', price: 1900, imageUrl: 'https://th.bing.com/th?id=OPAC.pyrjzrfAVNrHSQ474C474&w=128&h=168&rs=1&pcl=f5f5f5&o=6&dpr=1.5&pid=21.1' },
   { id: 22, name: 'Pigment Control Cream', category: 'Pigmentation', price: 1600, imageUrl: 'https://th.bing.com/th?id=OPAC.5PpSX3BBDVCgYA474C474&w=128&h=128&rs=1&pcl=f5f5f5&o=6&dpr=1.5&pid=21.1' },
-  { id: 23, name: 'Brightening Face Mask', category: 'Pigmentation', price: 1700, imageUrl: 'https://th.bing.com/th?id=OPAC.myy9kotU%2fnUMQg474C474&w=220&h=220&c=17&o=5&dpr=1.5&pid=21.1'},
+  { id: 23, name: 'Brightening Face Mask', category: 'Pigmentation', price: 1700, imageUrl: 'https://th.bing.com/th?id=OPAC.myy9kotU%2fnUMQg474C474&w=220&h=220&c=17&o=5&dpr=1.5&pid=21.1' },
   { id: 24, name: 'Even Tone Night Cream', category: 'Pigmentation', price: 2000, imageUrl: 'https://th.bing.com/th?id=OPAC.q8moSpimmtYo2w474C474&w=171&h=150&c=17&dpr=1.5&pid=21.1' },
 
   // Sensitive Skin Category
@@ -56,20 +55,20 @@ const products = [
   { id: 30, name: 'Sensitive Skin Sunscreen', category: 'SensitiveSkin', price: 1600, imageUrl: 'https://cdn.tirabeauty.com/v2/billowing-snowflake-434234/tira-p/wrkr/products/pictures/item/free/resize-w:1080/1108204/ZUTz_Idifb-1108204_2.jpg' },
 
   // Combination Skin Category
-{ id: 31, name: 'Acne Treatment Gel', category: 'CombinationSkin', price: 1500, imageUrl: 'https://th.bing.com/th?id=OPAC.WKOL%2bbHQqCv2rQ474C474&w=160&h=220&c=17&dpr=1.5&pid=21.1' },
-{ id: 32, name: 'Acne Moisturizer', category: 'CombinationSkin', price: 1200, imageUrl: 'https://th.bing.com/th?id=OPAC.rQuUGZisl66pQQ474C474&w=200&h=220&c=17&dpr=1.5&pid=21.1' },
-{ id: 33, name: 'Blemish Control Serum', category: 'CombinationSkin', price: 1700, imageUrl: 'https://th.bing.com/th?id=OPAC.9vhgeGS1vt2ZbA474C474&w=160&h=220&c=17&dpr=1.5&pid=21.1' },
-{ id: 34, name: 'Balancing Toner', category: 'CombinationSkin', price: 1400, imageUrl: 'https://th.bing.com/th?id=OPAC.usJdT6SufQwbkw474C474&w=220&h=210&c=17&o=5&dpr=1.5&pid=21.1' },
-{ id: 35, name: 'Combination Skin Cleanser', category: 'CombinationSkin', price: 1600, imageUrl: 'https://th.bing.com/th?id=OPAC.zg66jsQsR%2b9Rog474C474&w=196&h=220&c=17&dpr=1.5&pid=21.1' },
-{ id: 36, name: 'Hydration Balance Sunscreen', category: 'CombinationSkin', price: 1800, imageUrl: 'https://th.bing.com/th?id=OPAC.UfK%2fxHNRTCN3YA474C474&w=160&h=220&c=17&dpr=1.5&pid=21.1' },
+  { id: 31, name: 'Acne Treatment Gel', category: 'CombinationSkin', price: 1500, imageUrl: 'https://th.bing.com/th?id=OPAC.WKOL%2bbHQqCv2rQ474C474&w=160&h=220&c=17&dpr=1.5&pid=21.1' },
+  { id: 32, name: 'Acne Moisturizer', category: 'CombinationSkin', price: 1200, imageUrl: 'https://th.bing.com/th?id=OPAC.rQuUGZisl66pQQ474C474&w=200&h=220&c=17&dpr=1.5&pid=21.1' },
+  { id: 33, name: 'Blemish Control Serum', category: 'CombinationSkin', price: 1700, imageUrl: 'https://th.bing.com/th?id=OPAC.9vhgeGS1vt2ZbA474C474&w=160&h=220&c=17&dpr=1.5&pid=21.1' },
+  { id: 34, name: 'Balancing Toner', category: 'CombinationSkin', price: 1400, imageUrl: 'https://th.bing.com/th?id=OPAC.usJdT6SufQwbkw474C474&w=220&h=210&c=17&o=5&dpr=1.5&pid=21.1' },
+  { id: 35, name: 'Combination Skin Cleanser', category: 'CombinationSkin', price: 1600, imageUrl: 'https://th.bing.com/th?id=OPAC.zg66jsQsR%2b9Rog474C474&w=196&h=220&c=17&dpr=1.5&pid=21.1' },
+  { id: 36, name: 'Hydration Balance Sunscreen', category: 'CombinationSkin', price: 1800, imageUrl: 'https://th.bing.com/th?id=OPAC.UfK%2fxHNRTCN3YA474C474&w=160&h=220&c=17&dpr=1.5&pid=21.1' },
 
-// Textured Skin Category
-{ id: 37, name: 'Hydrating Moisturizer', category: 'TexturedSkin', price: 1800, imageUrl: 'https://th.bing.com/th?id=OPAC.qQao%2b5Gofr%2bKuA474C474&w=160&h=220&c=17&dpr=1.5&pid=21.1' },
-{ id: 38, name: 'Deep Moisture Sunscreen', category: 'TexturedSkin', price: 2000, imageUrl: 'https://th.bing.com/th?id=OPAC.OHa%2f6IaYy%2fdgoA474C474&w=160&h=220&c=17&dpr=1.5&pid=21.1' },
-{ id: 39, name: 'Texture Refining Serum', category: 'TexturedSkin', price: 1900, imageUrl: 'https://th.bing.com/th?id=OPAC.MRAJrspScaJV6A474C474&w=200&h=220&c=17&dpr=1.5&pid=21.1' },
-{ id: 40, name: 'Exfoliating Night Cream', category: 'TexturedSkin', price: 2200, imageUrl: 'https://th.bing.com/th?id=OPAC.z%2f4YLYOtXVnjUQ474C474&w=169&h=150&c=17&dpr=1.5&pid=21.1' },
-{ id: 41, name: 'Pore Smoothing Primer', category: 'TexturedSkin', price: 1600, imageUrl: 'https://th.bing.com/th?id=OPAC.Du0UzEpcrt0BtA474C474&w=200&h=220&c=17&dpr=1.5&pid=21.1' },
-{ id: 42, name: 'Smoothing Face Mask', category: 'TexturedSkin', price: 1800, imageUrl: 'https://th.bing.com/th?id=OPAC.iUg8tDjCIFTnuQ474C474&w=200&h=220&c=17&dpr=1.5&pid=21.1' },
+  // Textured Skin Category
+  { id: 37, name: 'Hydrating Moisturizer', category: 'TexturedSkin', price: 1800, imageUrl: 'https://th.bing.com/th?id=OPAC.qQao%2b5Gofr%2bKuA474C474&w=160&h=220&c=17&dpr=1.5&pid=21.1' },
+  { id: 38, name: 'Deep Moisture Sunscreen', category: 'TexturedSkin', price: 2000, imageUrl: 'https://th.bing.com/th?id=OPAC.OHa%2f6IaYy%2fdgoA474C474&w=160&h=220&c=17&dpr=1.5&pid=21.1' },
+  { id: 39, name: 'Texture Refining Serum', category: 'TexturedSkin', price: 1900, imageUrl: 'https://th.bing.com/th?id=OPAC.MRAJrspScaJV6A474C474&w=200&h=220&c=17&dpr=1.5&pid=21.1' },
+  { id: 40, name: 'Exfoliating Night Cream', category: 'TexturedSkin', price: 2200, imageUrl: 'https://th.bing.com/th?id=OPAC.z%2f4YLYOtXVnjUQ474C474&w=169&h=150&c=17&dpr=1.5&pid=21.1' },
+  { id: 41, name: 'Pore Smoothing Primer', category: 'TexturedSkin', price: 1600, imageUrl: 'https://th.bing.com/th?id=OPAC.Du0UzEpcrt0BtA474C474&w=200&h=220&c=17&dpr=1.5&pid=21.1' },
+  { id: 42, name: 'Smoothing Face Mask', category: 'TexturedSkin', price: 1800, imageUrl: 'https://th.bing.com/th?id=OPAC.iUg8tDjCIFTnuQ474C474&w=200&h=220&c=17&dpr=1.5&pid=21.1' },
 ];
 
 function App() {
@@ -115,30 +114,32 @@ function App() {
 
   return (
     <div className="App">
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/quiz" element={<QuizStart />} />
-        <Route path="/question/:questionNumber" element={<QuestionPage />} />
-        <Route path="/thank-you" element={<ThankYouPage />} />
-        <Route path="/all" element={<ProductList products={products} />} />
-        <Route path="/:category" element={<ProductList products={products} />} />
-        
-        {/* Pass addToCart prop to Recommendations */}
-        <Route
-          path="/recommendation"
-          element={<Recommendations addToCart={addToCart} />}
-        />
-  
-  <Route path="/cart" element={<Cart
-          cart={cart}
-          removeFromCart={removeFromCart}
-          updateCartItemQuantity={updateCartItemQuantity}
-        />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/quiz" element={<QuizStart />} />
+          <Route path="/question/:questionNumber" element={<QuestionPage />} />
+          <Route path="/thank-you" element={<ThankYouPage />} />
+          <Route path="/all" element={<ProductList products={products} />} />
+          <Route path="/:category" element={<ProductList products={products} />} />
+
+          {/* Pass addToCart prop to Recommendations */}
+          <Route
+            path="/recommendation"
+            element={<Recommendations addToCart={addToCart} />}
+          />
+
+          <Route path="/cart" element={<Cart
+            cart={cart}
+            removeFromCart={removeFromCart}
+            updateCartItemQuantity={updateCartItemQuantity}
+          />} />
+        </Routes>
+      </AuthProvider>
     </div>
   );
-  
+
 }
 
 export default App;

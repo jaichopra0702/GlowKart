@@ -12,16 +12,18 @@
   border-radius: 5px;
   border: 1px solid #ddd;
   font-size: 16px;
+  text-align: center;
 }
 
 .cart-button {
   position: relative;
   padding: 10px 20px;
-  background-color: #3289e1;
+  background-color: #d7d8da;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   margin-left: -200px;
+  
 }
 
 .cart-item-count {
@@ -35,7 +37,9 @@
   font-size: 12px;
 }
 .cart-button:hover {
-  background-color: #0c2fbc;
+  background-color: #2c6bc9;
+  color: #fbfcfc;
+  /* box-shadow: 10px 10px 10px; */
 }
 
 /* Responsive Design */

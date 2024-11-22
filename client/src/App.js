@@ -8,6 +8,7 @@ import Navbar from './Components/Navbar';
 import ProductList from './Components/ProductList';
 import Cart from './Components/Cart';
 import Login from './Components/Login';
+import ProfilePage from './Components/ProfilePage';
 import { CartContext } from "./Components/CartContext";
 import Recommendations from "./Components/Recommendations";
 import { AuthProvider } from './AuthContext'
@@ -121,6 +122,7 @@ function App() {
           <Route path="/quiz" element={<QuizStart />} />
           <Route path="/question/:questionNumber" element={<QuestionPage />} />
           <Route path="/thank-you" element={<ThankYouPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/all" element={<ProductList products={products} />} />
           <Route path="/:category" element={<ProductList products={products} />} />
 

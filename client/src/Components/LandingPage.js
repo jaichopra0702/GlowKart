@@ -10,7 +10,6 @@ import { useRef, useState } from 'react';
 import QuizStart from "./QuizStart";
 import { useContext } from 'react';
 import { useAuth } from '../AuthContext';
-// import './src/App.css'
 
 function LandingPage() {
 
@@ -37,7 +36,7 @@ function LandingPage() {
             text: "Thank you for listening to your customers and making this eco-friendly move!",
             author: "Dang",
         },
-        // Add more testimonials as needed
+      
     ];
 
     const settings = {
@@ -73,12 +72,12 @@ function LandingPage() {
         setMenuOpen(!menuOpen);
     };
 
-    const { isLoggedIn, logout } = useAuth(); // Accessing AuthContext state and methods
+    const { isLoggedIn, logout } = useAuth(); 
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        logout();  // Log the user out (updates context)
-        navigate('/');  // Redirect after logout (optional)
+        logout();  
+        navigate('/'); 
     };
 
 
@@ -107,6 +106,7 @@ function LandingPage() {
                                     <Link to="/login">Login</Link>  // Show Login if user is logged out
                                 )}
                             </li>
+                            <li><Link to="/profile">Profile</Link></li>
                             <li><Link to="/cart">Cart</Link></li>
                         </ul>
                     </div>
@@ -124,7 +124,6 @@ function LandingPage() {
                 </div>
                 <div className="right-section">
                     <h1 className="title">GLOWKART</h1>
-                    {/* <h2 className="subtitle">{`{ BODY CARE }`}</h2> */}
                     <p className="description">
                         Your daily body cleanser & lotion that will deliver exceptional
                         hydration and barrier support. The formulas are 95% naturally

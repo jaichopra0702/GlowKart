@@ -4,27 +4,22 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 require("dotenv").config();
 
-// Register User
 const registerUser = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
 
-    // Check if all fields are provided
     if (!name || !email || !password) {
         res.status(400);
         throw new Error("Please fill all fields");
     }
 
-    // Check if the user already exists
     const userExists = await User.findOne({ email });
     if (userExists) {
         return res.status(400).json({ message: "User already exists" });
     }
 
-    // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create the user
     const newUser = await User.create({
         name,
         email,
@@ -41,29 +36,24 @@ const registerUser = asyncHandler(async (req, res) => {
     });
 });
 
-// Login User
 const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
-    // Check if all fields are provided
     if (!email || !password) {
         res.status(400);
         throw new Error("Please fill all fields");
     }
 
-    // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
         return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
         return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Generate JWT token
     const token = jwt.sign(
         { userId: user._id, username: user.name },
         process.env.PRIVATE_KEY,
@@ -73,9 +63,8 @@ const loginUser = asyncHandler(async (req, res) => {
     res.status(200).json({ message: "Login successful", token });
 });
 
-// Get My Account
 const myAccount = asyncHandler(async (req, res) => {
-    const userId = req.user.userId; // Assuming req.user is populated by middleware
+    const userId = req.user.userId; 
 
     const user = await User.findById(userId);
 
@@ -83,48 +72,60 @@ const myAccount = asyncHandler(async (req, res) => {
         return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json({
-        id: user._id,
-        name: user.name,
-        email: user.email,
-    });
+    res.send(user);
 });
+  
 
-// Update Profile
-const updateProfile = asyncHandler(async (req, res) => {
-    const { name, email, password } = req.body;
-    const userId = req.user.userId; // Assuming req.user is populated by middleware
-
-    const user = await User.findById(userId);
+const updateUserProfile = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user.userId); 
 
     if (!user) {
-        return res.status(404).json({ message: "User not found" });
+        return res.status(404).json({ message: 'User not found' });
     }
 
-    // Update fields if provided
-    if (name) user.name = name;
-    if (email) user.email = email;
+    user.name = req.body.name || user.name; 
+    user.email = req.body.email || user.email;
 
-    if (password) {
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(password, salt);
-    }
+    const updatedUser = await user.save(); 
 
-    await user.save();
-
-    res.status(200).json({
-        message: "Profile updated successfully",
-        user: {
-            id: user._id,
-            name: user.name,
-            email: user.email,
-        },
+    res.json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
     });
 });
+
+const changeUserPassword = async (req, res) => {
+    const { currentPassword, newPassword } = req.body;
+
+    try {
+        const user = await User.findById(req.user.userId); // Changed from req.user.id to req.user.userId
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Current password is incorrect' });
+        }
+
+        const salt = await bcrypt.genSalt(10); 
+        user.password = await bcrypt.hash(newPassword, salt);
+        await user.save();
+
+        res.json({ message: 'Password updated successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to change password' });
+    }
+};
+
 
 module.exports = {
     registerUser,
     loginUser,
-    myAccount,
-    updateProfile,
+   myAccount,
+    updateUserProfile,
+    changeUserPassword
 };

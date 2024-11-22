@@ -15,6 +15,8 @@ import { CartContext } from "./Components/CartContext";
 import Recommendations from "./Components/Recommendations";
 import Checkout from "./Components/Checkout";
 
+import ProceedWithStripe from "./Components/ProceedWithStripe";
+
 
 
 
@@ -136,14 +138,16 @@ function App() {
           element={<Recommendations addToCart={addToCart} />}
         />
 
-        <Route
+        {/* <Route
             path="/checkout"
             element={
               <Elements stripe={stripePromise}>
                 <Checkout />
               </Elements>
             }
-          />
+          /> */}
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/proceed" element={<ProceedWithStripe />} />
 
   <Route path="/cart" element={<Cart
           cart={cart}

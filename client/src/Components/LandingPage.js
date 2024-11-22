@@ -5,10 +5,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./LandingPage.css";
 import image from './glowcart-removebg-preview.png'
-import { Link } from 'react-router-dom'
-import { useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom'
+import { useRef, useState } from 'react';
 import QuizStart from "./QuizStart";
-// import './src/App.css'
+import { useContext } from 'react';
+import { useAuth } from '../AuthContext';
 
 function LandingPage() {
 
@@ -35,7 +36,7 @@ function LandingPage() {
             text: "Thank you for listening to your customers and making this eco-friendly move!",
             author: "Dang",
         },
-        // Add more testimonials as needed
+      
     ];
 
     const settings = {
@@ -65,30 +66,53 @@ function LandingPage() {
         ],
     };
 
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
+
+    const { isLoggedIn, logout } = useAuth(); 
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();  
+        navigate('/'); 
+    };
+
 
     return (
         <div className="LandingPage">
-            
+
             <header className="navbar">
                 <div className="offer-banner">
                     Spend ₹1500 to get a FREE Travel Size Face Cleanser
                 </div>
-                
+
                 <nav>
 
                     <div className="logo-container">
-                        {/* <img src={image} alt="Logo" className="logo" /> */}
-                        <ul className="left-nav">
-                        <li><Link to='/All'>Shop All</Link></li>
-                        <li><Link to='/quiz'>Personalised Products</Link></li>
-                        <li>More</li>
-                        <li><Link to='/login'>Log in</Link></li>
-                        <li><Link to='/cart'>Cart</Link></li>
-                    </ul>
+                        <button className="hamburger-icon" onClick={toggleMenu}>
+                            &#9776; {/* Hamburger icon */}
+                        </button>
+                        <ul className={`left-nav ${menuOpen ? "open" : ""}`}>
+                            <li><Link to="/All">Shop All</Link></li>
+                            <li><Link to="/quiz">Personalised Products</Link></li>
+                            <li>More</li>
+                            <li>
+                                {isLoggedIn ? (
+                                    <button onClick={handleLogout}>Logout</button>  // Show Logout if user is logged in
+                                ) : (
+                                    <Link to="/login">Login</Link>  // Show Login if user is logged out
+                                )}
+                            </li>
+                            <li><Link to="/profile">Profile</Link></li>
+                            <li><Link to="/cart">Cart</Link></li>
+                        </ul>
                     </div>
-                    
+
                 </nav>
-                
+
             </header>
             <main>
                 <div className="left-section">
@@ -100,7 +124,6 @@ function LandingPage() {
                 </div>
                 <div className="right-section">
                     <h1 className="title">GLOWKART</h1>
-                    {/* <h2 className="subtitle">{`{ BODY CARE }`}</h2> */}
                     <p className="description">
                         Your daily body cleanser & lotion that will deliver exceptional
                         hydration and barrier support. The formulas are 95% naturally
@@ -165,7 +188,7 @@ function LandingPage() {
                     </div>
                 </div>
             </section>
-            
+
 
             <section>
                 <div className="customisation-container">
@@ -216,27 +239,27 @@ function LandingPage() {
             <section>
                 <div className="customisation-container">
                     <h1>Good for you.
-                    Good for the planet.</h1>
+                        Good for the planet.</h1>
                     <div className="customisation-steps">
                         <div className="step">
                             <img src="https://www.suhiandsego.com/cdn/shop/files/suhi-_-sego-bottle-to-order_180x.png?v=1646908213" alt="Online Questionnaire" />
                             <h2>WE THINK SMALL</h2>
                             <p>
-                            Our products are not mass-produced or factory-made. We only produce and bottle to order. This keeps us from wasting precious resources and ingredients.
+                                Our products are not mass-produced or factory-made. We only produce and bottle to order. This keeps us from wasting precious resources and ingredients.
                             </p>
                         </div>
                         <div className="step">
                             <img src="https://www.suhiandsego.com/cdn/shop/files/suhi-_-sego-biodegradable_180x.png?v=1646908256" alt="Skin Analysis" />
                             <h2>WE ARE NOT TRASHY</h2>
                             <p>
-                            Our bottles, cartons and shipping materials are planet friendly. While our bottles are made from glass and can be reused and repurposed, our cartons and shipping sleeves are 100% biodegradable.
+                                Our bottles, cartons and shipping materials are planet friendly. While our bottles are made from glass and can be reused and repurposed, our cartons and shipping sleeves are 100% biodegradable.
                             </p>
                         </div>
                         <div className="step">
                             <img src="https://www.suhiandsego.com/cdn/shop/files/suhi-_-sego-clean-ingredients_180x.png?v=1646908293" alt="Customised Remedy" />
                             <h2>WE ARE CLEAN</h2>
                             <p>
-                            Our ingredients are sustainably and ethically sourced. In our commitment to clean beauty, we say no to the use of parabens, sulphates, and phthalates in our products.
+                                Our ingredients are sustainably and ethically sourced. In our commitment to clean beauty, we say no to the use of parabens, sulphates, and phthalates in our products.
                             </p>
                         </div>
                     </div>
@@ -263,44 +286,44 @@ function LandingPage() {
             </section>
 
             <footer className="footer-container">
-      <div className="footer-content">
-        <div className="footer-left">
-          <img src={image} alt="Suhi & Sego" className="footer-logo" />
-          <div className="social-icons">
-            <a href="#"><i className="fab fa-facebook"></i></a>
-            <a href="#"><i className="fab fa-pinterest"></i></a>
-            <a href="#"><i className="fab fa-instagram"></i></a>
-          </div>
-        </div>
-        <div className="footer-middle">
-          <ul className="footer-links">
-            <li><a href="#">Our Story</a></li>
-            <li><a href="#">Our Products</a></li>
-            <li><a href="#">Get Your Remedy</a></li>
-            <li><a href="#">Contact Us</a></li>
-          </ul>
-        </div>
-        <div className="footer-right">
-          <ul className="footer-links">
-            <li><a href="#">FAQs</a></li>
-            <li><a href="#">Shipping Policy</a></li>
-            <li><a href="#">Return & Refund Policy</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms & Conditions</a></li>
-          </ul>
-        </div>
-        <div className="footer-subscribe">
-          <p>GlowKart's Club</p>
-          <div className="subscribe-form">
-            <input type="email" placeholder="Enter email" />
-            <button>Join</button>
-          </div>
-        </div>
-      </div>
-      <div className="footer-bottom">
-        <p>Urban Natives Pvt. Ltd. , New Delhi - 110035.</p>
-      </div>
-    </footer>
+                <div className="footer-content">
+                    <div className="footer-left">
+                        <img src={image} alt="Suhi & Sego" className="footer-logo" />
+                        <div className="social-icons">
+                            <a href="#"><i className="fab fa-facebook"></i></a>
+                            <a href="#"><i className="fab fa-pinterest"></i></a>
+                            <a href="#"><i className="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div className="footer-middle">
+                        <ul className="footer-links">
+                            <li><a href="#">Our Story</a></li>
+                            <li><a href="#">Our Products</a></li>
+                            <li><a href="#">Get Your Remedy</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div className="footer-right">
+                        <ul className="footer-links">
+                            <li><a href="#">FAQs</a></li>
+                            <li><a href="#">Shipping Policy</a></li>
+                            <li><a href="#">Return & Refund Policy</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms & Conditions</a></li>
+                        </ul>
+                    </div>
+                    <div className="footer-subscribe">
+                        <p>GlowKart's Club</p>
+                        <div className="subscribe-form">
+                            <input type="email" placeholder="Enter email" />
+                            <button>Join</button>
+                        </div>
+                    </div>
+                </div>
+                <div className="footer-bottom">
+                    <p>Urban Natives Pvt. Ltd. , New Delhi - 110035.</p>
+                </div>
+            </footer>
 
         </div>
     );

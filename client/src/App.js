@@ -14,6 +14,8 @@ import Login from './Components/login';
 import { CartContext } from "./Components/CartContext";
 import Recommendations from "./Components/Recommendations";
 import Checkout from "./Components/Checkout";
+import { AuthProvider } from './AuthContext'
+import ProfilePage from './Components/ProfilePage';
 
 import ProceedWithStripe from "./Components/ProceedWithStripe";
 
@@ -123,12 +125,14 @@ function App() {
 
   return (
     <div className="App">
+      <AuthProvider>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/quiz" element={<QuizStart />} />
         <Route path="/question/:questionNumber" element={<QuestionPage />} />
         <Route path="/thank-you" element={<ThankYouPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/all" element={<ProductList products={products} />} />
         <Route path="/:category" element={<ProductList products={products} />} />
         
@@ -155,6 +159,7 @@ function App() {
           updateCartItemQuantity={updateCartItemQuantity}
         />} />
       </Routes>
+      </AuthProvider>
     </div>
   );
   

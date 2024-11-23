@@ -151,35 +151,35 @@ function LandingPage() {
                         <div className="concern-cards" ref={scrollRef}>
                             <div className="concern-card">
                                 <img src="https://ybpskin.com/wp-content/uploads/2022/08/ybp-oily-acne-prone-skin.jpg" alt="Acne & Blemishes" />
-                                <p>ACNE & BLEMISHES</p>
+                                <Link to="/Acne"><p>ACNE & BLEMISHES</p></Link>
                             </div>
                             <div className="concern-card">
                                 <img src="https://ybpskin.com/wp-content/uploads/2022/08/ybp-dry-mature-skin.jpg" alt="Dry & Dehydrated" />
-                                <p>DRY & DEHYDRATED</p>
+                                <Link to="/DrySkin"><p>DRY & DEHYDRATED</p></Link>
                             </div>
                             <div className="concern-card">
                                 <img src="https://ybpskin.com/wp-content/uploads/2022/08/ybp-sensitive-damaged-skin.jpg" alt="Sensitive & Redness" />
-                                <p>SENSITIVE & REDNESS</p>
+                                <Link to="/SensitiveSkin"><p>SENSITIVE & REDNESS</p></Link>
                             </div>
-                            <div className="concern-card">
+                            {/* <div className="concern-card">
                                 <img src="https://ybpskin.com/wp-content/uploads/2023/10/ybp-mature-skin-1.jpg" alt="Mature Skin" />
-                                <p>MATURE SKIN</p>
-                            </div>
+                                <Link to="/MatureSkin"><p>MATURE SKIN</p></Link>
+                            </div> */}
                             <div className="concern-card">
                                 <img src="https://ybpskin.com/wp-content/uploads/2022/08/ybp-hyperpigmentation-uneven.jpg" alt="Oily Skin" />
-                                <p>HYPER PIGMENTATION</p>
+                                <Link to="Pigmentation"><p>HYPER PIGMENTATION</p></Link>
                             </div>
                             <div className="concern-card">
                                 <img src="https://ybpskin.com/wp-content/uploads/2023/10/ybp-cleansers-1.jpg" alt="Dullness" />
-                                <p>COMBINATION SKIN</p>
+                                <Link to="/CombinationSkin"><p>COMBINATION SKIN</p></Link>
                             </div>
                             <div className="concern-card">
                                 <img src="https://ybpskin.com/wp-content/uploads/2023/10/ybp-serums-1.jpg" alt="Uneven Tone" />
-                                <p>TEXTURED</p>
+                                <Link to="/TexturedSkin"><p>TEXTURED</p></Link>
                             </div>
                             <div className="concern-card">
                                 <img src="https://ybpskin.com/wp-content/uploads/2023/10/ybp-moisturizer-1.jpg" alt="Large Pores" />
-                                <p>OILY SKIN</p>
+                                <Link to="/OilySkin"><p>OILY SKIN</p></Link>
                             </div>
                         </div>
                         <button className="scroll-button right" onClick={scrollRight}>

@@ -1,28 +1,49 @@
 .filter-container {
-    margin: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: plum;
-  }
-  
-  .filter-select {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 16px;
-  }
-  
-  .cart-button {
-    padding: 10px 20px;
-    background-color: blue;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* background-color: plum; */
+  margin-right: 10px;
+  text-align: center;
+}
 
-  .cart-button:hover {
-    background-color: #0056b3;
-  }
+.filter-select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  text-align: center;
+}
+
+.cart-button {
+  padding: 10px 20px 10px 20px;
+  background-color: rgb(237, 237, 245);
+  color: #000000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: relative; /* To ensure the item count is positioned inside the button */
+  margin-left: -200px;
+  font-weight:bold;
+}
+
+
+.cart-button:hover {
+  background-color: #166fcd;
+  color: white;
+  font-weight: 900;
+}
+
+.cart-item-count {
+  background-color: red; /* This will make the count stand out */
+  color: white;          /* White text for contrast */
+  border-radius: 50%;    /* Makes the count circular */
+  padding: 5px 10px;     /* Adjust the padding for proper size */
+  font-size: 12px;       /* Smaller text size for the badge */
+  position: absolute;    /* To position the count on the corner of the button */
+  top: -10px;            /* Move the badge up slightly */
+  right: -10px;          /* Move the badge to the right side */
+  display: inline-block; /* Ensure it's displayed properly */
+}

@@ -43,7 +43,8 @@ app.use('/api/products', productRoutes);
 app.use('/user', userRoutes);
 app.use('/api/payment', paymentRoutes);
 
-
+//cors
+app.use(cors());
 
 // Server Start
 app.listen(PORT, () => {

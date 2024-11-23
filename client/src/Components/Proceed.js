@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import './Procedd.css';
 
 const cardElementOptions = {
   style: {
@@ -11,13 +12,13 @@ const cardElementOptions = {
     },
     invalid: { color: '#9e2146' },
   },
-  hidePostalCode: true,
+  hidePostalCode: true,  // This hides the ZIP/postal code input
 };
 
 const Proceed = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { cart, totalAmount } = location.state || {};
+  const { totalAmount } = location.state || {};
 
   const [paymentIntent, setPaymentIntent] = useState(null);
   const [loading, setLoading] = useState({
@@ -34,7 +35,7 @@ const Proceed = () => {
     const createPaymentIntent = async () => {
       if (!totalAmount) return;
 
-      setLoading(prev => ({ ...prev, intent: true }));
+      setLoading((prev) => ({ ...prev, intent: true }));
       setError('');
 
       try {
@@ -45,9 +46,6 @@ const Proceed = () => {
           body: JSON.stringify({
             amount: Math.round(totalAmount * 100),
             currency: 'inr',
-            metadata: {
-              cartItemCount: cart?.length || 0,
-            }
           }),
         });
 
@@ -58,34 +56,33 @@ const Proceed = () => {
         const data = await response.json();
         setPaymentIntent({
           clientSecret: data.clientSecret,
-          id: data.paymentIntentId
+          id: data.paymentIntentId,
         });
       } catch (err) {
         console.error('Error creating payment intent:', err);
         setError('Failed to initialize payment. Please try again.');
       } finally {
-        setLoading(prev => ({ ...prev, intent: false }));
+        setLoading((prev) => ({ ...prev, intent: false }));
       }
     };
 
     if (totalAmount > 0) {
       createPaymentIntent();
     }
-  }, [totalAmount, cart?.length]);
+  }, [totalAmount]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
     if (!stripe || !elements || !paymentIntent) {
       return;
     }
 
-    setLoading(prev => ({ ...prev, payment: true }));
+    setLoading((prev) => ({ ...prev, payment: true }));
     setError('');
     setPaymentStatus('');
 
     try {
-      // Create payment method
       const { error: methodError, paymentMethod } = await stripe.createPaymentMethod({
         type: 'card',
         card: elements.getElement(CardElement),
@@ -95,7 +92,6 @@ const Proceed = () => {
         throw new Error(methodError.message);
       }
 
-      // Confirm payment
       const confirmResponse = await fetch('http://localhost:3001/api/payment/confirm-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -112,98 +108,78 @@ const Proceed = () => {
         throw new Error(confirmResult.message);
       }
 
-      // Handle different payment intent statuses
       if (confirmResult.requiresAction) {
-        const { error: confirmError } = await stripe.confirmCardPayment(
-          paymentIntent.clientSecret
-        );
+        const { error: confirmError } = await stripe.confirmCardPayment(paymentIntent.clientSecret);
         if (confirmError) {
           throw new Error(confirmError.message);
         }
       }
 
       setPaymentStatus('Payment successful! Redirecting...');
-      // Redirect to success page after short delay
       setTimeout(() => {
-        navigate('/thank-you', { 
-          state: { 
+        navigate('/thank-you', {
+          state: {
             orderId: confirmResult.paymentIntent.id,
-            amount: totalAmount 
-          }
+            amount: totalAmount,
+          },
         });
       }, 2000);
-
     } catch (err) {
       console.error('Payment error:', err);
       setError(err.message || 'Payment failed. Please try again.');
     } finally {
-      setLoading(prev => ({ ...prev, payment: false }));
+      setLoading((prev) => ({ ...prev, payment: false }));
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">Complete Your Payment</h1>
-      
-      <div className="bg-gray-50 p-4 rounded-lg mb-6">
-        <h2 className="text-xl mb-4">Order Summary</h2>
-        <p className="text-lg font-semibold mb-4">
-          Total Amount: ₹{totalAmount?.toFixed(2)}
-        </p>
-        <div className="max-h-40 overflow-auto">
-          <table className="w-full">
-            <thead>
-              <tr>
-                <th className="text-left">Product</th>
-                <th className="text-right">Quantity</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cart?.map((item, index) => (
-                <tr key={index}>
-                  <td className="py-2">{item.name}</td>
-                  <td className="text-right">{item.quantity}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div className="flex items-center justify-center min-h-screen bg-pink-50 p-4">
+      <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg border border-pink-300">
+        <h1 className="text-2xl font-bold text-center text-pink-700 mb-6">
+          Complete Your Payment
+        </h1>
 
-      {loading.intent ? (
-        <div className="text-center py-4">
-          <p>Initializing payment...</p>
+        <div className="bg-pink-100 p-4 rounded-lg shadow mb-6">
+          <p className="text-center font-semibold text-pink-900">
+            Total Amount: ₹{totalAmount?.toFixed(2)}
+          </p>
         </div>
-      ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="bg-white p-4 border rounded-md">
-            <CardElement options={cardElementOptions} />
+
+        {loading.intent ? (
+          <div className="text-center py-4">
+            <p className="text-pink-600">Initializing payment...</p>
           </div>
-          
-          <button
-            type="submit"
-            disabled={loading.payment || !stripe || !paymentIntent}
-            className={`w-full py-3 px-4 rounded-md text-white font-medium 
-              ${loading.payment || !paymentIntent
-                ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-blue-600 hover:bg-blue-700'}`}
-          >
-            {loading.payment ? 'Processing...' : 'Pay Now'}
-          </button>
-        </form>
-      )}
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="bg-pink-50 p-4 border border-pink-300 rounded-lg">
+              <CardElement options={cardElementOptions} />
+            </div>
 
-      {error && (
-        <div className="mt-4 p-4 bg-red-50 text-red-700 rounded-md">
-          {error}
-        </div>
-      )}
-      
-      {paymentStatus && !error && (
-        <div className="mt-4 p-4 bg-green-50 text-green-700 rounded-md">
-          {paymentStatus}
-        </div>
-      )}
+            <div className="text-center">
+              <button
+                type="submit"
+                disabled={loading.payment || !stripe || !paymentIntent}
+                className={`w-auto py-3 px-4 rounded-md font-medium text-white bg-pink-600 
+                  ${loading.payment || !paymentIntent ? 'cursor-not-allowed bg-pink-300' : 'hover:bg-pink-700'}`}
+              >
+                {loading.payment ? 'Processing...' : 'Pay Now'}
+              </button>
+            </div>
+          </form>
+        )}
+
+        {error && (
+          <div className="mt-4 p-4 bg-pink-100 text-pink-700 rounded-md">
+            {error}
+          </div>
+        )}
+
+        {paymentStatus && !error && (
+          <div className="mt-4 p-4 bg-pink-50 text-pink-800 rounded-md">
+            {paymentStatus}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

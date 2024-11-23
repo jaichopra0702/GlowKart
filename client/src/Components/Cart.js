@@ -82,13 +82,15 @@ const Cart = () => {
     navigate('/checkout', { state: { cart, totalAmount, totalProducts } }); // Pass cart items along with totalAmount and totalProducts
   };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+  // if (loading) {
+  //   return <p>Loading...</p>;
+  // }
+
+ 
 
   return (
     <div className="cart-container">
-      <h1>Your Cart</h1>
+      <h1><u>Your Cart</u></h1>
       {cart.length > 0 ? (
         <>
           <div className="cart-summary">
@@ -120,9 +122,16 @@ const Cart = () => {
       ) : (
         <p className="empty-cart">Your cart is empty.</p>
       )}
+      <div className='end'>
+        
+      </div>
       <button onClick={handleBackToShop} className="back-to-shop">Back to Shop</button>
-      <button onClick={handleCheckout} className="checkout-button">Checkout</button>
+      <button onClick={handleCheckout} className="checkout-button">Check-Out</button>
     </div>
+
+      
+      
+
   );
 };
 

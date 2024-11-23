@@ -22,7 +22,6 @@ const ProductList = ({ products }) => {
     }
     return products; // Show all products if category is 'All'
   }, [category, products]);
-  // console.log("ETESTTTTT")
 
   return (
     <div className="product-list">

@@ -42,6 +42,14 @@ app.use('/api/quiz', quizRoutes);
 app.use('/api/products', productRoutes);
 app.use('/user', userRoutes);
 app.use('/api/payment', paymentRoutes);
+// app.use('/api/cart', cartRoutes);
+
+//cors
+app.use(cors());
+
+//console.log(cartRoutes); // Should log a function, not an object
+
+
 
 // Server Start
 app.listen(PORT, () => {

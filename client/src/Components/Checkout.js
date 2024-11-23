@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Proceed from './Proceed';
+import './Checkout.css';
 
 const Checkout = () => {
   const location = useLocation();
@@ -64,6 +65,7 @@ const Checkout = () => {
     title: {
       fontSize: '2rem',
       marginBottom: '1rem',
+      
     },
     text: {
       fontSize: '1.2rem',
@@ -77,11 +79,14 @@ const Checkout = () => {
       width: '100%',
       marginTop: '20px',
       borderCollapse: 'collapse',
+      backgroundColor: '#f9f9f9',
+      border: '2px solid black',
     },
     tableHeader: {
-      backgroundColor: '#f4f4f4',
+      // backgroundColor: '#ffff00',
       fontSize: '1.1rem',
       padding: '10px',
+      border: '1px solid #000000',
     },
     tableData: {
       padding: '10px',
@@ -119,14 +124,15 @@ const Checkout = () => {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>Checkout</h1>
+      <h1 style={styles.title}><u>Checkout</u></h1>
       <p style={styles.text}>
-        Thank you for choosing to shop with us. Please complete your payment below:
+        <b>Thank you for choosing to shop with us. Please complete your payment below:</b>
       </p>
+      <b className='add'>Enter Address Details:</b>
 
       {/* Address Details Form */}
       <div>
-        <h2>Enter Address Details</h2>
+        
         <input
           style={styles.formInput}
           type="text"
@@ -175,8 +181,8 @@ const Checkout = () => {
       </div>
 
       <div style={styles.details}>
-        <p>Total Products: <strong>{totalProducts}</strong></p>
-        <p>Total Amount: <strong>₹{totalAmount.toFixed(2)}</strong></p>
+        <p><b>Total Products: </b><strong>{totalProducts}</strong></p>
+        <p><b>Total Amount: </b><strong>₹{totalAmount.toFixed(2)}</strong></p>
       </div>
 
       {/* Product List Table */}

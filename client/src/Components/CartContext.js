@@ -1,5 +1,5 @@
 // src/components/CartContext.js
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 export const CartContext = createContext();
 
@@ -48,8 +48,41 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
+  // Get total items in the cart
+  const getCartItemCount = () => {
+    return cart.reduce((acc, item) => acc + item.quantity, 0);
+  };
+
+  // CartButton component (keep as it is)
+  const CartButton = () => {
+    const { cart } = useContext(CartContext);
+    const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+    return (
+      <button style={{ position: 'relative', padding: '10px 20px' }}>
+        🛒 Cart
+        {totalItems > 0 && (
+          <span
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              background: 'red',
+              color: 'white',
+              borderRadius: '50%',
+              padding: '5px 10px',
+              fontSize: '12px',
+            }}
+          >
+            {totalItems}
+          </span>
+        )}
+      </button>
+    );
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateCartItemQuantity }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateCartItemQuantity, getCartItemCount }}>
       {children}
     </CartContext.Provider>
   );

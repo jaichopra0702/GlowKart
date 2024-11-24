@@ -47,6 +47,7 @@ body {
 .product-card .product-image-container .product-image{
   height: 200px;
   width: 200px;
+  margin-top: -100px;
 }
 
 .product-card .infos {

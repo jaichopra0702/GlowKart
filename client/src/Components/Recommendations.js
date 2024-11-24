@@ -72,7 +72,7 @@ const Recommendations = () => {
                 alt={product.name}
                 onError={(e) => (e.target.src = '/path_to_default_image.jpg')} // Fallback image
               />
-              <div className="product-info">
+              <div className="product-info1">
                 <h3>{product.name}</h3>
                 <p>{product.description}</p>
                 <p className="price">Rs {product.price}</p>

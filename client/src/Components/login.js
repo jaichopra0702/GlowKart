@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import { useNavigate } from 'react-router-dom';
 import './login.css';
 import image from './glowcart-removebg-preview.png';
 import image2 from './login.jpg';
@@ -12,7 +12,9 @@ function Login() {
     password: '',
   });
 
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputFocus = (e) => {
     e.target.classList.add('active');
@@ -33,38 +35,52 @@ function Login() {
 
   const toggleMode = () => {
     setIsSignUpMode(!isSignUpMode);
+    setErrorMessage(''); // Clear any error messages when switching modes
   };
 
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setErrorMessage('');
 
     const endpoint = isSignUpMode ? '/registeruser' : '/loginuser';
 
-    fetch(`http://localhost:3001/user${endpoint}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Success:', data);
+    try {
+      const response = await fetch(`http://localhost:3001/user${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-        // If the response contains a token, save it and redirect
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Something went wrong');
+      }
+
+      if (isSignUpMode) {
+        // After successful registration, switch to login mode
+        setIsSignUpMode(false);
+        setFormData({ name: '', email: '', password: '' });
+        alert('Registration successful! Please login with your credentials.');
+      } else {
+        // After successful login
         if (data.token) {
-          localStorage.setItem('token', data.token); // Save token to localStorage
-          navigate('/'); // Redirect to homepage
+          localStorage.setItem('token', data.token);
+          navigate('/'); // Navigate to home page
         } else {
-          alert(data.message); // Show error message if any
+          throw new Error('No token received');
         }
-      })
-      .catch((error) => console.error('Error:', error));
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+      console.error('Error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
-
 
   return (
     <div className="login-css">
@@ -72,6 +88,11 @@ function Login() {
         <div className="box12">
           <div className="inner-box">
             <div className="forms-wrap">
+              {errorMessage && (
+                <div className="error-message" style={{ color: 'red', textAlign: 'center', padding: '10px' }}>
+                  {errorMessage}
+                </div>
+              )}
               <form
                 className={`sign-in-form ${isSignUpMode ? 'hidden' : ''}`}
                 onSubmit={handleSubmit}
@@ -81,7 +102,7 @@ function Login() {
                 </div>
                 <div className="heading">
                   <h3>Sign In</h3>
-                  <h6>Don't have an account?  </h6>
+                  <h6>Don't have an account?</h6>
                   <button type="button" className="toggle" onClick={toggleMode}>
                     Sign up
                   </button>
@@ -94,6 +115,7 @@ function Login() {
                       className="input-field"
                       autoComplete="off"
                       name="name"
+                      value={formData.name}
                       required
                       onFocus={handleInputFocus}
                       onBlur={handleInputBlur}
@@ -107,6 +129,7 @@ function Login() {
                       className="input-field"
                       autoComplete="off"
                       name="email"
+                      value={formData.email}
                       required
                       onFocus={handleInputFocus}
                       onBlur={handleInputBlur}
@@ -121,6 +144,7 @@ function Login() {
                       className="input-field"
                       autoComplete="off"
                       name="password"
+                      value={formData.password}
                       required
                       onFocus={handleInputFocus}
                       onBlur={handleInputBlur}
@@ -128,7 +152,13 @@ function Login() {
                     />
                     <label>Password</label>
                   </div>
-                  <input type="submit" value="Sign In" className="sign-btn" />
+                  <button 
+                    type="submit" 
+                    className="sign-btn"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? 'Please wait...' : 'Sign In'}
+                  </button>
                 </div>
               </form>
               <form
@@ -141,7 +171,7 @@ function Login() {
                 <div className="heading">
                   <h3>Sign Up</h3>
                   <h6>Already have an account?</h6>
-                  <button className="toggle" onClick={toggleMode}>
+                  <button type="button" className="toggle" onClick={toggleMode}>
                     Sign in
                   </button>
                 </div>
@@ -190,7 +220,13 @@ function Login() {
                     />
                     <label>Password</label>
                   </div>
-                  <input type="submit" value="Sign Up" className="sign-btn" />
+                  <button 
+                    type="submit" 
+                    className="sign-btn"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? 'Please wait...' : 'Sign Up'}
+                  </button>
                 </div>
               </form>
             </div>

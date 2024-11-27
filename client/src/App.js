@@ -40,7 +40,7 @@ const products = [
   { id: 12, name: 'Moisturizing Sunscreen', category: 'DrySkin', price: 1500, imageUrl: 'https://www.bing.com/th?id=OIP.KcvpOLNfCWqElkgpZhAb2gHaHa&w=150&h=150&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2' },
 
   // Oily Skin Category
-  { id: 13, name: 'Oil Control Lotion', category: 'OilySkin', price: 1300, imageUrl: 'https://th.bing.com/th/id/OIP.1MQTqXQRNrmWzj5g6VgCAQHaHa?w=215&h=215&c=7&r=0&o=5&dpr=1.5&pid=1.7' },
+  { id: 13, name: 'Oil Control Lotion', category: 'OilySkin', price: 1300, imageUrl: 'https://www.bing.com/th?id=OPAC.sIljtNSj30k8eQ474C474&o=5&pid=21.1&w=124&h=124&rs=1&qlt=100&dpr=1.5&bw=6&bc=FFFFFF' },
   { id: 14, name: 'Oil Control Cleanser', category: 'OilySkin', price: 1400, imageUrl: 'https://www.bing.com/th?id=OPAC.hFGeWPZop%2bQPNQ474C474&o=5&pid=21.1&w=136&h=158&rs=1&qlt=100&dpr=1.5&pcl=f5f5f5' },
   { id: 15, name: 'Mattifying Moisturizer', category: 'OilySkin', price: 1600, imageUrl: 'https://th.bing.com/th?id=OPAC.%2bl5TnHUrU762Sw474C474&w=200&h=220&c=17&dpr=1.5&pid=21.1' },
   { id: 16, name: 'Pore Minimizing Serum', category: 'OilySkin', price: 1500, imageUrl: 'https://th.bing.com/th?id=OPAC.jwkHCZgq5wTGTw474C474&w=160&h=220&c=17&dpr=1.5&pid=21.1' },

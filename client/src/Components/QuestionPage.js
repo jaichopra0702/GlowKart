@@ -93,7 +93,9 @@ const QuestionPage = () => {
             'Pigmentation': 'Pigmentation',
             'OilySkin': 'OilySkin',
             'SensitiveSkin': 'SensitiveSkin',
-            'Acne': 'Acne'
+            'Acne': 'Acne',
+            'TexturedSkin': 'TexturedSkin',
+            'CombinationSkin': 'CombinationSkin'
         };
 
         category = categoryMap[answer] || 'General';

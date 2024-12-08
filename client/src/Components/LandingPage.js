@@ -72,12 +72,12 @@ function LandingPage() {
         setMenuOpen(!menuOpen);
     };
 
-    const { isLoggedIn, logout } = useAuth(); 
+    const { isLoggedIn, logout } = useAuth();
     const navigate = useNavigate();
 
-    const handleLogout = () => {
-        logout();  
-        navigate('/'); 
+    const handleLogout = async () => {
+        await logout();  // Ensure logout is complete before navigating
+        navigate('/');   // Navigate to home page or login page after logout
     };
 
 

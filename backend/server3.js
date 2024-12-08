@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
@@ -27,6 +28,20 @@ const PORT = process.env.PORT || 3001;
 // File Paths
 const FILE_PATH = path.join(__dirname, 'record1.txt');
 const QUIZ_FILE_PATH = path.join(__dirname, 'record.txt');
+
+
+app.use(
+  session({
+      secret: process.env.PRIVATE_KEY, // Replace with a secure secret
+      resave: false,            // Prevents resaving the session if not modified
+      saveUninitialized: false, // Doesn't save an uninitialized session
+      cookie: {
+          httpOnly: true,       // Prevent access from client-side JavaScript
+          secure: false,        // Set true in production with HTTPS
+          maxAge: 1000 * 60 * 60, // 1-hour expiration
+      },
+  })
+);
 
 // Middleware
 app.use(cors({ 

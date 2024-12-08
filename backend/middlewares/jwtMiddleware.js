@@ -1,38 +1,26 @@
-var jwt = require("jsonwebtoken");
-const generateToken = (userData) => {
-    //creating a new fresh jwt token to provide user for login session management or for authorization purpose...
-    return jwt.sign(userData, process.env.PRIVATE_KEY);
-}
-
+const session = require('express-session');
 const validateToken = (req, res, next) => {
-    // first we are checking that jwt token is availabe or nota
-    const authorization = req.headers.authorization;
-
-    //output: 1. Bearer tfghfjehioh(string)
-    //output: 2. udjfojdfiod
-    //output: 3. 
-    //output: 4. token is not created, sent from local or endpoint testing, without token header...
-
-    if (!authorization) {
-        return response.status(401).json({ err: 'Token not available' });
-    }
-    //we are storing token value from headers and splitting to get "Bearer xyz.abc.kjh" to "xyz.abc.kjh"..
-    const token = req.headers.authorization.split(' ')[1];
-
-    //token provided is wrong, throw error message "unauthorized user"
-    if (!token) {
-        return response.status(401).json({ err: 'Unauthorized user' });
-    }
-
-    try {
-        //in this error handler Try Catch: we are handling of token is validated or verified then move to next middleware or respond back to client
-        const validateToken = jwt.verify(token, process.env.PRIVATE_KEY);
-        req.user = validateToken;
+    // Check if user is authenticated via session
+    if (req.session && req.session.userId) {
+        // Session exists and has a user ID
         next();
-    } catch (err) {
-        console.error("Error Occured: ", err.message);
+    } else {
+        // No active session
+        res.status(401).json({ 
+            error: 'Unauthorized. Please log in.' 
+        });
     }
+};
 
-}
+const generateToken = (user) => {
+    // This would typically be handled by express-session automatically
+    // But you can add custom session data if needed
+    req.session.userId = user._id;
+    req.session.username = user.username;
+    req.session.role = user.role;
+};
 
-module.exports = {generateToken, validateToken};
+module.exports = {
+    validateToken,
+    generateToken
+};

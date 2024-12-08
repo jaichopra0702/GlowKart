@@ -10,37 +10,22 @@ const ProfilePage = () => {
   const [passwordData, setPasswordData] = useState({ currentPassword: '', newPassword: '' });
   const [updatedProfile, setUpdatedProfile] = useState({ name: '', email: '' });
 
-  const token = localStorage.getItem('token');
-
   useEffect(() => {
     const getUserProfile = async () => {
-      
-            try {
-              if (token) {
-                const userData = await fetchUserProfile(token);
-                setUser(userData);
-              } else {
-                setError('No token found. Please log in.');
-              }
-            } catch (error) {
-              setError('Failed to load profile. Please try again later.');
-            }
-          };
-      
-          getUserProfile();
-        }, [token]);
-      
-        if (error) {
-          return <div className="error-message">{error}</div>;
-        }
-      
-        if (!user) {
-          return <div className="loading">Loading...</div>;
-        }
+      try {
+        const userData = await fetchUserProfile();  // No need to pass token, the session ID will be sent automatically
+        setUser(userData);
+      } catch (error) {
+        setError('Failed to load profile. Please try again later.');
+      }
+    };
+
+    getUserProfile();
+  }, []);
 
   const handleProfileUpdate = async () => {
     try {
-      const updatedUser = await updateUserProfile(token, updatedProfile);
+      const updatedUser = await updateUserProfile(updatedProfile);  // No token required
       setUser(updatedUser);
       setMessage('Profile updated successfully!');
       setEditMode(false);
@@ -51,7 +36,7 @@ const ProfilePage = () => {
 
   const handlePasswordChange = async () => {
     try {
-      await changePassword(token, passwordData);
+      await changePassword(passwordData);  // No token required
       setMessage('Password changed successfully!');
       setPasswordData({ currentPassword: '', newPassword: '' });
     } catch (error) {

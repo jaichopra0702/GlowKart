@@ -82,12 +82,7 @@ const Cart = () => {
     navigate('/checkout', { state: { cart, totalAmount, totalProducts } }); // Pass cart items along with totalAmount and totalProducts
   };
 
-  // if (loading) {
-  //   return <p>Loading...</p>;
-  // }
-
- 
-
+  
   return (
     <div className="cart-container">
       <h1><u>Your Cart</u></h1>

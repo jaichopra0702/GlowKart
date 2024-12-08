@@ -58,27 +58,27 @@ export const CartProvider = ({ children }) => {
     const { cart } = useContext(CartContext);
     const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
-    return (
-      <button style={{ position: 'relative', padding: '10px 20px' }}>
-        🛒 Cart
-        {totalItems > 0 && (
-          <span
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              background: 'red',
-              color: 'white',
-              borderRadius: '50%',
-              padding: '5px 10px',
-              fontSize: '12px',
-            }}
-          >
-            {totalItems}
-          </span>
-        )}
-      </button>
-    );
+    // return (
+    //   <button style={{ position: 'relative', padding: '10px 20px' }}>
+    //     🛒 Cart
+    //     {totalItems > 0 && (
+    //       <span
+    //         style={{
+    //           position: 'absolute',
+    //           top: 0,
+    //           right: 0,
+    //           background: 'red',
+    //           color: 'white',
+    //           borderRadius: '50%',
+    //           padding: '5px 10px',
+    //           fontSize: '12px',
+    //         }}
+    //       >
+    //         {totalItems}
+    //       </span>
+    //     )}
+    //   </button>
+    // );
   };
 
   return (

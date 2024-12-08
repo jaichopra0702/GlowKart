@@ -5,6 +5,7 @@ import { CartContext } from './CartContext';  // Import your context
 import { useContext } from 'react';
 
 
+
 const Filter = ({ setCategory }) => {
   const { cart } = useContext(CartContext);  // Use cart from context
   const { category } = useParams();
@@ -49,17 +50,6 @@ const Filter = ({ setCategory }) => {
         <option value="Pigmentation">Pigmentation</option>
         <option value="CombinationSkin">Combination Skin</option>
       </select>
-
-      <Link to="/cart">
-        <button className="cart-button">
-          Cart
-          {cartItemCount > 0 && (
-            <span className="cart-item-count">
-              {cartItemCount}
-            </span>
-          )}
-        </button>
-      </Link>
       
     </div>
   );

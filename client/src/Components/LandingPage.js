@@ -98,7 +98,7 @@ function LandingPage() {
                         <ul className={`left-nav ${menuOpen ? "open" : ""}`}>
                             <li><Link to="/All">Shop All</Link></li>
                             <li><Link to="/quiz">Personalised Products</Link></li>
-                            <li>More</li>
+                            <li><Link to="/contact">Contact Us</Link></li>
                             <li>
                                 {isLoggedIn ? (
                                     <button onClick={handleLogout}>Logout</button>  // Show Logout if user is logged in

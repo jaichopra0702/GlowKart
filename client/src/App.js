@@ -16,7 +16,7 @@ import Recommendations from "./Components/Recommendations";
 import Checkout from "./Components/Checkout";
 import { AuthProvider } from './AuthContext'
 import ProfilePage from './Components/ProfilePage';
-
+import Contact from "./Components/Contact";
 import ProceedWithStripe from "./Components/ProceedWithStripe";
 
 
@@ -152,6 +152,7 @@ function App() {
           /> */}
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/proceed" element={<ProceedWithStripe />} />
+          <Route path='/contact' element={<Contact />} />
 
   <Route path="/cart" element={<Cart
           cart={cart}

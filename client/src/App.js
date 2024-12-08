@@ -18,7 +18,7 @@ import { AuthProvider } from './AuthContext'
 import ProfilePage from './Components/ProfilePage';
 import Contact from "./Components/Contact";
 import ProceedWithStripe from "./Components/ProceedWithStripe";
-
+import AdminDashboard from "./Components/AdminDashboard";
 
 
 
@@ -135,21 +135,13 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/all" element={<ProductList products={products} />} />
         <Route path="/:category" element={<ProductList products={products} />} />
-        
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
         {/* Pass addToCart prop to Recommendations */}
         <Route
           path="/recommendation"
           element={<Recommendations addToCart={addToCart} />}
         />
 
-        {/* <Route
-            path="/checkout"
-            element={
-              <Elements stripe={stripePromise}>
-                <Checkout />
-              </Elements>
-            }
-          /> */}
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/proceed" element={<ProceedWithStripe />} />
           <Route path='/contact' element={<Contact />} />

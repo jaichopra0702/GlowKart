@@ -14,6 +14,7 @@ const productRoutes = require('./routes/productRoutes');
 const quizRoutes = require('./routes/quizRoutes');
 const userRoutes = require('./routes/userRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
+const adminRouter = require('./routes/adminRoutes'); 
 
 dotenv.config(); // Load environment variables
 connectDb(); // Connect to the database
@@ -42,7 +43,7 @@ app.use('/api/quiz', quizRoutes);
 app.use('/api/products', productRoutes);
 app.use('/user', userRoutes);
 app.use('/api/payment', paymentRoutes);
-
+app.use('/api/admin', adminRouter);
 //cors
 app.use(cors());
 

@@ -37,11 +37,11 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
+    const { email } = req.body;
 
-    if (!email || !password) {
+    if (!email) {
         res.status(400);
-        throw new Error("Please fill all fields");
+        throw new Error("Please fill the email field");
     }
 
     const user = await User.findOne({ email });
@@ -49,19 +49,50 @@ const loginUser = asyncHandler(async (req, res) => {
         return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-        return res.status(401).json({ message: "Invalid credentials" });
-    }
-
+    // No password checking, directly create a token
     const token = jwt.sign(
-        { userId: user._id, username: user.name },
+        { 
+            userId: user._id, 
+            username: user.name, 
+            isAdmin: user.isAdmin || false // Include isAdmin flag
+        },
         process.env.PRIVATE_KEY,
         { expiresIn: "1h" }
     );
 
     res.status(200).json({ message: "Login successful", token });
 });
+
+
+// Admin-only: Get all users
+const getAllUsers = asyncHandler(async (req, res) => {
+    if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "Access denied: Admins only" });
+    }
+
+    const users = await User.find({}).select("-password"); // Exclude passwords
+    res.status(200).json(users);
+});
+
+// Admin-only: Promote a user to admin
+const promoteToAdmin = asyncHandler(async (req, res) => {
+    if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "Access denied: Admins only" });
+    }
+
+    const { userId } = req.body; // Get the ID of the user to promote
+    const user = await User.findById(userId);
+
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+
+    user.isAdmin = true; // Set the isAdmin flag to true
+    await user.save();
+
+    res.status(200).json({ message: "User promoted to admin", user });
+});
+
 
 const myAccount = asyncHandler(async (req, res) => {
     const userId = req.user.userId; 
@@ -121,11 +152,42 @@ const changeUserPassword = async (req, res) => {
     }
 };
 
+const createAdminUser = async (req, res) => {
+    const { name, email, password } = req.body;
 
-module.exports = {
+    try {
+        // Hash the password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        // Create new admin user
+        const adminUser = new User({
+            name,
+            email,
+            password: hashedPassword,
+            isAdmin: true, // Make the user an admin
+        });
+
+        await adminUser.save();
+
+        res.status(201).json({
+            message: 'Admin user created successfully',
+            user: adminUser
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error creating admin user',
+            error: error.message
+        });
+    }
+};
+  
+  module.exports = {
     registerUser,
     loginUser,
-   myAccount,
+    createAdminUser,
+    promoteToAdmin,
+    myAccount,
     updateUserProfile,
     changeUserPassword
-};
+  };

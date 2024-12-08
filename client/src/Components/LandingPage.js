@@ -99,6 +99,7 @@ function LandingPage() {
                             <li><Link to="/All">Shop All</Link></li>
                             <li><Link to="/quiz">Personalised Products</Link></li>
                             <li><Link to="/contact">Contact Us</Link></li>
+                            <li><Link to="/admin/dashboard">Admin</Link></li>
                             <li>
                                 {isLoggedIn ? (
                                     <button onClick={handleLogout}>Logout</button>  // Show Logout if user is logged in

@@ -61,18 +61,11 @@ const loginUser = asyncHandler(async (req, res) => {
     );
 
     res.status(200).json({ message: "Login successful", token });
+
+    
 });
 
 
-// Admin-only: Get all users
-const getAllUsers = asyncHandler(async (req, res) => {
-    if (!req.user.isAdmin) {
-        return res.status(403).json({ message: "Access denied: Admins only" });
-    }
-
-    const users = await User.find({}).select("-password"); // Exclude passwords
-    res.status(200).json(users);
-});
 
 // Admin-only: Promote a user to admin
 const promoteToAdmin = asyncHandler(async (req, res) => {

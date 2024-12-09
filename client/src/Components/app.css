@@ -1,12 +1,12 @@
 /* General Styling */
 
-  
-.login, .cart {
+.login,
+.cart {
   color: #000; /* Black text color */
   text-decoration: none;
 }
 
-button{
+button {
   margin-left: 30px;
 }
 
@@ -59,15 +59,15 @@ button{
   margin: 10px 0;
 }
 
-.product-name{
+.product-name {
   margin-left: 0px;
 }
 
-.product-rating{
+.product-rating {
   margin: -4px 10px 0px 15px;
 }
 
-.product-price{
+.product-price {
   margin-right: 0px;
 }
 
@@ -113,7 +113,6 @@ button{
   color: #333;
   margin-bottom: 0.5rem;
 }
-
 
 /* Filter and Sorting Section */
 .filter-sort-section {

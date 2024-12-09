@@ -42,9 +42,9 @@ function Login() {
     e.preventDefault();
     setIsLoading(true);
     setErrorMessage('');
-  
+
     const endpoint = isSignUpMode ? '/registeruser' : '/loginuser';
-  
+
     try {
       const response = await fetch(`http://localhost:3001/user${endpoint}`, {
         method: 'POST',
@@ -54,13 +54,13 @@ function Login() {
         },
         body: JSON.stringify(formData),
       });
-  
+
       const data = await response.json();
-  
+
       if (!response.ok) {
         throw new Error(data.message || 'Something went wrong');
       }
-  
+
       if (isSignUpMode) {
         // After successful registration, switch to login mode
         setIsSignUpMode(false);
@@ -77,7 +77,7 @@ function Login() {
       setIsLoading(false);
     }
   };
-  
+
   return (
     <div className="login-css">
       <main className={isSignUpMode ? 'sign-up-mode' : ''}>
@@ -85,7 +85,10 @@ function Login() {
           <div className="inner-box">
             <div className="forms-wrap">
               {errorMessage && (
-                <div className="error-message" style={{ color: 'red', textAlign: 'center', padding: '10px' }}>
+                <div
+                  className="error-message"
+                  style={{ color: 'red', textAlign: 'center', padding: '10px' }}
+                >
                   {errorMessage}
                 </div>
               )}
@@ -148,8 +151,8 @@ function Login() {
                     />
                     <label>Password</label>
                   </div>
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className="sign-btn"
                     disabled={isLoading}
                   >
@@ -216,8 +219,8 @@ function Login() {
                     />
                     <label>Password</label>
                   </div>
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className="sign-btn"
                     disabled={isLoading}
                   >

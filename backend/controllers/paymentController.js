@@ -6,18 +6,21 @@ exports.createPaymentIntent = async (req, res) => {
 
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount,  // amount in paise for INR (example: 1000 = ₹10)
+      amount: amount, // amount in paise for INR (example: 1000 = ₹10)
       currency: currency,
       payment_method_types: ['card'],
     });
-    console.log("PAYMENT INTENT",paymentIntent);
+    console.log('PAYMENT INTENT', paymentIntent);
     res.status(200).json({
       clientSecret: paymentIntent.client_secret,
-      paymentIntentId: paymentIntent.id,  // Ensure you're sending this back correctly
+      paymentIntentId: paymentIntent.id, // Ensure you're sending this back correctly
     });
   } catch (error) {
     console.error('Error creating payment intent:', error);
-    res.status(500).json({ message: 'Unable to create payment intent', error: error.message });
+    res.status(500).json({
+      message: 'Unable to create payment intent',
+      error: error.message,
+    });
   }
 };
 
@@ -52,28 +55,36 @@ exports.createPaymentIntent = async (req, res) => {
 
 // Confirm payment intent
 
-
 exports.confirmPayment = async (req, res) => {
   const { paymentIntentId, paymentMethodId } = req.body; // Receive these values from the frontend
 
   try {
     if (!paymentMethodId) {
-      return res.status(400).json({ success: false, message: 'Payment method is required.' });
+      return res
+        .status(400)
+        .json({ success: false, message: 'Payment method is required.' });
     }
 
     // Confirm paymentIntent with paymentMethodId
     const paymentIntent = await stripe.paymentIntents.confirm(paymentIntentId, {
       payment_method: paymentMethodId, // Corrected here: pass paymentMethodId, not paymentIntentId
     });
-    
+
     if (paymentIntent.status === 'succeeded') {
-      res.status(200).json({ success: true, message: 'Payment succeeded', paymentIntent });
+      res
+        .status(200)
+        .json({ success: true, message: 'Payment succeeded', paymentIntent });
     } else {
-      res.status(400).json({ success: false, message: 'Payment failed', paymentIntent });
+      res
+        .status(400)
+        .json({ success: false, message: 'Payment failed', paymentIntent });
     }
-    
   } catch (error) {
     console.error('Error confirming payment:', error);
-    res.status(500).json({ success: false, message: 'Error confirming payment', error: error.message });
+    res.status(500).json({
+      success: false,
+      message: 'Error confirming payment',
+      error: error.message,
+    });
   }
 };

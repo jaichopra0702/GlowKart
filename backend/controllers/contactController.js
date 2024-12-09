@@ -9,7 +9,7 @@ exports.submitContactForm = async (req, res) => {
     if (!name || !email || !message) {
       return res.status(400).json({
         success: false,
-        msg: 'All fields are required'
+        msg: 'All fields are required',
       });
     }
 
@@ -18,24 +18,23 @@ exports.submitContactForm = async (req, res) => {
     if (!emailRegex.test(email)) {
       return res.status(400).json({
         success: false,
-        msg: 'Please provide a valid email address'
+        msg: 'Please provide a valid email address',
       });
     }
 
     // Create transporter
     const transporter = nodemailer.createTransport({
-        host: 'sandbox.smtp.mailtrap.io',
-        port: 2525,
-        secure: false, // Mailtrap does not require SSL
-        auth: {
-          user: process.env.MAIL_USER,
-          pass: process.env.MAIL_PASS
-        },
-        connectionTimeout: 20000, // 20 seconds
-        greetingTimeout: 20000,   // 20 seconds
-        socketTimeout: 20000  
-      });
-      
+      host: 'sandbox.smtp.mailtrap.io',
+      port: 2525,
+      secure: false, // Mailtrap does not require SSL
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
+      },
+      connectionTimeout: 20000, // 20 seconds
+      greetingTimeout: 20000, // 20 seconds
+      socketTimeout: 20000,
+    });
 
     // IMPORTANT: Set a specific recipient email
     const RECIPIENT_EMAIL = 'recipient@example.com'; // Replace with your email or Mailtrap test inbox
@@ -43,7 +42,7 @@ exports.submitContactForm = async (req, res) => {
     const mailOptions = {
       from: {
         name: name,
-        address: process.env.MAIL_USER // Use Mailtrap user as sender
+        address: process.env.MAIL_USER, // Use Mailtrap user as sender
       },
       to: RECIPIENT_EMAIL, // Specific recipient
       replyTo: email, // Allow replies to go to the form submitter
@@ -58,14 +57,14 @@ Message: ${message}
 <p><strong>Name:</strong> ${name}</p>
 <p><strong>Email:</strong> ${email}</p>
 <p><strong>Message:</strong> ${message}</p>
-      `
+      `,
     };
 
     // Log mail options for debugging
     console.log('Mail options:', {
       from: mailOptions.from,
       to: mailOptions.to,
-      subject: mailOptions.subject
+      subject: mailOptions.subject,
     });
 
     // Send email
@@ -76,15 +75,14 @@ Message: ${message}
     res.status(200).json({
       success: true,
       msg: 'Message sent successfully',
-      messageId: info.messageId
+      messageId: info.messageId,
     });
-
   } catch (error) {
     console.error('Contact form error:', error);
     res.status(500).json({
       success: false,
       msg: 'Server error while sending message',
-      error: error.message
+      error: error.message,
     });
   }
 };

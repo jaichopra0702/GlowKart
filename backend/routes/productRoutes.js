@@ -7,5 +7,4 @@ const productController = require('../controllers/productController'); // Assumi
 // Route to get recommendations based on category
 router.get('/recommendations', productController.getRecommendations);
 
-
 module.exports = router;

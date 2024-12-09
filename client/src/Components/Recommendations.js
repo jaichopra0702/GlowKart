@@ -20,7 +20,9 @@ const Recommendations = () => {
   useEffect(() => {
     setLoading(true); // Start loading when category changes
     axios
-      .get(`http://localhost:3001/api/products/recommendations?category=${selectedCategory}`)
+      .get(
+        `http://localhost:3001/api/products/recommendations?category=${selectedCategory}`
+      )
       .then((response) => {
         if (response.data && response.data.length > 0) {
           setProducts(response.data);
@@ -37,7 +39,7 @@ const Recommendations = () => {
 
   // Handle adding individual product to cart
   const handleAddToCart = (product) => {
-    addToCart(product);  // Add only the clicked product to the cart
+    addToCart(product); // Add only the clicked product to the cart
   };
 
   // Navigate to the cart page
@@ -76,7 +78,10 @@ const Recommendations = () => {
                 <h3>{product.name}</h3>
                 <p>{product.description}</p>
                 <p className="price">Rs {product.price}</p>
-                <button className="add-to-cart" onClick={() => handleAddToCart(product)}>
+                <button
+                  className="add-to-cart"
+                  onClick={() => handleAddToCart(product)}
+                >
                   Add to Cart
                 </button>
               </div>

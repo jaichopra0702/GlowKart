@@ -4,12 +4,12 @@ import ProductCard from './ProductCard';
 import Filter from './Filter';
 import './app1.css';
 import { CartContext } from './CartContext';
-import { FaShoppingCart } from 'react-icons/fa';  // Import the cart icon
+import { FaShoppingCart } from 'react-icons/fa'; // Import the cart icon
 
 const ProductList = ({ products }) => {
   const { category } = useParams();
   const navigate = useNavigate();
-  const { addToCart, cart } = useContext(CartContext);  // Get cart and addToCart from context
+  const { addToCart, cart } = useContext(CartContext); // Get cart and addToCart from context
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -18,11 +18,12 @@ const ProductList = ({ products }) => {
     if (!products) return [];
 
     // Filter by category
-    let categoryFiltered = category && category !== 'All'
-      ? products.filter((product) =>
-        product.category.replace(/ /g, '_') === category
-      )
-      : products;
+    let categoryFiltered =
+      category && category !== 'All'
+        ? products.filter(
+            (product) => product.category.replace(/ /g, '_') === category
+          )
+        : products;
 
     // Filter by search query (name matching)
     if (searchQuery) {
@@ -64,7 +65,6 @@ const ProductList = ({ products }) => {
           <span className="cart-item-count">{cartItemCount}</span>
         )}
       </button>
-
 
       <div className="products">
         {filteredProducts.length > 0 ? (

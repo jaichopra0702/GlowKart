@@ -1,10 +1,10 @@
 .App {
   text-align: center;
   display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #e7ded8;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #e7ded8;
 }
 
 .App-logo {

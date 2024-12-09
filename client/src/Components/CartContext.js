@@ -13,9 +13,9 @@ export const CartProvider = ({ children }) => {
   // Add item to cart
   const addToCart = (product) => {
     setCart((prevCart) => {
-      const existingProduct = prevCart.find(item => item.id === product.id);
+      const existingProduct = prevCart.find((item) => item.id === product.id);
       if (existingProduct) {
-        return prevCart.map(item =>
+        return prevCart.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
@@ -27,9 +27,7 @@ export const CartProvider = ({ children }) => {
 
   // Remove item from cart
   const removeFromCart = (product) => {
-    setCart((prevCart) =>
-      prevCart.filter((item) => item.id !== product.id)
-    );
+    setCart((prevCart) => prevCart.filter((item) => item.id !== product.id));
   };
 
   // Update item quantity in cart
@@ -82,7 +80,15 @@ export const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateCartItemQuantity, getCartItemCount }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        updateCartItemQuantity,
+        getCartItemCount,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

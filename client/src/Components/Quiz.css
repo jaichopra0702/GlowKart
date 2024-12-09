@@ -1,82 +1,81 @@
 .quiz-container {
-    background-color: #fdf8f4;
-    margin-top: 40px;
-    padding: 120px;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-.quiz-header h1,h2{
-    background-color: #fdf8f4;
-    font-family: "Nunito", sans-serif;
+  background-color: #fdf8f4;
+  margin-top: 40px;
+  padding: 120px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.quiz-header h1,
+h2 {
+  background-color: #fdf8f4;
+  font-family: 'Nunito', sans-serif;
   font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
 }
-  .quiz-header h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .quiz-header p {
-    font-size: 16px;
-    margin-bottom: 30px;
-  }
-  
-  .quiz-button {
-    background-color: black;
-    color: white;
-    padding: 25px 50px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 18px;
-    font-size: 18px;
-  font-family: "Arapey",serif;
-  font-optical-sizing: auto;
-  font-weight: 5500; 
-  font-style: normal;
-  }
-  
-  .quiz-button:hover {
-    background-color: #333;
-  }
-  
+.quiz-header h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
 
-  .quiz-container {
-    background-color: #fdf8f4;
-    margin-top: 40px;
-    padding: 120px;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  .quiz-header {
-    background-color: #fdf8f4;
-  }
-  .quiz-header h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  .quiz-header p {
-    font-size: 16px;
-    margin-bottom: 30px;
-  }
-  .quiz-button {
-    background-color: black;
-    color: white;
-    padding: 25px 50px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 18px;
-  }
-  .quiz-button:hover {
-    background-color: #333;
-  }
-  
-  
-  /* General Styles for Quiz Pages */
+.quiz-header p {
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.quiz-button {
+  background-color: black;
+  color: white;
+  padding: 25px 50px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  font-size: 18px;
+  font-family: 'Arapey', serif;
+  font-optical-sizing: auto;
+  font-weight: 5500;
+  font-style: normal;
+}
+
+.quiz-button:hover {
+  background-color: #333;
+}
+
+.quiz-container {
+  background-color: #fdf8f4;
+  margin-top: 40px;
+  padding: 120px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.quiz-header {
+  background-color: #fdf8f4;
+}
+.quiz-header h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.quiz-header p {
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+.quiz-button {
+  background-color: black;
+  color: white;
+  padding: 25px 50px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 18px;
+}
+.quiz-button:hover {
+  background-color: #333;
+}
+
+/* General Styles for Quiz Pages */
 .quiz-container1 {
   display: flex;
   flex-direction: column;
@@ -87,7 +86,7 @@
   padding: 20px;
 }
 
-input[type="text"] {
+input[type='text'] {
   width: 100%;
   max-width: 800px; /* Adjust as needed */
   padding: 15px; /* Adjust padding as needed */
@@ -98,8 +97,8 @@ input[type="text"] {
   box-sizing: border-box;
 }
 
-.button-text{
-  margin-left: 90px
+.button-text {
+  margin-left: 90px;
 }
 
 button.quiz-button1 {
@@ -121,7 +120,6 @@ button.quiz-button1:disabled {
 .button-text::after {
   content: ' →'; /* Arrow character */
 }
-
 
 .quiz-header {
   text-align: center;
@@ -148,10 +146,9 @@ button.quiz-button1:disabled {
   border-radius: 5px;
   transition: background-color 0.3s;
 }
-.next{
+.next {
   margin-left: 60px;
 }
-
 
 /* .quiz-button:hover {
   background-color: #0056b3;
@@ -205,7 +202,6 @@ button.quiz-button1:disabled {
   color: #666;
 }
 
-
 .quiz-container1 {
   display: flex;
   flex-direction: column;
@@ -216,7 +212,7 @@ button.quiz-button1:disabled {
   padding: 20px;
 }
 
-input[type="text"] {
+input[type='text'] {
   width: 100%;
   max-width: 800px;
   padding: 15px;
@@ -351,7 +347,9 @@ button.quiz-button1:disabled {
   cursor: pointer;
   border-radius: 50%; /* Make the button circular */
   margin: 10px;
-  transition: background-color 0.3s, transform 0.2s;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
   width: 100px; /* Set width for circular shape */
   height: 100px; /* Set height for circular shape */
 }
@@ -418,8 +416,6 @@ button.quiz-button1:disabled {
   white-space: nowrap; /* Prevent text wrapping */
 }
 
-
-
 .mcq-options {
   display: flex;
   flex-wrap: wrap; /* Ensure options wrap if needed */
@@ -471,7 +467,9 @@ button.quiz-button1:disabled {
   cursor: pointer;
   border-radius: 50%;
   margin: 10px;
-  transition: background-color 0.3s, transform 0.2s;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
   width: 100px;
   height: 100px;
 }
@@ -573,22 +571,22 @@ button.quiz-button1:disabled {
 }
 
 .prompt-before-br {
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
 }
 
 .prompt-after-br {
-  font-family: "Arapey",serif;
+  font-family: 'Arapey', serif;
   font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
 }
 
-.prompt-alternative{
+.prompt-alternative {
   font-size: 18px;
-  font-family: "Arapey",serif;
+  font-family: 'Arapey', serif;
   font-optical-sizing: auto;
   font-weight: 5500; /* Adjust weight as needed */
   font-style: normal;
@@ -596,9 +594,9 @@ button.quiz-button1:disabled {
   margin-top: 30px;
 }
 
-.alt{
+.alt {
   font-size: 18px;
-  font-family: "Arapey",serif;
+  font-family: 'Arapey', serif;
   font-optical-sizing: auto;
   font-weight: 5500; /* Adjust weight as needed */
   font-style: normal;
@@ -607,11 +605,8 @@ button.quiz-button1:disabled {
 }
 
 .alt1 {
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
 }
-
-
-

@@ -9,7 +9,11 @@ const Checkout = () => {
   const navigate = useNavigate();
 
   // Extract cart, totalAmount, and totalProducts from location state
-  const { cart = [], totalAmount = 0, totalProducts = 0 } = location.state || {};
+  const {
+    cart = [],
+    totalAmount = 0,
+    totalProducts = 0,
+  } = location.state || {};
 
   // State to store address details
   const [address, setAddress] = useState({
@@ -48,7 +52,7 @@ const Checkout = () => {
       alert('Proceeding to payment...');
       // Pass cart, total amount, total products, and address to the payment page
       navigate('/proceed', {
-        state: { cart, totalAmount, totalProducts, address }
+        state: { cart, totalAmount, totalProducts, address },
       });
     } else {
       alert('Please fill out all address details.');
@@ -65,7 +69,6 @@ const Checkout = () => {
     title: {
       fontSize: '2rem',
       marginBottom: '1rem',
-      
     },
     text: {
       fontSize: '1.2rem',
@@ -124,15 +127,19 @@ const Checkout = () => {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}><u>Checkout</u></h1>
+      <h1 style={styles.title}>
+        <u>Checkout</u>
+      </h1>
       <p style={styles.text}>
-        <b>Thank you for choosing to shop with us. Please complete your payment below:</b>
+        <b>
+          Thank you for choosing to shop with us. Please complete your payment
+          below:
+        </b>
       </p>
-      <b className='add'>Enter Address Details:</b>
+      <b className="add">Enter Address Details:</b>
 
       {/* Address Details Form */}
       <div>
-        
         <input
           style={styles.formInput}
           type="text"
@@ -181,8 +188,14 @@ const Checkout = () => {
       </div>
 
       <div style={styles.details}>
-        <p><b>Total Products: </b><strong>{totalProducts}</strong></p>
-        <p><b>Total Amount: </b><strong>₹{totalAmount.toFixed(2)}</strong></p>
+        <p>
+          <b>Total Products: </b>
+          <strong>{totalProducts}</strong>
+        </p>
+        <p>
+          <b>Total Amount: </b>
+          <strong>₹{totalAmount.toFixed(2)}</strong>
+        </p>
       </div>
 
       {/* Product List Table */}
@@ -203,7 +216,9 @@ const Checkout = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="2" style={styles.tableData}>No products in cart.</td>
+              <td colSpan="2" style={styles.tableData}>
+                No products in cart.
+              </td>
             </tr>
           )}
         </tbody>
@@ -219,7 +234,9 @@ const Checkout = () => {
           Proceed to Payment
         </button>
       ) : (
-        <button style={styles.disabledButton} disabled>Proceed to Payment</button>
+        <button style={styles.disabledButton} disabled>
+          Proceed to Payment
+        </button>
       )}
     </div>
   );

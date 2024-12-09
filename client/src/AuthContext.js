@@ -11,36 +11,36 @@ export const AuthProvider = ({ children }) => {
       try {
         const response = await fetch('http://localhost:3001/user/myAccount', {
           method: 'GET',
-          credentials: 'include',  // Include cookies (session ID)
+          credentials: 'include', // Include cookies (session ID)
         });
 
         if (response.ok) {
-          setIsLoggedIn(true);  // If session is valid, the user is logged in
+          setIsLoggedIn(true); // If session is valid, the user is logged in
         } else {
-          setIsLoggedIn(false);  // Session is not valid
+          setIsLoggedIn(false); // Session is not valid
         }
       } catch (error) {
         console.error('Error checking session:', error);
-        setIsLoggedIn(false);  // Handle error, consider user not logged in
+        setIsLoggedIn(false); // Handle error, consider user not logged in
       }
     };
 
-    checkSession();  // Call the function to check session when the app loads
-  }, []);  // Empty dependency array means this effect runs once when the component mounts
+    checkSession(); // Call the function to check session when the app loads
+  }, []); // Empty dependency array means this effect runs once when the component mounts
 
   const login = () => {
-    setIsLoggedIn(true);  // Update state to logged in (session handled by the server)
+    setIsLoggedIn(true); // Update state to logged in (session handled by the server)
   };
 
   const logout = async () => {
     try {
       const response = await fetch('http://localhost:3001/user/logout', {
         method: 'POST',
-        credentials: 'include',  // Include cookies (session ID)
+        credentials: 'include', // Include cookies (session ID)
       });
 
       if (response.ok) {
-        setIsLoggedIn(false);  // Set login state to false on logout
+        setIsLoggedIn(false); // Set login state to false on logout
       } else {
         console.error('Failed to logout');
       }

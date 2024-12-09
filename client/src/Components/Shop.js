@@ -6,16 +6,16 @@ const Shop = () => {
 
   useEffect(() => {
     fetch('http://localhost:5001/api/products')
-      .then(response => response.json())
-      .then(data => setProducts(data))
-      .catch(error => console.error('Error fetching products:', error));
+      .then((response) => response.json())
+      .then((data) => setProducts(data))
+      .catch((error) => console.error('Error fetching products:', error));
   }, []);
 
   return (
     <div>
       <h1>Shop</h1>
       <div className="product-list">
-        {products.map(product => (
+        {products.map((product) => (
           <div key={product.id} className="product-item">
             <img src={product.imageUrl} alt={product.name} />
             <h2>{product.name}</h2>

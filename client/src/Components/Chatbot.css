@@ -1,181 +1,180 @@
 /* ChatBot.css */
 .chatbot-container {
-    position: relative;
-    margin-top: -70px;
-    right: 20px;
-    z-index: 1000;
+  position: relative;
+  margin-top: -70px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.chat-button {
+  background-color: blueviolet;
+  color: white;
+  border: none;
+  border-radius: 48%;
+  padding: 18px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 1120px;
+}
+
+.chat-button:hover {
+  background-color: #2563eb;
+  transform: scale(1.05);
+}
+
+.chat-window {
+  position: fixed;
+  bottom: 20px;
+  margin-top: -360px;
+  margin-left: 900px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 350px;
+  /* max-height: 500px; */
+  display: flex;
+  flex-direction: column;
+  transition: max-height 0.5s ease-out;
+}
+
+.chat-header {
+  background-color: blueviolet;
+  color: white;
+  padding: 16px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-title {
+  font-weight: 500;
+  margin: 0;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.header-button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.header-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.messages-container {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.messages-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background-color: #cbd5e0;
+  border-radius: 3px;
+}
+
+.message {
+  margin-bottom: 16px;
+}
+
+.message.user {
+  text-align: right;
+}
+
+.message-content {
+  display: inline-block;
+  padding: 12px;
+  border-radius: 12px;
+  max-width: 80%;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.user .message-content {
+  background-color: blueviolet;
+  color: white;
+}
+
+.bot .message-content {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+.input-container {
+  border-top: 1px solid #e5e7eb;
+  padding: 16px;
+}
+
+.input-wrapper {
+  display: flex;
+  gap: 8px;
+}
+
+.chat-input {
+  flex: 1;
+  border: 1px solid #d1d5db;
+  border-radius: 9999px;
+  padding: 8px 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.chat-input:focus {
+  border-color: blueviolet;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.send-button {
+  background-color: blueviolet;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.send-button:hover {
+  background-color: blueviolet;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  
-  .chat-button {
-    background-color: blueviolet;
-    color: white;
-    border: none;
-    border-radius: 48%;
-    padding: 18px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-left: 1120px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .chat-button:hover {
-    background-color: #2563eb;
-    transform: scale(1.05);
-  }
-  
+}
+
+/* Add responsiveness */
+@media (max-width: 640px) {
   .chat-window {
-    position: fixed;
-    bottom: 20px;
-    margin-top: -360px;
-    margin-left: 900px;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    width: 350px;
-    /* max-height: 500px; */
-    display: flex;
-    flex-direction: column;
-    transition: max-height 0.5s ease-out;
+    width: 100%;
+    max-width: 320px;
   }
-  
-  
-  .chat-header {
-    background-color: blueviolet;
-    color: white;
-    padding: 16px;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .chat-title {
-    font-weight: 500;
-    margin: 0;
-  }
-  
-  .header-buttons {
-    display: flex;
-    gap: 8px;
-  }
-  
-  .header-button {
-    background: none;
-    border: none;
-    color: white;
-    padding: 4px;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .header-button:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-  
-  .messages-container {
-    flex: 1;
-    padding: 16px;
-    overflow-y: auto;
-    max-height: 300px;
-  }
-  
-  .messages-container::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  .messages-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 3px;
-  }
-  
-  .messages-container::-webkit-scrollbar-thumb {
-    background-color: #cbd5e0;
-    border-radius: 3px;
-  }
-  
-  .message {
-    margin-bottom: 16px;
-  }
-  
-  .message.user {
-    text-align: right;
-  }
-  
-  .message-content {
-    display: inline-block;
-    padding: 12px;
-    border-radius: 12px;
-    max-width: 80%;
-    animation: fadeIn 0.3s ease-in;
-  }
-  
-  .user .message-content {
-    background-color: blueviolet;
-    color: white;
-  }
-  
-  .bot .message-content {
-    background-color: #f3f4f6;
-    color: #1f2937;
-  }
-  
-  .input-container {
-    border-top: 1px solid #e5e7eb;
-    padding: 16px;
-  }
-  
-  .input-wrapper {
-    display: flex;
-    gap: 8px;
-  }
-  
-  .chat-input {
-    flex: 1;
-    border: 1px solid #d1d5db;
-    border-radius: 9999px;
-    padding: 8px 16px;
-    outline: none;
-    transition: border-color 0.3s ease;
-  }
-  
-  .chat-input:focus {
-    border-color: blueviolet;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-  }
-  
-  .send-button {
-    background-color: blueviolet;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    padding: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
-  }
-  
-  .send-button:hover {
-    background-color: blueviolet;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* Add responsiveness */
-  @media (max-width: 640px) {
-    .chat-window {
-      width: 100%;
-      max-width: 320px;
-    }
-  }
+}

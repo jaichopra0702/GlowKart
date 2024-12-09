@@ -15,9 +15,14 @@ const QuizStart = () => {
         <h1>You know your skin. We know the science.</h1>
         <h1>So let’s get you one step closer to your</h1>
         <h2>custom remedy.</h2>
-        <p>This two-minute questionnaire will help us understand your unique skin profile.</p>
+        <p>
+          This two-minute questionnaire will help us understand your unique skin
+          profile.
+        </p>
       </div>
-      <button className="quiz-button" onClick={handleStart}>LET'S GET STARTED</button>
+      <button className="quiz-button" onClick={handleStart}>
+        LET'S GET STARTED
+      </button>
     </div>
   );
 };

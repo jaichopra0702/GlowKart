@@ -6,7 +6,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -15,7 +15,7 @@ const Contact = () => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.id]: e.target.value
+      [e.target.id]: e.target.value,
     });
     // Clear error when user starts typing
     if (error) setError('');
@@ -39,8 +39,8 @@ const Contact = () => {
         formData,
         {
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         }
       );
 
@@ -52,7 +52,10 @@ const Contact = () => {
       }
     } catch (err) {
       console.error('Error details:', err.response?.data || err.message);
-      setError(err.response?.data?.msg || 'Failed to send message. Please try again later.');
+      setError(
+        err.response?.data?.msg ||
+          'Failed to send message. Please try again later.'
+      );
     } finally {
       setLoading(false);
     }
@@ -63,7 +66,11 @@ const Contact = () => {
       <h1>Contact Us</h1>
 
       {error && <p className="error-message">{error}</p>}
-      {success && <p className="success-message">Your message has been sent successfully!</p>}
+      {success && (
+        <p className="success-message">
+          Your message has been sent successfully!
+        </p>
+      )}
 
       <form onSubmit={handleSubmit} className="contact-form1">
         <div className="form-group">
@@ -99,15 +106,10 @@ const Contact = () => {
         </div>
 
         <div className="form-section">
-  <button 
-    type="submit" 
-    className="submit-btn" 
-    disabled={loading}
-  >
-    {loading ? 'Sending...' : 'Send Message'}
-  </button>
-</div>
-
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? 'Sending...' : 'Send Message'}
+          </button>
+        </div>
       </form>
     </div>
   );

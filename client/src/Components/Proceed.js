@@ -12,7 +12,7 @@ const cardElementOptions = {
     },
     invalid: { color: '#9e2146' },
   },
-  hidePostalCode: true,  // This hides the ZIP/postal code input
+  hidePostalCode: true, // This hides the ZIP/postal code input
 };
 
 const Proceed = () => {
@@ -39,15 +39,18 @@ const Proceed = () => {
       setError('');
 
       try {
-        const response = await fetch('http://localhost:3001/api/payment/create', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify({
-            amount: Math.round(totalAmount * 100),
-            currency: 'inr',
-          }),
-        });
+        const response = await fetch(
+          'http://localhost:3001/api/payment/create',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+              amount: Math.round(totalAmount * 100),
+              currency: 'inr',
+            }),
+          }
+        );
 
         if (!response.ok) {
           throw new Error('Failed to create payment intent');
@@ -83,24 +86,28 @@ const Proceed = () => {
     setPaymentStatus('');
 
     try {
-      const { error: methodError, paymentMethod } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: elements.getElement(CardElement),
-      });
+      const { error: methodError, paymentMethod } =
+        await stripe.createPaymentMethod({
+          type: 'card',
+          card: elements.getElement(CardElement),
+        });
 
       if (methodError) {
         throw new Error(methodError.message);
       }
 
-      const confirmResponse = await fetch('http://localhost:3001/api/payment/confirm-payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({
-          paymentIntentId: paymentIntent.id,
-          paymentMethodId: paymentMethod.id,
-        }),
-      });
+      const confirmResponse = await fetch(
+        'http://localhost:3001/api/payment/confirm-payment',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            paymentIntentId: paymentIntent.id,
+            paymentMethodId: paymentMethod.id,
+          }),
+        }
+      );
 
       const confirmResult = await confirmResponse.json();
 
@@ -109,7 +116,9 @@ const Proceed = () => {
       }
 
       if (confirmResult.requiresAction) {
-        const { error: confirmError } = await stripe.confirmCardPayment(paymentIntent.clientSecret);
+        const { error: confirmError } = await stripe.confirmCardPayment(
+          paymentIntent.clientSecret
+        );
         if (confirmError) {
           throw new Error(confirmError.message);
         }

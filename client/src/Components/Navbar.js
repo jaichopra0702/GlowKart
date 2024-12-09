@@ -1,7 +1,7 @@
 // src/components/Navbar.js
 // import React from 'react';
 // import { Link } from 'react-router-dom';
-// import './app.css'; 
+// import './app.css';
 
 // const Navbar = () => {
 //   return (
@@ -25,9 +25,6 @@
 //   );
 // };
 
-
-
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './app.css';
@@ -39,14 +36,26 @@ const Navbar = () => {
         <img src="https://via.placeholder.com/100x50?text=Logo" alt="Logo" />
       </div>
       <ul className="nav-links">
-        <li><Link to="/">Shop</Link></li>
-        <li><a href="#">Rewards</a></li>
-        <li><a href="#">Our Story</a></li>
-        <li><a href="#">More</a></li>
+        <li>
+          <Link to="/">Shop</Link>
+        </li>
+        <li>
+          <a href="#">Rewards</a>
+        </li>
+        <li>
+          <a href="#">Our Story</a>
+        </li>
+        <li>
+          <a href="#">More</a>
+        </li>
       </ul>
       <div className="nav-actions">
-        <Link to="/login" className="login">Login</Link>
-        <Link to="/signup" className="signup">Sign Up</Link>
+        <Link to="/login" className="login">
+          Login
+        </Link>
+        <Link to="/signup" className="signup">
+          Sign Up
+        </Link>
         <div className="cart">
           <Link to="/cart">Cart</Link>
         </div>
@@ -56,4 +65,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

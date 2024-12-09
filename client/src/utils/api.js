@@ -5,7 +5,7 @@ import axios from 'axios';
 export const getCartData = (token) => {
   return axios.get('http://localhost:5000/api/cart', {
     headers: {
-      Authorization: `Bearer ${token}`,  // Pass token for authentication
+      Authorization: `Bearer ${token}`, // Pass token for authentication
     },
   });
 };

@@ -10,9 +10,9 @@ const submitQuiz = async (req, res) => {
 
     // Validate required fields
     if (!name || !email || !answers || !category) {
-      return res.status(400).json({ 
-        error: "Missing required fields",
-        receivedData: req.body
+      return res.status(400).json({
+        error: 'Missing required fields',
+        receivedData: req.body,
       });
     }
 
@@ -22,24 +22,23 @@ const submitQuiz = async (req, res) => {
       phone,
       answers,
       category,
-      recommendations
+      recommendations,
     });
 
     await newQuiz.save();
     console.log('Quiz Saved Successfully:', newQuiz);
 
-    res.status(201).json({ 
-      success: true, 
-      message: 'Quiz submitted successfully', 
-      quiz: newQuiz 
+    res.status(201).json({
+      success: true,
+      message: 'Quiz submitted successfully',
+      quiz: newQuiz,
     });
-
   } catch (error) {
     console.error('Quiz Submission Error:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      error: 'Error submitting quiz', 
-      details: error.message 
+      error: 'Error submitting quiz',
+      details: error.message,
     });
   }
 };

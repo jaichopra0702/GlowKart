@@ -1,111 +1,110 @@
 /* General styles for the recommendations container */
 .recommendations-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    margin-left: 380px;
-    font-size: 18px;
-  }
-  
-  .add-all-to-cart {
-    background-color: blue;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-    margin-right: 40px;
-  }
-  .add-all-to-cart:hover{
-    background-color: blueviolet;
-  }
-  
-  
-  /* Styling for the product list */
-  .product-list1 {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 20px;
-    justify-content: center; /* Center all products in the row */
-  }
-  
-  .product-card {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    width: 160px; /* Box size */
-    text-align: center;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column; /* Stack content vertically */
-    justify-content: flex-start;
-    height: 320px; /* Adjust height to fit content */
-    padding-top: 50px; /* Add space to push content downward */
-  }
-  
-  /* Styling for the product image */
-  .product-card1 img {
-    width: 60%; /* Increase the width of the image to fill more of the container */
-    height: auto; /* Maintain aspect ratio */
-    max-height: 150px; /* Increase the max-height for a slightly larger image */
-    object-fit: contain; /* Ensure the image remains fully visible without cropping */
-    display: block;
-    margin-left: 5px; /* Center the image horizontally */
-    margin-top: -18px; /* Move the image upwards */
-    margin-bottom: 10px; /* Add some space below the image */
-  }
-  
-  /* Styling for the product info container */
-  .product-info1 {
-    padding: 10px;
-    display: flex;
-    flex-direction: column; /* Stack text vertically */
-    text-align: center;
-    margin-top: 0px; /* Move content below the image */
-    margin-left: 60px;
-  }
-  
-  /* Styling for the product name */
-  .product-info1 h3 {
-    font-size: 18px;
-    color: #333;
-    margin-top: -10px;
-    margin-bottom: 8px; /* Space between name and description */
-  }
-  
-  /* Styling for the product description */
-  .product-info1 p {
-    font-size: 12px;
-    color: #777;
-    margin-bottom: 8px; /* Space between description and price */
-  }
-  
-  .price {
-    font-weight: bold;
-    color: #333;
-    margin-top: -20px;
-    margin-left: 40px;
-    margin-bottom: 10px; /* Space before Add to Cart button */
-  }
-  
-  /* Styling for the 'Add to Cart' button */
-  .add-to-cart2 {
-    background-color: #ff5722;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 5px;
-    margin-right: 5px;
-    margin-top: 10px; /* Add space above the button */
-  }
-  
-  .add-to-cart:hover {
-    background-color:blueviolet;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin-left: 380px;
+  font-size: 18px;
+}
+
+.add-all-to-cart {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-right: 40px;
+}
+.add-all-to-cart:hover {
+  background-color: blueviolet;
+}
+
+/* Styling for the product list */
+.product-list1 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center; /* Center all products in the row */
+}
+
+.product-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  width: 160px; /* Box size */
+  text-align: center;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  justify-content: flex-start;
+  height: 320px; /* Adjust height to fit content */
+  padding-top: 50px; /* Add space to push content downward */
+}
+
+/* Styling for the product image */
+.product-card1 img {
+  width: 60%; /* Increase the width of the image to fill more of the container */
+  height: auto; /* Maintain aspect ratio */
+  max-height: 150px; /* Increase the max-height for a slightly larger image */
+  object-fit: contain; /* Ensure the image remains fully visible without cropping */
+  display: block;
+  margin-left: 5px; /* Center the image horizontally */
+  margin-top: -18px; /* Move the image upwards */
+  margin-bottom: 10px; /* Add some space below the image */
+}
+
+/* Styling for the product info container */
+.product-info1 {
+  padding: 10px;
+  display: flex;
+  flex-direction: column; /* Stack text vertically */
+  text-align: center;
+  margin-top: 0px; /* Move content below the image */
+  margin-left: 60px;
+}
+
+/* Styling for the product name */
+.product-info1 h3 {
+  font-size: 18px;
+  color: #333;
+  margin-top: -10px;
+  margin-bottom: 8px; /* Space between name and description */
+}
+
+/* Styling for the product description */
+.product-info1 p {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 8px; /* Space between description and price */
+}
+
+.price {
+  font-weight: bold;
+  color: #333;
+  margin-top: -20px;
+  margin-left: 40px;
+  margin-bottom: 10px; /* Space before Add to Cart button */
+}
+
+/* Styling for the 'Add to Cart' button */
+.add-to-cart2 {
+  background-color: #ff5722;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+  margin-right: 5px;
+  margin-top: 10px; /* Add space above the button */
+}
+
+.add-to-cart:hover {
+  background-color: blueviolet;
+}

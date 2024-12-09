@@ -11,7 +11,7 @@ const validateToken = (req, res, next) => {
         });
     }
 };
-
+//this is cool
 const generateToken = (user) => {
     // This would typically be handled by express-session automatically
     // But you can add custom session data if needed

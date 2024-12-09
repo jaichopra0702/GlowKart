@@ -5,6 +5,61 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 require("dotenv").config();
 
+const promoteToAdmin = asyncHandler(async (req, res) => {
+    if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "Access denied: Admins only" });
+    }
+
+    const { userId } = req.body;
+    const user = await User.findById(userId);
+
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+
+    user.isAdmin = true;
+    await user.save();
+
+    res.status(200).json({ message: "User promoted to admin", user });
+});
+
+// Create an admin user
+const createAdminUser = asyncHandler(async (req, res) => {
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+        return res.status(400).json({ message: "Please fill all fields" });
+    }
+
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+        return res.status(400).json({ message: "Admin user already exists" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const adminUser = await User.create({
+        name,
+        email,
+        password: hashedPassword,
+        isAdmin: true,
+    });
+
+    console.log("JWT_SECRET:", process.env.JWT_SECRET); // Debug log
+
+    // Return the created admin user details without the token
+    res.status(201).json({
+        message: "Admin user created successfully",
+        user: {
+            id: adminUser._id,
+            name: adminUser.name,
+            email: adminUser.email,
+            isAdmin: adminUser.isAdmin,
+        },
+    });
+});
+
 const registerUser = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
 
@@ -49,10 +104,18 @@ const loginUser = asyncHandler(async (req, res) => {
         return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-        return res.status(401).json({ message: "Invalid credentials" });
-    }
+   // No password checking, directly create a token
+   const token = jwt.sign(
+    { 
+        userId: user._id, 
+        username: user.name, 
+        isAdmin: user.isAdmin || false // Include isAdmin flag
+    },
+    process.env.PRIVATE_KEY,
+    { expiresIn: "1h" }
+);
+res.status(200).json({ message: "Login successful", token });
+
 
     // Create a stateful session
     req.session.userId = user._id;
@@ -123,7 +186,14 @@ const updateUserProfile = asyncHandler(async (req, res) => {
         email: updatedUser.email,
     });
 });
+const getAllUsers = asyncHandler(async (req, res) => {
+    if (!req.user.isAdmin) {
+        return res.status(403).json({ message: "Access denied: Admins only" });
+    }
 
+    const users = await User.find({}).select("-password"); // Exclude passwords
+    res.status(200).json(users);
+});
 // Change user password
 const changeUserPassword = asyncHandler(async (req, res) => {
     const { currentPassword, newPassword } = req.body;
@@ -158,5 +228,8 @@ module.exports = {
     logoutUser,
     myAccount,
     updateUserProfile,
-    changeUserPassword
+    changeUserPassword,
+    getAllUsers,
+    promoteToAdmin,
+    createAdminUser
 };

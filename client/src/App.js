@@ -21,7 +21,6 @@ import ProceedWithStripe from "./Components/ProceedWithStripe";
 import AdminDashboard from "./Components/AdminDashboard";
 
 
-
 const products = [
   // Acne Category
   { id: 1, name: 'Acne Treatment Gel', category: 'Acne', price: 1500, imageUrl: 'https://cdn.tirabeauty.com/v2/billowing-snowflake-434234/tira-p/wrkr/products/pictures/item/free/resize-w:1080/1090912/C-iRhDQGuO-4103040895554_1.jpg' },

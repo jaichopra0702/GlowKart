@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -10,7 +10,7 @@ import ThankYouPage from "./Components/ThankYouPage";
 import Navbar from './Components/Navbar';
 import ProductList from './Components/ProductList';
 import Cart from './Components/Cart';
-import Login from './Components/Login';
+import Login from './Components/login';
 import { CartContext } from "./Components/CartContext";
 import Recommendations from "./Components/Recommendations";
 import Checkout from "./Components/Checkout";
@@ -18,6 +18,8 @@ import { AuthProvider } from './AuthContext'
 import ProfilePage from './Components/ProfilePage';
 import Contact from "./Components/Contact";
 import ProceedWithStripe from "./Components/ProceedWithStripe";
+import ChatBot from "./Components/Chatbot";
+
 import AdminDashboard from "./Components/AdminDashboard";
 
 
@@ -82,6 +84,10 @@ const products = [
 const stripePromise = loadStripe('pk_test_51PyvtA03czuQee3J7rVd9ySCVxJZImm9T9QkjXfpjFg4nsVJBO9QVTgbY1tbWVtVJx6ygJvG8q7q0xUD8Z63STm400HIxzx1xw');
 
 function App() {
+  const location = useLocation();
+
+  // Only show ChatBot on LandingPage route
+  const showChatBot = location.pathname === "/";
   const [cart, setCart] = useState([]);
 
   // Load cart from localStorage on component mount
@@ -135,15 +141,26 @@ function App() {
         <Route path="/all" element={<ProductList products={products} />} />
         <Route path="/:category" element={<ProductList products={products} />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+ 
         {/* Pass addToCart prop to Recommendations */}
         <Route
           path="/recommendation"
           element={<Recommendations addToCart={addToCart} />}
         />
 
+        {/* <Route
+            path="/checkout"
+            element={
+              <Elements stripe={stripePromise}>
+                <Checkout />
+              </Elements>
+            }
+          /> */}
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/proceed" element={<ProceedWithStripe />} />
           <Route path='/contact' element={<Contact />} />
+          
+          
 
   <Route path="/cart" element={<Cart
           cart={cart}
@@ -151,6 +168,8 @@ function App() {
           updateCartItemQuantity={updateCartItemQuantity}
         />} />
       </Routes>
+       {/* Conditionally render ChatBot only on the landing page */}
+       {showChatBot && <ChatBot />}
       </AuthProvider>
     </div>
   );

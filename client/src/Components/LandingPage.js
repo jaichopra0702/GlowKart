@@ -131,6 +131,7 @@ function LandingPage() {
                         derived and will leave you feeling like everyday is spa-day.
                     </p>
                     <button className="shop-now"><Link to='/All'>Shop Now</Link></button>
+                    <button className="shop-now"><Link to='/chatbot'>Chatbot</Link></button>
                 </div>
             </main>
             <section className="section1">

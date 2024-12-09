@@ -37,11 +37,10 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-    const { email } = req.body;
+    const { email, password } = req.body;
 
-    if (!email) {
-        res.status(400);
-        throw new Error("Please fill the email field");
+    if (!email || !password) {
+        return res.status(400).json({ message: "Please fill all fields" });
     }
 
     const user = await User.findOne({ email });
@@ -49,20 +48,23 @@ const loginUser = asyncHandler(async (req, res) => {
         return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // No password checking, directly create a token
+    // Add password comparison
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+        return res.status(401).json({ message: "Invalid credentials" });
+    }
+
     const token = jwt.sign(
         { 
             userId: user._id, 
             username: user.name, 
-            isAdmin: user.isAdmin || false // Include isAdmin flag
+            isAdmin: user.isAdmin || false
         },
         process.env.PRIVATE_KEY,
         { expiresIn: "1h" }
     );
 
     res.status(200).json({ message: "Login successful", token });
-
-    
 });
 
 
@@ -149,28 +151,45 @@ const createAdminUser = async (req, res) => {
     const { name, email, password } = req.body;
 
     try {
-        // Hash the password
+        const { name, email, password } = req.body;
+        
+        // Validate input
+        if (!name || !email || !password) {
+            return res.status(400).json({ 
+                message: 'Missing required fields' 
+            });
+        }
+
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ 
+                message: 'Email already registered' 
+            });
+        }
+
+        // Hash password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
         // Create new admin user
-        const adminUser = new User({
+        const newAdmin = new User({
             name,
             email,
             password: hashedPassword,
-            isAdmin: true, // Make the user an admin
+            role: 'admin' // Assuming you have a role field
         });
 
-        await adminUser.save();
+        await newAdmin.save();
 
-        res.status(201).json({
-            message: 'Admin user created successfully',
-            user: adminUser
+        res.status(201).json({ 
+            message: 'Admin user created successfully' 
         });
     } catch (error) {
-        res.status(500).json({
-            message: 'Error creating admin user',
-            error: error.message
+        console.error('Admin creation error:', error);
+        res.status(500).json({ 
+            message: 'Error creating admin user', 
+            error: error.message 
         });
     }
 };

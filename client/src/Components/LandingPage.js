@@ -72,12 +72,12 @@ function LandingPage() {
         setMenuOpen(!menuOpen);
     };
 
-    const { isLoggedIn, logout } = useAuth();
+    const { isLoggedIn, logout } = useAuth(); 
     const navigate = useNavigate();
 
-    const handleLogout = async () => {
-        await logout();  // Ensure logout is complete before navigating
-        navigate('/');   // Navigate to home page or login page after logout
+    const handleLogout = () => {
+        logout();  
+        navigate('/'); 
     };
 
 
@@ -99,6 +99,7 @@ function LandingPage() {
                             <li><Link to="/All">Shop All</Link></li>
                             <li><Link to="/quiz">Personalised Products</Link></li>
                             <li><Link to="/contact">Contact Us</Link></li>
+                            <li><Link to="/admin/dashboard">Admin</Link></li>
                             <li>
                                 {isLoggedIn ? (
                                     <button onClick={handleLogout}>Logout</button>  // Show Logout if user is logged in
@@ -130,7 +131,7 @@ function LandingPage() {
                         derived and will leave you feeling like everyday is spa-day.
                     </p>
                     <button className="shop-now"><Link to='/All'>Shop Now</Link></button>
-                </div>
+                     </div>
             </main>
             <section className="section1">
                 <div className="left-content">

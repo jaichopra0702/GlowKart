@@ -323,6 +323,7 @@ function LandingPage() {
                 <div className="footer-bottom">
                     <p>Urban Natives Pvt. Ltd. , New Delhi - 110035.</p>
                 </div>
+               
             </footer>
 
         </div>

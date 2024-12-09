@@ -39,6 +39,7 @@
     "jest-resolve": "^27.4.2",
     "jest-watch-typeahead": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^0.468.0",
     "mini-css-extract-plugin": "^2.4.5",
     "mongoose": "^8.8.1",
     "postcss": "^8.4.4",

@@ -1,26 +1,53 @@
-const session = require('express-session');
-const validateToken = (req, res, next) => {
-  // Check if user is authenticated via session
-  if (req.session && req.session.userId) {
-    // Session exists and has a user ID
-    next();
-  } else {
-    // No active session
-    res.status(401).json({
-      error: 'Unauthorized. Please log in.',
-    });
-  }
-};
-//this is cool
-const generateToken = (user) => {
-  // This would typically be handled by express-session automatically
-  // But you can add custom session data if needed
-  req.session.userId = user._id;
-  req.session.username = user.username;
-  req.session.role = user.role;
+const jwt = require("jsonwebtoken");
+
+// Generate a new JWT token
+const generateToken = (userData) => {
+    return jwt.sign(userData, process.env.PRIVATE_KEY);
 };
 
-module.exports = {
-  validateToken,
-  generateToken,
+// Validate the token and check for admin privileges
+const validateToken = (req, res, next) => {
+    const authorization = req.headers.authorization;
+
+    // Check if the token is provided in the header
+    if (!authorization) {
+        return res.status(401).json({ err: 'Token not available' });
+    }
+
+    const token = authorization.split(' ')[1];
+
+    // Check if the token exists
+    if (!token) {
+        return res.status(401).json({ err: 'Unauthorized user' });
+    }
+
+    try {
+        // Verify the token
+        const decodedToken = jwt.verify(token, process.env.PRIVATE_KEY);
+
+        // Attach user data to the request object
+        req.user = decodedToken;
+
+        next();
+    } catch (err) {
+        console.error("Error Occurred:", err.message);
+        return res.status(401).json({ err: 'Invalid token' });
+    }
 };
+
+// Middleware for admin validation
+const validateAdmin = (req, res, next) => {
+    // Ensure the token validation middleware has run first
+    if (!req.user) {
+        return res.status(403).json({ err: 'Access denied. No valid token provided.' });
+    }
+
+    // Check if the user has admin privileges
+    if (!req.user.isAdmin) {
+        return res.status(403).json({ err: 'Access denied. Admin privileges required.' });
+    }
+
+    next();
+};
+
+module.exports = { generateToken, validateToken, validateAdmin };

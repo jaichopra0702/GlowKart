@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  fetchUserProfile,
-  updateUserProfile,
-  changePassword,
-} from '../utils/userService';
+import { fetchUserProfile, updateUserProfile, changePassword } from '../utils/userService';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
@@ -11,28 +7,40 @@ const ProfilePage = () => {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [editMode, setEditMode] = useState(false);
-  const [passwordData, setPasswordData] = useState({
-    currentPassword: '',
-    newPassword: '',
-  });
+  const [passwordData, setPasswordData] = useState({ currentPassword: '', newPassword: '' });
   const [updatedProfile, setUpdatedProfile] = useState({ name: '', email: '' });
+
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const getUserProfile = async () => {
-      try {
-        const userData = await fetchUserProfile(); // No need to pass token, the session ID will be sent automatically
-        setUser(userData);
-      } catch (error) {
-        setError('Failed to load profile. Please try again later.');
-      }
-    };
-
-    getUserProfile();
-  }, []);
+      
+            try {
+              if (token) {
+                const userData = await fetchUserProfile(token);
+                setUser(userData);
+              } else {
+                setError('No token found. Please log in.');
+              }
+            } catch (error) {
+              setError('Failed to load profile. Please try again later.');
+            }
+          };
+      
+          getUserProfile();
+        }, [token]);
+      
+        if (error) {
+          return <div className="error-message">{error}</div>;
+        }
+      
+        if (!user) {
+          return <div className="loading">Loading...</div>;
+        }
 
   const handleProfileUpdate = async () => {
     try {
-      const updatedUser = await updateUserProfile(updatedProfile); // No token required
+      const updatedUser = await updateUserProfile(token, updatedProfile);
       setUser(updatedUser);
       setMessage('Profile updated successfully!');
       setEditMode(false);
@@ -43,7 +51,7 @@ const ProfilePage = () => {
 
   const handlePasswordChange = async () => {
     try {
-      await changePassword(passwordData); // No token required
+      await changePassword(token, passwordData);
       setMessage('Password changed successfully!');
       setPasswordData({ currentPassword: '', newPassword: '' });
     } catch (error) {
@@ -70,33 +78,20 @@ const ProfilePage = () => {
             <input
               type="text"
               value={updatedProfile.name}
-              onChange={(e) =>
-                setUpdatedProfile({ ...updatedProfile, name: e.target.value })
-              }
+              onChange={(e) => setUpdatedProfile({ ...updatedProfile, name: e.target.value })}
               placeholder="Name"
             />
             <input
               type="email"
               value={updatedProfile.email}
-              onChange={(e) =>
-                setUpdatedProfile({ ...updatedProfile, email: e.target.value })
-              }
+              onChange={(e) => setUpdatedProfile({ ...updatedProfile, email: e.target.value })}
               placeholder="Email"
             />
-            <button onClick={handleProfileUpdate} className="update-button">
-              Update Profile
-            </button>
-            <button
-              onClick={() => setEditMode(false)}
-              className="cancel-button"
-            >
-              Cancel
-            </button>
+            <button onClick={handleProfileUpdate} className="update-button">Update Profile</button>
+            <button onClick={() => setEditMode(false)} className="cancel-button">Cancel</button>
           </div>
         ) : (
-          <button onClick={() => setEditMode(true)} className="edit-button">
-            Edit Profile
-          </button>
+          <button onClick={() => setEditMode(true)} className="edit-button">Edit Profile</button>
         )}
 
         <div className="change-password">
@@ -104,28 +99,16 @@ const ProfilePage = () => {
           <input
             type="password"
             value={passwordData.currentPassword}
-            onChange={(e) =>
-              setPasswordData({
-                ...passwordData,
-                currentPassword: e.target.value,
-              })
-            }
+            onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
             placeholder="Current Password"
           />
           <input
             type="password"
             value={passwordData.newPassword}
-            onChange={(e) =>
-              setPasswordData({ ...passwordData, newPassword: e.target.value })
-            }
+            onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
             placeholder="New Password"
           />
-          <button
-            onClick={handlePasswordChange}
-            className="change-password-button"
-          >
-            Change Password
-          </button>
+          <button onClick={handlePasswordChange} className="change-password-button">Change Password</button>
         </div>
       </div>
     </div>

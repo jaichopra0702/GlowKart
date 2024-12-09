@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import AddProductForm from './AddProductForm';
 const AdminDashboard = () => {
     const [products, setProducts] = useState([]);
     const [newProduct, setNewProduct] = useState({
@@ -20,20 +20,23 @@ const AdminDashboard = () => {
         password: ''
     });
 
-    // Fetch products from backend
     const fetchProducts = async () => {
         try {
-            const response = await axios.get('http://localhost:3001/api/admin/products', {
-                headers: {
-                    Authorization: `Bearer ${token}` // Pass token for authentication
-                }
-            });
-            setProducts(response.data.products || []); // Assuming response has a 'products' field
+          const url = token 
+            ? 'http://localhost:3001/api/admin/products' 
+            : 'http://localhost:3001/api/products';
+          const options = token
+            ? { headers: { Authorization: `Bearer ${token}` } }
+            : {};
+    
+          const response = await axios.get(url, options);
+          const productData = token ? response.data.products : response.data; // Adjust based on response structure
+          setProducts(productData || []);
         } catch (error) {
-            console.error('Error fetching products:', error.response?.data || error.message);
-            alert('Failed to fetch products: ' + (error.response?.data?.message || 'Unknown error'));
+          console.error('Error fetching products:', error.response?.data || error.message);
+          alert('Failed to fetch products: ' + (error.response?.data?.message || 'Unknown error'));
         }
-    };
+      };
 
     // Handle Admin Registration
     const handleCreateAdmin = async (e) => {
@@ -148,6 +151,7 @@ const AdminDashboard = () => {
                                 </li>
                             ))}
                         </ul>
+                        <AddProductForm />
                     </div>
                 </>
             )}

@@ -15,13 +15,21 @@ jobs:
         with:
           node-version: '18'
       
-      - name: Install Prettier
-        run: npm install --save-dev prettier
+      - name: Install Root Dependencies
+        run: npm install
       
-      - name: Check Format
-        run: npx prettier --check "**/*.{js,jsx,json,yml,yaml,css,md}"
+      - name: Install Client Dependencies
+        working-directory: ./client
+        run: npm install
       
-      - name: Show Prettier Version and Files
-        run: |
-          npx prettier --version
-          find . -type f \( -name "*.js" -o -name "*.json" \)
+      - name: Install Backend Dependencies
+        working-directory: ./backend
+        run: npm install
+      
+      - name: Check Format in Client
+        working-directory: ./client
+        run: npx prettier --check "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"
+      
+      - name: Check Format in Backend
+        working-directory: ./backend
+        run: npx prettier --check "src/**/*.{js,ts,json,md}"

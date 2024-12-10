@@ -15,9 +15,6 @@ jobs:
         with:
           node-version: '18'
       
-      - name: Install Root Dependencies
-        run: npm install
-      
       - name: Install Client Dependencies
         working-directory: ./client
         run: npm install

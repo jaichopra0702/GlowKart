@@ -1,5 +1,4 @@
 name: Prettier
-
 on:
   push:
     branches: [ main, master ]
@@ -11,18 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
+      
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-
+      
       - name: Install Prettier
-        run: npm install --global prettier
-
+        run: npm install --save-dev prettier
+      
       - name: Check Format
-        run: prettier --check "**/*.{js,jsx,json,yml,yaml,css,md}"
-
+        run: npx prettier --check "**/*.{js,jsx,json,yml,yaml,css,md}"
+      
       - name: Show Prettier Version and Files
         run: |
-          prettier --version
-          find . -type f -name "*.js" -o -name "*.json"
+          npx prettier --version
+          find . -type f \( -name "*.js" -o -name "*.json" \)

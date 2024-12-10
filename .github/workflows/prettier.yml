@@ -21,7 +21,7 @@ jobs:
 
       - name: Debug File Paths (Backend)
         working-directory: ./backend
-        run: ls -R src
+        run: ls -R .
 
       - name: Install Client Dependencies
         working-directory: ./client

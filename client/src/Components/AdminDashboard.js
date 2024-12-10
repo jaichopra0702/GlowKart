@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-
+import AddProductForm from './AddProductForm';
 const AdminDashboard = () => {
     const [products, setProducts] = useState([]);
     const [newProduct, setNewProduct] = useState({
@@ -10,178 +10,151 @@ const AdminDashboard = () => {
         imageUrl: ''
     });
     const [isEditing, setIsEditing] = useState(null);
+    const [token, setToken] = useState('');
+    const [loginCredentials, setLoginCredentials] = useState({
+        email: '',
+        password: ''
+    });
+    const [adminCreation, setAdminCreation] = useState({
+        email: '',
+        password: ''
+    });
 
-    // Authentication token (you'll need to manage this in your app)
-    const token = localStorage.getItem('token');
-
-    // Fetch all products
     const fetchProducts = async () => {
         try {
-            const response = await axios.get('/api/products', {
-                headers: { 
-                    'Authorization': `Bearer ${token}` 
-                }
-            });
-            setProducts(response.data);
+          const url = token 
+            ? 'http://localhost:3001/api/admin/products' 
+            : 'http://localhost:3001/api/products';
+          const options = token
+            ? { headers: { Authorization: `Bearer ${token}` } }
+            : {};
+    
+          const response = await axios.get(url, options);
+          const productData = token ? response.data.products : response.data; // Adjust based on response structure
+          setProducts(productData || []);
         } catch (error) {
-            console.error('Error fetching products:', error);
-            alert('Failed to fetch products');
+          console.error('Error fetching products:', error.response?.data || error.message);
+          alert('Failed to fetch products: ' + (error.response?.data?.message || 'Unknown error'));
         }
-    };
+      };
 
-    // Add new product
-    const handleAddProduct = async (e) => {
+    // Handle Admin Registration
+    const handleCreateAdmin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3001/api/products/add', newProduct, {
-                headers: { 
-                    'Authorization': `Bearer ${token}` 
-                }
+            const response = await axios.post('http://localhost:3001/user/adminuser', {
+                name: adminCreation.name, // Make sure to include name
+                email: adminCreation.email,
+                password: adminCreation.password
             });
-            
-            setProducts([...products, response.data.product]);
-            // Reset form
-            setNewProduct({
-                name: '',
-                price: '',
-                category: '',
-                imageUrl: ''
-            });
+            alert(response.data.message || 'Admin created successfully');
+            setAdminCreation({ name: '', email: '', password: '' });
         } catch (error) {
-            console.error('Error adding product:', error);
-            alert('Failed to add product');
+            console.error('Detailed error:', error.response?.data || error);
+            alert('Failed to create admin: ' + (error.response?.data?.message || 'Unknown error'));
         }
     };
 
-    // Update product
-    const handleUpdateProduct = async (e) => {
-        e.preventDefault();
+    // Handle Admin Login
+    const handleAdminLogin = async (email, password) => {
         try {
-            const response = await axios.put(`/api/products/update/${isEditing._id}`, newProduct, {
-                headers: { 
-                    'Authorization': `Bearer ${token}` 
-                }
+            const response = await axios.post('http://localhost:3001/user/loginuser', { 
+                email, 
+                password,
+                // Add this to match backend expectation
+                loginAttempt: true 
             });
-            
-            // Update products list
-            const updatedProducts = products.map(product => 
-                product._id === isEditing._id ? response.data.product : product
-            );
-            
-            setProducts(updatedProducts);
-            // Reset editing state and form
-            setIsEditing(null);
-            setNewProduct({
-                name: '',
-                price: '',
-                category: '',
-                imageUrl: ''
-            });
+            if (response.data.token) {
+                const adminToken = response.data.token;
+                localStorage.setItem('token', adminToken);
+                setToken(adminToken);
+                fetchProducts(); // Fetch products after successful login
+            } else {
+                alert('Not an admin user');
+            }
         } catch (error) {
-            console.error('Error updating product:', error);
-            alert('Failed to update product');
+            console.error('Admin login full error:', error.response || error);
+            alert('Login failed: ' + (error.response?.data?.message || 'Unknown error'));
         }
     };
-
-    // Delete product
-    const handleDeleteProduct = async (productId) => {
-        try {
-            await axios.delete(`/api/products/delete/${productId}`, {
-                headers: { 
-                    'Authorization': `Bearer ${token}` 
-                }
-            });
-            
-            // Remove product from list
-            const updatedProducts = products.filter(product => product._id !== productId);
-            setProducts(updatedProducts);
-        } catch (error) {
-            console.error('Error deleting product:', error);
-            alert('Failed to delete product');
-        }
-    };
-
-    // Prepare product for editing
-    const startEditing = (product) => {
-        setIsEditing(product);
-        setNewProduct({
-            name: product.name,
-            price: product.price,
-            category: product.category,
-            imageUrl: product.imageUrl
-        });
-    };
-
-    // Load products on component mount
-    useEffect(() => {
-        fetchProducts();
-    }, []);
 
     return (
         <div className="admin-dashboard">
-            <h1>Admin Dashboard</h1>
-            
-            {/* Product Form */}
-            <form onSubmit={isEditing ? handleUpdateProduct : handleAddProduct}>
-                <input 
-                    type="text" 
-                    placeholder="Product Name" 
-                    value={newProduct.name}
-                    onChange={(e) => setNewProduct({...newProduct, name: e.target.value})}
-                    required 
-                />
-                <input 
-                    type="number" 
-                    placeholder="Price" 
-                    value={newProduct.price}
-                    onChange={(e) => setNewProduct({...newProduct, price: e.target.value})}
-                    required 
-                />
-                <input 
-                    type="text" 
-                    placeholder="Category" 
-                    value={newProduct.category}
-                    onChange={(e) => setNewProduct({...newProduct, category: e.target.value})}
-                    required 
-                />
-                <input 
-                    type="text" 
-                    placeholder="Image URL" 
-                    value={newProduct.imageUrl}
-                    onChange={(e) => setNewProduct({...newProduct, imageUrl: e.target.value})}
-                    required 
-                />
-                <button type="submit">
-                    {isEditing ? 'Update Product' : 'Add Product'}
-                </button>
-                {isEditing && (
-                    <button type="button" onClick={() => {
-                        setIsEditing(null);
-                        setNewProduct({name: '', price: '', category: '', imageUrl: ''});
-                    }}>
-                        Cancel
-                    </button>
-                )}
-            </form>
-
-            {/* Product List */}
-            <div className="product-list">
-                <h2>Existing Products</h2>
-                {products.map((product) => (
-                    <div key={product._id} className="product-item">
-                        <img src={product.imageUrl} alt={product.name} style={{width: '100px', height: '100px'}} />
-                        <div>
-                            <h3>{product.name}</h3>
-                            <p>Price: ${product.price}</p>
-                            <p>Category: {product.category}</p>
-                        </div>
-                        <div>
-                            <button onClick={() => startEditing(product)}>Edit</button>
-                            <button onClick={() => handleDeleteProduct(product._id)}>Delete</button>
-                        </div>
+            {!token ? (
+                <>
+                    <div className="login-form">
+                        <h1>Admin Login</h1>
+                        <form onSubmit={(e) => {
+                            e.preventDefault();
+                            handleAdminLogin(loginCredentials.email, loginCredentials.password);
+                        }}>
+                            <input
+                                type="email"
+                                placeholder="Email"
+                                value={loginCredentials.email}
+                                onChange={(e) => setLoginCredentials({ ...loginCredentials, email: e.target.value })}
+                                required
+                            />
+                            <input
+                                type="password"
+                                placeholder="Password"
+                                value={loginCredentials.password}
+                                onChange={(e) => setLoginCredentials({ ...loginCredentials, password: e.target.value })}
+                                required
+                            />
+                            <button type="submit">Login</button>
+                        </form>
                     </div>
-                ))}
-            </div>
+                    <div className="create-admin-form">
+                        <h1>Create Admin</h1>
+                        <form onSubmit={handleCreateAdmin}>
+                        <input
+                        type="text"
+                        placeholder="Name"
+                        value={adminCreation.name || ''} // Add a default empty string to avoid undefined errors
+                        onChange={(e) => setAdminCreation({ ...adminCreation, name: e.target.value })}
+                        required
+                        />
+                            <input
+                                type="email"
+                                placeholder="Email"
+                                value={adminCreation.email}
+                                onChange={(e) => setAdminCreation({ ...adminCreation, email: e.target.value })}
+                                required
+                            />
+                            <input
+                                type="password"
+                                placeholder="Password"
+                                value={adminCreation.password}
+                                onChange={(e) => setAdminCreation({ ...adminCreation, password: e.target.value })}
+                                required
+                            />
+                            <button type="submit">Create Admin</button>
+                        </form>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <h1>Admin Dashboard</h1>
+                    <button onClick={() => {
+                        localStorage.removeItem('token');
+                        setToken('');
+                    }}>
+                        Logout
+                    </button>
+                    <div>
+                        <h2>Products</h2>
+                        <ul>
+                            {products.map(product => (
+                                <li key={product.id}>
+                                    {product.name} - ${product.price}
+                                </li>
+                            ))}
+                        </ul>
+                        <AddProductForm />
+                    </div>
+                </>
+            )}
         </div>
     );
 };

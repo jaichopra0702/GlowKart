@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
     // Check if the session cookie exists and user is logged in (e.g., checking if session is valid on a backend endpoint)
     const checkSession = async () => {
       try {
-        const response = await fetch('http://localhost:3001/user/myAccount', {
+        const response = await fetch('https://glowkart-backend.onrender.com/user/myAccount', {
           method: 'GET',
           credentials: 'include', // Include cookies (session ID)
         });
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const response = await fetch('http://localhost:3001/user/logout', {
+      const response = await fetch('https://glowkart-backend.onrender.com/user/logout', {
         method: 'POST',
         credentials: 'include', // Include cookies (session ID)
       });

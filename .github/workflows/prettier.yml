@@ -15,18 +15,26 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Debug File Paths (Client)
+        working-directory: ./client
+        run: ls -R src
+
+      - name: Debug File Paths (Backend)
+        working-directory: ./backend
+        run: ls -R src
+
       - name: Install Client Dependencies
         working-directory: ./client
-        run: npm install
+        run: npm ci
 
       - name: Install Backend Dependencies
         working-directory: ./backend
-        run: npm install
+        run: npm ci
 
       - name: Check Format in Client
         working-directory: ./client
-        run: npx prettier --check "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"
+        run: npx prettier --check --no-cache "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"
 
       - name: Check Format in Backend
         working-directory: ./backend
-        run: npx prettier --check "src/**/*.{js,ts,json,md}"
+        run: npx prettier --check --no-cache "**/*.{js,ts,json,md}"

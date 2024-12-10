@@ -9,29 +9,20 @@ on:
 jobs:
   prettier:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+
+      - uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: 'npm'
-          
-      - name: Install dependencies
-        run: npm ci
-        
-      - name: Check formatting
-        run: npm run format:check
-        
-      # Optional: Automatically fix and commit formatting issues
-      - name: Fix formatting
-        if: failure()
+
+      - name: Install Prettier
+        run: npm install --global prettier
+
+      - name: Check Format
+        run: prettier --check "**/*.{js,jsx,json,yml,yaml,css,md}"
+
+      - name: Show Prettier Version and Files
         run: |
-          npm run format
-          git config --global user.name github-actions
-          git config --global user.email github-actions@github.com
-          git add .
-          git commit -m "style: format with prettier"
-          git push
+          prettier --version
+          find . -type f -name "*.js" -o -name "*.json"

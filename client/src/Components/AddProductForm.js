@@ -7,20 +7,20 @@ const AddProductForm = () => {
     name: '',
     price: '',
     category: '',
-    imageUrl: ''
+    imageUrl: '',
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProductData(prevState => ({
+    setProductData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validate input fields
     if (!productData.name || !productData.price || !productData.category) {
       toast.error('Please fill in all required fields');
@@ -32,12 +32,16 @@ const AddProductForm = () => {
       const token = localStorage.getItem('token');
 
       // Make API call to add product
-      const response = await axios.post('http://localhost:3001/api/admin/add', productData, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+      const response = await axios.post(
+        'http://localhost:3001/api/admin/add',
+        productData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
         }
-      });
+      );
 
       // Show success message
       toast.success('Product added successfully!');
@@ -47,7 +51,7 @@ const AddProductForm = () => {
         name: '',
         price: '',
         category: '',
-        imageUrl: ''
+        imageUrl: '',
       });
     } catch (error) {
       // Handle errors
@@ -61,7 +65,10 @@ const AddProductForm = () => {
       <h2 className="text-2xl font-bold mb-6 text-center">Add New Product</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="name"
+          >
             Product Name
           </label>
           <input
@@ -77,7 +84,10 @@ const AddProductForm = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="price"
+          >
             Price
           </label>
           <input
@@ -95,7 +105,10 @@ const AddProductForm = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="category"
+          >
             Category
           </label>
           <select
@@ -107,20 +120,22 @@ const AddProductForm = () => {
             required
           >
             <option value="All">All Categories</option>
-        <option value="SensitiveSkin">Sensitive Skin</option>
-        <option value="Acne">Acne & Blemishes</option>
-        <option value="DrySkin">Dry Skin</option>
-        <option value="OilySkin">Oily Skin</option>
-        <option value="TexturedSkin">Textured Skin</option>
-        <option value="Pigmentation">Pigmentation</option>
-        <option value="CombinationSkin">Combination Skin</option>
-
+            <option value="SensitiveSkin">Sensitive Skin</option>
+            <option value="Acne">Acne & Blemishes</option>
+            <option value="DrySkin">Dry Skin</option>
+            <option value="OilySkin">Oily Skin</option>
+            <option value="TexturedSkin">Textured Skin</option>
+            <option value="Pigmentation">Pigmentation</option>
+            <option value="CombinationSkin">Combination Skin</option>
           </select>
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="imageUrl">
-            Image URL 
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="imageUrl"
+          >
+            Image URL
           </label>
           <input
             type="url"

@@ -19,7 +19,7 @@ import ProfilePage from './Components/ProfilePage';
 import Contact from './Components/Contact';
 import ProceedWithStripe from './Components/ProceedWithStripe';
 import ChatBot from './Components/Chatbot';
-import AdminDashboard from "./Components/AdminDashboard";
+import AdminDashboard from './Components/AdminDashboard';
 
 const products = [
   // Acne Category
@@ -444,7 +444,7 @@ function App() {
             element={<ProductList products={products} />}
           />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
- 
+
           {/* Pass addToCart prop to Recommendations */}
           <Route
             path="/recommendation"

@@ -1,32 +1,32 @@
 name: Prettier
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 
 jobs:
   prettier:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-      
+
       - name: Install Client Dependencies
         working-directory: ./client
         run: npm install
-      
+
       - name: Install Backend Dependencies
         working-directory: ./backend
         run: npm install
-      
+
       - name: Check Format in Client
         working-directory: ./client
         run: npx prettier --check "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"
-      
+
       - name: Check Format in Backend
         working-directory: ./backend
         run: npx prettier --check "src/**/*.{js,ts,json,md}"

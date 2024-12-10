@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../Components/Contact.css';
-
+const apiUrl = 'https://glowkart-backend-nqnn.onrender.com'; // Correct backend URL
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -35,7 +35,7 @@ const Contact = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:3001/user/contact',
+        `${apiUrl}/user/contact`,
         formData,
         {
           headers: {

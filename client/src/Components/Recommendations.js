@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './Recommendations.css';
 
 import { CartContext } from './CartContext';
-
+const apiUrl = 'https://glowkart-backend-nqnn.onrender.com'; // Correct backend URL
 const Recommendations = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,7 +21,7 @@ const Recommendations = () => {
     setLoading(true); // Start loading when category changes
     axios
       .get(
-        `http://localhost:3001/api/products/recommendations?category=${selectedCategory}`
+        `${apiUrl}/api/products/recommendations?category=${selectedCategory}`
       )
       .then((response) => {
         if (response.data && response.data.length > 0) {

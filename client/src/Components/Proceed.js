@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import './Procedd.css';
-
+const apiUrl = 'https://glowkart-backend-nqnn.onrender.com'; // Correct backend URL
 const cardElementOptions = {
   style: {
     base: {
@@ -40,7 +40,7 @@ const Proceed = () => {
 
       try {
         const response = await fetch(
-          'http://localhost:3001/api/payment/create',
+          `${apiUrl}/api/payment/create`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -97,7 +97,7 @@ const Proceed = () => {
       }
 
       const confirmResponse = await fetch(
-        'http://localhost:3001/api/payment/confirm-payment',
+        `${apiUrl}/api/payment/confirm-payment`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

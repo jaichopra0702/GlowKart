@@ -8,7 +8,7 @@ import {
   removeItemFromCart,
 } from '../utils/api'; // Import API utility functions
 import axios from 'axios';
-
+const apiUrl = 'https://glowkart-backend-nqnn.onrender.com'; // Correct backend URL
 const Cart = () => {
   const navigate = useNavigate();
   const { cart, removeFromCart, updateCartItemQuantity, addToCart } =
@@ -46,7 +46,7 @@ const Cart = () => {
     addToCart(product); // Optimistic UI update
     const token = localStorage.getItem('authToken');
     axios
-      .post('http://localhost:5000/api/cart', product, {
+      .post(`${apiUrl}/api/cart`, product, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

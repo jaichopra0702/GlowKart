@@ -1,11 +1,11 @@
 // src/components/Shop.js
 import React, { useState, useEffect } from 'react';
-
+const apiUrl = 'https://glowkart-backend-nqnn.onrender.com'; // Correct backend URL
 const Shop = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/products')
+    fetch(`${apiUrl}/api/products`)
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error('Error fetching products:', error));

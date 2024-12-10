@@ -1,6 +1,8 @@
+const apiUrl = 'https://glowkart-backend-nqnn.onrender.com'; // Correct backend URL
 export const fetchUserProfile = async () => {
+  
   try {
-    const response = await fetch('http://localhost:3001/user/myAccount', {
+    const response = await fetch(`${apiUrl}/user/myAccount`, {
       method: 'GET',
       credentials: 'include', // Ensure session cookie is sent with the request
       headers: {
@@ -21,7 +23,7 @@ export const fetchUserProfile = async () => {
 
 export const updateUserProfile = async (updatedProfile) => {
   try {
-    const response = await fetch('http://localhost:3001/user/myAccount', {
+    const response = await fetch(`${apiUrl}/user/myAccount`, {
       method: 'PUT',
       credentials: 'include', // Ensure session cookie is sent with the request
       headers: {
@@ -43,7 +45,7 @@ export const updateUserProfile = async (updatedProfile) => {
 
 export const changePassword = async (passwordData) => {
   try {
-    const response = await fetch('http://localhost:3001/user/password', {
+    const response = await fetch(`${apiUrl}/user/password`, {
       method: 'PUT',
       credentials: 'include', // Ensure session cookie is sent with the request
       headers: {

@@ -21,7 +21,7 @@ const Recommendations = () => {
     setLoading(true); // Start loading when category changes
     axios
       .get(
-        `https://glowkart-backend.onrender.com/api/products/recommendations?category=${selectedCategory}`
+        `http://localhost:3001/api/products/recommendations?category=${selectedCategory}`
       )
       .then((response) => {
         if (response.data && response.data.length > 0) {

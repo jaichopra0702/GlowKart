@@ -1,6 +1,6 @@
 export const fetchUserProfile = async () => {
   try {
-    const response = await fetch('https://glowkart-backend.onrender.com/user/myAccount', {
+    const response = await fetch('http://localhost:3001/user/myAccount', {
       method: 'GET',
       credentials: 'include', // Ensure session cookie is sent with the request
       headers: {
@@ -21,7 +21,7 @@ export const fetchUserProfile = async () => {
 
 export const updateUserProfile = async (updatedProfile) => {
   try {
-    const response = await fetch('https://glowkart-backend.onrender.com/user/myAccount', {
+    const response = await fetch('http://localhost:3001/user/myAccount', {
       method: 'PUT',
       credentials: 'include', // Ensure session cookie is sent with the request
       headers: {
@@ -43,7 +43,7 @@ export const updateUserProfile = async (updatedProfile) => {
 
 export const changePassword = async (passwordData) => {
   try {
-    const response = await fetch('https://glowkart-backend.onrender.com/user/password', {
+    const response = await fetch('http://localhost:3001/user/password', {
       method: 'PUT',
       credentials: 'include', // Ensure session cookie is sent with the request
       headers: {

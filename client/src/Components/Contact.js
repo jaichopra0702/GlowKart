@@ -35,7 +35,7 @@ const Contact = () => {
 
     try {
       const response = await axios.post(
-        'https://glowkart-backend.onrender.com/user/contact',
+        'http://localhost:3001/user/contact',
         formData,
         {
           headers: {

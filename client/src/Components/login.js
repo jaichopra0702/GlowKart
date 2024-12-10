@@ -46,7 +46,7 @@ function Login() {
     const endpoint = isSignUpMode ? '/registeruser' : '/loginuser';
 
     try {
-      const response = await fetch(`https://glowkart-backend.onrender.com/user${endpoint}`, {
+      const response = await fetch(`http://localhost:3001/user${endpoint}`, {
         method: 'POST',
         credentials: 'include', // Ensure cookies (session ID) are included in the request
         headers: {

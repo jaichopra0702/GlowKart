@@ -5,7 +5,7 @@ const Shop = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch('https://glowkart-backend.onrender.com/api/products')
+    fetch('http://localhost:3001/api/products')
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error('Error fetching products:', error));

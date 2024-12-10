@@ -40,7 +40,7 @@ const Proceed = () => {
 
       try {
         const response = await fetch(
-          'https://glowkart-backend.onrender.com/api/payment/create',
+          'http://localhost:3001/api/payment/create',
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -97,7 +97,7 @@ const Proceed = () => {
       }
 
       const confirmResponse = await fetch(
-        'https://glowkart-backend.onrender.com/api/payment/confirm-payment',
+        'http://localhost:3001/api/payment/confirm-payment',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

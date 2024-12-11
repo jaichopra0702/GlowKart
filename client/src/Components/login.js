@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import './login.css';
 import image from './glowcart-removebg-preview.png';
 import image2 from './login.jpg';
+
 const apiUrl = 'https://glowkart-backend-nqnn.onrender.com'; // Correct backend URL
+
 function Login() {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
   const [formData, setFormData] = useState({
@@ -42,9 +44,9 @@ function Login() {
     e.preventDefault();
     setIsLoading(true);
     setErrorMessage('');
-  
+
     const endpoint = isSignUpMode ? '/registeruser' : '/loginuser';
-  
+
     try {
       const response = await fetch(`${apiUrl}/user${endpoint}`, {
         method: 'POST',
@@ -54,13 +56,13 @@ function Login() {
         },
         body: JSON.stringify(formData),
       });
-  
+
       const data = await response.json();
-  
+
       if (!response.ok) {
         throw new Error(data.message || 'Something went wrong');
       }
-  
+
       if (isSignUpMode) {
         // After successful registration, switch to login mode
         setIsSignUpMode(false);
@@ -77,7 +79,7 @@ function Login() {
       setIsLoading(false);
     }
   };
-  
+
   return (
     <div className="login-css">
       <main className={isSignUpMode ? 'sign-up-mode' : ''}>
@@ -107,20 +109,6 @@ function Login() {
                 <div className="actual-form">
                   <div className="input-wrap">
                     <input
-                      type="name"
-                      className="input-field"
-                      autoComplete="off"
-                      name="name"
-                      value={formData.name}
-                      required
-                      onFocus={handleInputFocus}
-                      onBlur={handleInputBlur}
-                      onChange={handleInputChange}
-                    />
-                    <label>Name</label>
-                  </div>
-                  <div className="input-wrap">
-                    <input
                       type="email"
                       className="input-field"
                       autoComplete="off"
@@ -148,8 +136,8 @@ function Login() {
                     />
                     <label>Password</label>
                   </div>
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className="sign-btn"
                     disabled={isLoading}
                   >
@@ -216,8 +204,8 @@ function Login() {
                     />
                     <label>Password</label>
                   </div>
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className="sign-btn"
                     disabled={isLoading}
                   >

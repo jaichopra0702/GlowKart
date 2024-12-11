@@ -39,18 +39,28 @@ const Proceed = () => {
       setError('');
 
       try {
-        const response = await fetch(
-          `${apiUrl}/api/payment/create`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify({
-              amount: Math.round(totalAmount * 100),
-              currency: 'inr',
-            }),
-          }
-        );
+        // const response = await fetch(
+        //   `${apiUrl}/api/payment/create`,
+        //   {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     credentials: 'include',
+        //     body: JSON.stringify({
+        //       amount: Math.round(totalAmount * 100),
+        //       currency: 'inr',
+        //     }),
+        //   }
+        // );
+
+        const response = await fetch(`${apiUrl}/api/payment/create`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            amount: Math.round(totalAmount * 100),
+            currency: 'inr',
+          }),
+        });
 
         if (!response.ok) {
           throw new Error('Failed to create payment intent');

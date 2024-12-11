@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'; // Toast notifications
+import 'react-toastify/dist/ReactToastify.css'; // Ensure Toastify styles are imported
+
+// API base URL for backend
+const apiUrl = 'https://glowkart-backend-nqnn.onrender.com'; 
 
 const AddProductForm = () => {
   const [productData, setProductData] = useState({
@@ -21,19 +25,19 @@ const AddProductForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate input fields
+    // Validate required fields
     if (!productData.name || !productData.price || !productData.category) {
-      toast.error('Please fill in all required fields');
+      toast.error('Please fill in all required fields.');
       return;
     }
 
     try {
-      // Get the token from local storage (assuming you store it after login)
+      // Retrieve authentication token from local storage
       const token = localStorage.getItem('token');
 
       // Make API call to add product
       const response = await axios.post(
-        'http://localhost:3001/api/admin/add',
+        `${apiUrl}/api/admin/add`,
         productData,
         {
           headers: {
@@ -43,10 +47,10 @@ const AddProductForm = () => {
         }
       );
 
-      // Show success message
-      toast.success('Product added successfully!');
+      // Notify success
+      toast.success(response.data.message || 'Product added successfully!');
 
-      // Reset form after successful submission
+      // Reset form fields
       setProductData({
         name: '',
         price: '',
@@ -54,9 +58,8 @@ const AddProductForm = () => {
         imageUrl: '',
       });
     } catch (error) {
-      // Handle errors
       console.error('Error adding product:', error);
-      toast.error(error.response?.data?.message || 'Failed to add product');
+      toast.error(error.response?.data?.message || 'Failed to add product.');
     }
   };
 
@@ -64,11 +67,9 @@ const AddProductForm = () => {
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6 text-center">Add New Product</h2>
       <form onSubmit={handleSubmit}>
+        {/* Product Name */}
         <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="name"
-          >
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
             Product Name
           </label>
           <input
@@ -83,11 +84,9 @@ const AddProductForm = () => {
           />
         </div>
 
+        {/* Product Price */}
         <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="price"
-          >
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
             Price
           </label>
           <input
@@ -104,11 +103,9 @@ const AddProductForm = () => {
           />
         </div>
 
+        {/* Product Category */}
         <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="category"
-          >
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category">
             Category
           </label>
           <select
@@ -119,7 +116,9 @@ const AddProductForm = () => {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
           >
-            <option value="All">All Categories</option>
+            <option value="" disabled>
+              Select Category
+            </option>
             <option value="SensitiveSkin">Sensitive Skin</option>
             <option value="Acne">Acne & Blemishes</option>
             <option value="DrySkin">Dry Skin</option>
@@ -130,11 +129,9 @@ const AddProductForm = () => {
           </select>
         </div>
 
+        {/* Product Image URL */}
         <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="imageUrl"
-          >
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="imageUrl">
             Image URL
           </label>
           <input
@@ -144,10 +141,11 @@ const AddProductForm = () => {
             value={productData.imageUrl}
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter image URL"
+            placeholder="Enter image URL (optional)"
           />
         </div>
 
+        {/* Submit Button */}
         <div className="flex items-center justify-center">
           <button
             type="submit"

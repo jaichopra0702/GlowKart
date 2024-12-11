@@ -1,11 +1,10 @@
-// contactController.js
 const nodemailer = require('nodemailer');
 
 exports.submitContactForm = async (req, res) => {
   try {
     const { name, email, message } = req.body;
 
-    // Input validation
+    // Validate inputs
     if (!name || !email || !message) {
       return res.status(400).json({
         success: false,
@@ -13,7 +12,7 @@ exports.submitContactForm = async (req, res) => {
       });
     }
 
-    // Email validation
+    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({
@@ -22,30 +21,26 @@ exports.submitContactForm = async (req, res) => {
       });
     }
 
-    // Create transporter
+    // Create mail transporter using Mailtrap
     const transporter = nodemailer.createTransport({
-      host: 'sandbox.smtp.mailtrap.io',
-      port: 2525,
-      secure: false, // Mailtrap does not require SSL
+      host: process.env.MAIL_HOST || 'sandbox.smtp.mailtrap.io',
+      port: process.env.MAIL_PORT || 2525,
+      secure: false, // Mailtrap does not use SSL
       auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
       },
-      connectionTimeout: 20000, // 20 seconds
-      greetingTimeout: 20000, // 20 seconds
-      socketTimeout: 20000,
     });
 
-    // IMPORTANT: Set a specific recipient email
-    const RECIPIENT_EMAIL = 'recipient@example.com'; // Replace with your email or Mailtrap test inbox
+    const RECIPIENT_EMAIL = process.env.RECIPIENT_EMAIL || 'recipient@example.com';
 
     const mailOptions = {
       from: {
-        name: name,
-        address: process.env.MAIL_USER, // Use Mailtrap user as sender
+        name,
+        address: process.env.MAIL_USER,
       },
-      to: RECIPIENT_EMAIL, // Specific recipient
-      replyTo: email, // Allow replies to go to the form submitter
+      to: RECIPIENT_EMAIL,
+      replyTo: email,
       subject: 'New Contact Form Submission',
       text: `
 Name: ${name}
@@ -60,18 +55,14 @@ Message: ${message}
       `,
     };
 
-    // Log mail options for debugging
-    console.log('Mail options:', {
-      from: mailOptions.from,
-      to: mailOptions.to,
-      subject: mailOptions.subject,
-    });
+    // Debug mail options
+    console.log('Mail options:', mailOptions);
 
     // Send email
     const info = await transporter.sendMail(mailOptions);
     console.log('Message sent: %s', info.messageId);
 
-    // Success response
+    // Return success response
     res.status(200).json({
       success: true,
       msg: 'Message sent successfully',

@@ -5,7 +5,7 @@ import questions from './questions';
 import './Quiz.css';
 import ProgressBar from './ProgressBar';
 import Recommendations from './Recommendations';
-
+const apiUrl = 'https://glowkart-backend-nqnn.onrender.com'; // Correct backend URL
 const QuestionPage = () => {
   const { questionNumber } = useParams();
   const navigate = useNavigate();
@@ -206,7 +206,7 @@ const QuestionPage = () => {
         JSON.stringify(quizData, null, 2)
       );
 
-      const response = await fetch('http://localhost:3001/api/quiz/submit', {
+      const response = await fetch(`${apiUrl}/api/quiz/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -251,7 +251,7 @@ const QuestionPage = () => {
       navigate(`/question/${nextQuestionNumber}`);
     } else {
       axios
-        .post('http://localhost:3001/api/quiz/submit', formData)
+        .post(`${apiUrl}/api/quiz/submit`, formData)
         .then((response) => {
           console.log('Success:', response.data);
           navigate('/thank-you');

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import AddProductForm from './AddProductForm';
+const apiUrl = 'https://glowkart-backend-nqnn.onrender.com'; // Correct backend URL
+
 const AdminDashboard = () => {
   const [products, setProducts] = useState([]);
   const [newProduct, setNewProduct] = useState({
@@ -23,8 +25,8 @@ const AdminDashboard = () => {
   const fetchProducts = async () => {
     try {
       const url = token
-        ? 'http://localhost:3001/api/admin/products'
-        : 'http://localhost:3001/api/products';
+        ? `${apiUrl}/api/admin/products`
+        : `${apiUrl}/api/products`;
       const options = token
         ? { headers: { Authorization: `Bearer ${token}` } }
         : {};
@@ -49,7 +51,7 @@ const AdminDashboard = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        'http://localhost:3001/user/adminuser',
+        `${apiUrl}/user/adminuser`,
         {
           name: adminCreation.name, // Make sure to include name
           email: adminCreation.email,
@@ -71,7 +73,7 @@ const AdminDashboard = () => {
   const handleAdminLogin = async (email, password) => {
     try {
       const response = await axios.post(
-        'http://localhost:3001/user/loginuser',
+        `${apiUrl}/user/loginuser`,
         {
           email,
           password,
